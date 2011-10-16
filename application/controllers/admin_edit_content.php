@@ -112,7 +112,6 @@ class Admin_Edit_Content extends Controller {
     // see routies.php -> $route['admin_edit_content/edit_node/:num/submit'] = "admin_edit_content/submit";
     public function submit() {
 
-
         $data = array();
 
         $file_result = null;

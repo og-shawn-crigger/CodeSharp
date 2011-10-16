@@ -14,9 +14,7 @@
 
 <h1>Pinhead CMS - CodeIgnitor Verson</h1>
 
-
 </header><!-- End header -->
-
 
 <div id="content" class="clearfix">
 
@@ -143,34 +141,53 @@ echo $form;
 
 <div id="menu-order-result">
 
+<?php
+
+if (isset($_POST['submitMenu'])) {
+
+    if (isset($success_fail)) {
+
+        echo $success_fail;
+
+    }
+
+}
+
+?>
+
 </div><!-- end menu-order-result -->
 
 <form id="menu-order" name="menuOrder" method="post" action="<?php
 
 echo base_url();
 
-?>index.php/admin_menu/change_menu_order">
+?>index.php/admin_menu/change_menu_order#menu-order-result">
 <fieldset>
 <legend><span>Change the number from 99 to 0. <br>The higher the number the higher it appears in the menu order</span></legend>
 
 <?php
 
+/**
+ *  VALUE FOR ARRAY IN INPUT FORM NOT STICKING AFTER ERROR AND FORM RELOAD
+ */
+
 $a = 1;
 $b = 1;
 
 foreach ($admin_menu_order as $menuItem) {
-    
+
     $menuInput = 'menu[' . $a++ . ']';
-    
+
     $menuFormControl = 'menu' . $b++;
 
     $result = '<label for="' . $menuFormControl . '">' . $menuItem['name'] .
         '</label>';
 
-    $result .= '<input type="text" id="' . $menuFormControl . '" name="' . 'menu[' . $a++ . ']' .
-        '" value="';
+    $result .= '<input type="text" id="' . $menuFormControl . '" name="' . 'menu[' .
+        $a++ . ']' . '" value="';
 
-    $result .= isset($_POST['menu[' . $a++ . ']']) ? $_POST['menu[' . $a++ . ']'] : $menuItem['number'];
+    $result .= isset($_POST['menu[' . $a++ . ']']) ? $_POST['menu[' . $a++ . ']'] :
+        $menuItem['number'];
 
     $result .= '" maxlength="2" />';
 
@@ -182,7 +199,6 @@ foreach ($admin_menu_order as $menuItem) {
 
     echo $result;
 
-
 }
 
 ?>
@@ -190,22 +206,171 @@ foreach ($admin_menu_order as $menuItem) {
 <input name="submitMenu" value="submit" type="submit">
 </fieldset>
 </form>
+<?php
 
+foreach ($display_menu as $menu_page) {
+
+    $id = $menu_page->id;
+
+    // Set variables
+    $submit = 'submit' . $id;
+    $menu_name = 'menuName' . $id;
+    $url = 'menuUrl' . $id;
+    $publish = 'menuPublish' . $id;
+    $orig_name = 'hidden' . '00' . $id;
+    $delete = 'delete' . $id;
+    $finalDelete = 'finalDelete' . $id;
+    $id_item = 'hidden' . $id;
+    $menu_number = 'menuOrder' . $id;
+
+    // Create this block for the form action value
+    echo '<div id="menu-block-result-' . $id . '">';
+
+    if (isset($_POST["submit$id"])) {
+
+        if (isset($success_error)) {
+
+            echo $success_error;
+            
+            echo validation_errors();
+
+        }// 
+
+    }
+
+    echo '</div>';
+
+    $form = '<div id="menu-block-full-' . $id . '" class="full-block">';
+
+    $form .= '<div id="menu-block-result' . $id . '">';
+
+    $form .= '<div class="menuname">';
+
+    $form .= $menu_page->name;
+
+    $form .= '</div>';
+
+    $form .= '<form id="admin-add-menu-';
+
+    $form .= $id;
+
+    $form .= '" ';
+
+    $form .= 'name="adminAddMenu';
+
+    $form .= $id;
+
+    $form .= '" ';
+
+    $form .= 'method="post" action="';
+
+    $form .= base_url() . 'index.php/' . 'admin_menu/update_menu#menu-block-result-' .
+        $id;
+
+    $form .= '">';
+
+    $form .= '<fieldset class="fieldset-hidden">';
+
+    $form .= '<legend id="legend' . $id . '">Edit:' . $menu_page->name . '</legend>';
+
+    // Username form field
+
+    $form .= '<label for="' . $menu_name . '">Edit ' . 'Menu name:' . '</label>';
+
+    $form .= '<input type="text" maxlength="40" name="' . $menu_name . '" id="' . $menu_name .
+        '" value="';
+
+    $form .= isset($_POST[$menu_name]) ? $_POST[$menu_name] : $menu_page->name;
+
+    $form .= '" />';
+
+    // URL
+
+    $form .= '<label for="' . $url . '">Edit ' . 'URL:' . '</label>';
+
+    $form .= '<input type="text" maxlength="40" name="' . $url . '" id="' . $url .
+        '" value="';
+
+    $form .= isset($_POST[$url]) ? $_POST[$url] : $menu_page->url;
+
+    $form .= '" />';
+
+    // Publication settings settings
+
+    $form .= '<input type="radio" name="' . $publish . '" id="publishYes' . $id .
+        '" value="YES" class="admin-top"';
+
+    $form .= $menu_page->visible == 1 || (isset($_POST[$publish]) && $_POST[$publish] ==
+        "YES") ? ' checked="checked" ' : null;
+
+    $form .= '/>';
+
+    $form .= '<label for="publishYes' . $id . '">Make publish</label>';
+
+    $form .= '<input type="radio" name="' . $publish . '" id="publishNo' . $id .
+        '" value="NO" ';
+
+    $form .= $menu_page->visible == 0 || (isset($_POST[$publish]) && $_POST[$publish] ==
+        "NO") ? ' checked="checked" ' : null;
+
+    $form .= '/>';
+
+    $form .= '<label for="publishNo' . $id . '">Don\'t make public</label>';
+
+    // Delete button
+
+    $form .= '<input type="submit" name="delete';
+
+    $form .= $id . '" value="delete" />';
+
+    // Submit button
+
+    $form .= '<input type="submit" name="submit';
+
+    $form .= $id . '" value="submit" />';
+
+    // Hidden buttons
+
+    $form .= '<input type="hidden" name="hidden';
+
+    $form .= $id . '" value="';
+
+    $form .= $id;
+
+    $form .= '" />';
+
+    $form .= '<input type="hidden" name="';
+
+    $form .= $orig_name . '" value="';
+
+    $form .= $menu_page->name;
+
+    $form .= '" />';
+
+    $form .= '</fieldset>';
+
+    $form .= '</form>';
+
+    $form .= '</div>';
+
+    $form .= '</div>';
+
+    echo $form;
+
+
+}
+
+?>
 
 </section>
 <!-- End column one -->
 
 <section  id="column-two">
 
-
 </section><!-- End column two -->
 
 <section id="column-three">
 
-
-
 </section><!-- End column three -->
-
-
 
 </div><!-- End content -->

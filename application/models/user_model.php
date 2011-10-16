@@ -3,7 +3,7 @@
 /**
  * @author Andy Walpole
  * @date 26/9/2011<?php
-?>
+ * ?>
  * 
  */
 
@@ -77,8 +77,8 @@ class User_Model extends Model {
         }
 
     } // end method update_category
-    
-    
+
+
     public function delete_user($id = "") {
 
         $this->db->limit(1);
@@ -88,10 +88,7 @@ class User_Model extends Model {
         return $this->db->delete('user');
 
     }
-    
-    
-  
-    
+
 
 }
 

@@ -44,7 +44,12 @@ body {
 	font : 62.5% Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman", serif;
 	height : 100%;
 	background : #fff!important;
+	
 	line-height : 1.7em;
+}
+pre {
+font-size : 1.6em;
+color : #000!important;
 }
 html {
 	height : 100%;

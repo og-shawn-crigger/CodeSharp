@@ -16,13 +16,28 @@ class Menu_Model extends Model {
         // load model file below in order to gain access to their constants
         $this->load->model('admin_config_model');
         $this->set_menu();
-        
+
+    }
+
+    // Constant notes whether the categories will be included in the user menu
+    public function set_menu() {
+
+        if (CATMENU == 1) {
+
+            $this->cat_menu = true;
+
+        } else {
+
+            $this->cat_menu = false;
+
+        }
+
     }
 
     public function fetch_cat_menu() {
 
         $this->db->select('okay');
-        
+
         $this->db->where('name', "cat_menu");
 
         $query = $this->db->get("admin");
@@ -32,7 +47,7 @@ class Menu_Model extends Model {
     }
 
     public function add_categories_to_menu() {
-        
+
         if ($_POST['categoriesAdd'] == "YES") {
 
             $value = 1;
@@ -52,14 +67,14 @@ class Menu_Model extends Model {
             if ($value == 1) {
 
                 $this->cat_menu = true;
-                
+
                 return true;
 
             } else {
 
 
                 $this->cat_menu = false;
-                
+
                 return false;
 
             }
@@ -67,26 +82,75 @@ class Menu_Model extends Model {
     }
 
 
-    function display_menu() {
+    public function display_menu() {
 
         $query = $this->db->get("menu");
         return $query->result();
 
     }
 
-    // Constant notes whether the categories will be included in the user menu
-    public function set_menu() {   
+    public function display_menu_admin() {
 
-        if (CATMENU == 1) {
+        //SELECT * FROM menu ORDER BY id = 1, name DESC
+        $this->db->order_by("id", "1");
+        $this->db->order_by("name", "desc");
+        $query = $this->db->get("menu");
+        return $query->result();
 
-            $this->cat_menu = true;
+    }
 
-        } else {
 
-            $this->cat_menu = false;
+    public function update_menu_order($form = "") {
 
-        }
-        
+        foreach ($form as $row) {
+
+            if ($row[0] === "C") {
+
+                $sql = "UPDATE category SET number = $row[2] WHERE name = $row[1] LIMIT 1";
+
+                $data = array('number' => $row[2]);
+
+                $this->db->limit(1);
+
+                $this->db->where('name', $row[1]);
+
+                if ($this->db->update('category', $data)) {
+
+                    $update = 1;
+
+                } else {
+
+                    $update = null;
+
+                } // end if database statement
+
+            } else {
+
+                $sql = "UPDATE menu SET number = $row[2] WHERE name = $row[1] LIMIT 1";
+
+                $data = array('number' => $row[2]);
+
+                $this->db->limit(1);
+
+                $this->db->where('name', $row[1]);
+
+                if ($this->db->update('menu', $data)) {
+
+                    $update = 1;
+
+                } else {
+
+                    $update = null;
+
+                } // end if database statement
+
+            } // end if $row[0] === "C"
+
+        } // end foreach loop
+
+
+        return $update;
+
     }
 
 
@@ -114,8 +178,6 @@ class Menu_Model extends Model {
         }
 
     }
-    
-    
 
 
     /**
@@ -140,6 +202,30 @@ class Menu_Model extends Model {
         return $this->db->insert('menu', $data);
 
     }
+
+
+    public function update_menu($name, $url, $visible, $id) {
+
+        if ($visible === "YES") {
+
+            $visible = 1;
+
+        } else {
+
+            $visible = 0;
+
+        }
+
+        $data = array('name' => $name, 'url' => $url, 'visible' => $visible);
+
+        $this->db->limit(1);
+
+        $this->db->where('id', $id);
+
+        return $this->db->update('menu', $data);
+
+    }
+
 
 }
 

@@ -9,12 +9,6 @@
 
 class Author_Model extends Model {
 
-    public function index() {
-
-
-    }
-
-
     public function node_author($id) {
 
         $this->db->where('id', $id);
