@@ -11,7 +11,7 @@
 |	http://example.com/
 |
 */
-$config['base_url']	= "http://localhost/codeigntor1.7/";
+$config['base_url']	= "http://localhost/CodeSharp/";
 
 /*
 |--------------------------------------------------------------------------

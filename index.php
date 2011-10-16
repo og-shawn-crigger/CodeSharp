@@ -1,4 +1,5 @@
 <?php
+
 /*
 |---------------------------------------------------------------
 | PHP ERROR REPORTING LEVEL
@@ -9,7 +10,7 @@
 | For more info visit:  http://www.php.net/error_reporting
 |
 */
-	error_reporting(E_ALL);
+error_reporting(E_ALL);
 
 /*
 |---------------------------------------------------------------
@@ -23,7 +24,7 @@
 | NO TRAILING SLASH!
 |
 */
-	$system_folder = "CI_system";
+$system_folder = "CI_system";
 
 /*
 |---------------------------------------------------------------
@@ -40,7 +41,7 @@
 | NO TRAILING SLASH!
 |
 */
-	$application_folder = "application";
+$application_folder = "application";
 
 /*
 |===============================================================
@@ -60,17 +61,13 @@
 | full server path.
 |
 */
-if (strpos($system_folder, '/') === FALSE)
-{
-	if (function_exists('realpath') AND @realpath(dirname(__FILE__)) !== FALSE)
-	{
-		$system_folder = realpath(dirname(__FILE__)).'/'.$system_folder;
-	}
-}
-else
-{
-	// Swap directory separators to Unix style for consistency
-	$system_folder = str_replace("\\", "/", $system_folder); 
+if (strpos($system_folder, '/') === false) {
+    if (function_exists('realpath') and @realpath(dirname(__file__)) !== false) {
+        $system_folder = realpath(dirname(__file__)) . '/' . $system_folder;
+    }
+} else {
+    // Swap directory separators to Unix style for consistency
+    $system_folder = str_replace("\\", "/", $system_folder);
 }
 
 /*
@@ -86,22 +83,18 @@ else
 |
 */
 define('EXT', '.php');
-define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
-define('FCPATH', str_replace(SELF, '', __FILE__));
-define('BASEPATH', $system_folder.'/');
+define('SELF', pathinfo(__file__, PATHINFO_BASENAME));
+define('FCPATH', str_replace(SELF, '', __file__));
+define('BASEPATH', $system_folder . '/');
 
-if (is_dir($application_folder))
-{
-	define('APPPATH', $application_folder.'/');
-}
-else
-{
-	if ($application_folder == '')
-	{
-		$application_folder = 'application';
-	}
+if (is_dir($application_folder)) {
+    define('APPPATH', $application_folder . '/');
+} else {
+    if ($application_folder == '') {
+        $application_folder = 'application';
+    }
 
-	define('APPPATH', BASEPATH.$application_folder.'/');
+    define('APPPATH', BASEPATH . $application_folder . '/');
 }
 
 /*
@@ -112,7 +105,7 @@ else
 | And away we go...
 |
 */
-require_once BASEPATH.'codeigniter/CodeIgniter'.EXT;
+require_once BASEPATH . 'codeigniter/CodeIgniter' . EXT;
 
 /* End of file index.php */
 /* Location: ./index.php */
