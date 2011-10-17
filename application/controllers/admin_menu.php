@@ -41,6 +41,27 @@ class Admin_Menu extends Controller {
 
     }
 
+    // When a new menu item is created make sure that the menu name is unique
+
+    public function duplicate_menu_name($name) {
+
+        $query = $this->menu_model->display_menu();
+
+        foreach ($query as $row) {
+
+            if ($row->name == $name) {
+
+                $this->form_validation->set_message('duplicate_menu_name',
+                    "The %s field already exists in the database. Please chose a new name");
+
+                return false;
+
+            }
+
+        }
+
+    }
+
 
     private function array_key_change($existing, $newkeys) {
 
@@ -176,7 +197,7 @@ class Admin_Menu extends Controller {
         $data = array();
 
         $this->form_validation->set_rules('nameAdd', 'Name',
-            'trim|required|max_length[40]');
+            'trim|required|max_length[40]|callback_duplicate_menu_name');
 
         $this->form_validation->set_rules('urlAdd', 'URL',
             'trim|required|max_length[100]');
@@ -206,6 +227,19 @@ class Admin_Menu extends Controller {
 
     }
 
+    public function delete_menu() {
+
+        $data = array();
+
+        if ($this->menu_model->delete_menu($this->input->post("delete_this"))) {
+
+            $data['success'] = "<p>You have successfully deleted the menu item</p>";
+
+        }
+
+        $this->add_theme($data);
+
+    }
 
 }
 

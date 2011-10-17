@@ -31,6 +31,17 @@
 
 <?php
 
+if (isset($_POST['deleteFinal'])) {
+
+    if (isset($success)) {
+
+        echo $success;
+
+    }
+
+}
+
+
 if (isset($_POST['submit'])) {
 
     if (isset($error)) {
@@ -59,7 +70,7 @@ $form .= form_fieldset('Add a new menu item');
 $form .= form_label('Name:', 'name-add');
 
 $form .= form_input(array('name' => 'nameAdd', 'id' => 'name-add', 'maxlength' =>
-    '40', 'type' => 'text', 'value' => set_value('nameAdd')));
+    '40', 'type' => 'text', 'value' => isset($_POST['nameAdd']) ? $_POST['nameAdd'] : null));
 
 $form .= form_label('URL:', 'url-add');
 
@@ -168,7 +179,7 @@ echo base_url();
 <?php
 
 /**
- *  VALUE FOR ARRAY IN INPUT FORM NOT STICKING AFTER ERROR AND FORM RELOAD
+ *  VALUE FOR ARRAY IN INPUT FORM NOT STICKING AFTER ERROR AND FORM RELOAD - WHY?!
  */
 
 $a = 1;
@@ -231,14 +242,40 @@ foreach ($display_menu as $menu_page) {
         if (isset($success_error)) {
 
             echo $success_error;
-            
+
             echo validation_errors();
 
-        }// 
+        } //
 
     }
 
+
+    if (isset($_POST[$delete])) {
+
+        $attributesD = array('id' => "delete-menu_item", 'name' => "deleteMenuItem");
+
+        $Dform = form_open_multipart('admin_menu/delete_menu', $attributesD);
+
+        $Dform .= form_fieldset('Are you sure you want to delete this menu item? <br />It will not be possible to undo this action.');
+
+        $Dform .= form_hidden('delete_this', $id);
+
+        $Dform .= form_submit('deleteFinal', 'delete');
+
+        $Dform .= form_fieldset_close();
+
+        $Dform .= form_close();
+
+        echo $Dform;
+
+    }
+
+
     echo '</div>';
+
+    /**
+     * CHANGE THIS FORM TO THE CODEIGNITER HTML HELPER FOR THE SAKE OF CONSISTENCY
+     */
 
     $form = '<div id="menu-block-full-' . $id . '" class="full-block">';
 
@@ -356,7 +393,6 @@ foreach ($display_menu as $menu_page) {
     $form .= '</div>';
 
     echo $form;
-
 
 }
 

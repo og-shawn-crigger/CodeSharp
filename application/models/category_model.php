@@ -71,15 +71,35 @@ class Category_Model extends Model {
 
     }
 
-    public function get_cats() {
+    public function get_cats($value = "") {
+    
+        if ($value === "") {
 
-        $query = $this->db->get("category");
+            $query = $this->db->get("category");
 
-        return $query->result();
+            return $query->result();
+
+        } else {
+            
+            $query = $this->db->query('SELECT name FROM category WHERE name <> "' . $value . '"');
+            
+           return $query->result();
+
+        }
 
     }
 
-    private function update_category($name, $visibility, $id) {
+    public function update_category($name, $visibility, $id) {
+
+        if ($visibility === "YES") {
+
+            $visibility = 1;
+
+        } else {
+
+            $visibility = 0;
+
+        }
 
         $data = array('name' => $name, 'visible' => $visibility);
 
@@ -100,53 +120,7 @@ class Category_Model extends Model {
         return $this->db->delete('category');
 
     }
-    
-    public function update_cat($form) {
 
-        /**
-         *  This takes the form submission the as a $_POST associative array, creates a multidimensional array with array_map and then
-         * uses the list function to take the values and place them into the database update function
-         */
-
-
-        $data = array();
-
-        $submit = '/^submit/';
-
-        $delete = '/^delete/';
-
-        $number = array(1, 2, 3, 4, 5);
-
-        $array_merge = array_map(null, $number, $form);
-
-        foreach ($form as $key => $value) {
-
-            // loop through $_POST keys to see whether the delete or submit button was clicked
-
-            if (preg_match($submit, $key, $matches)) {
-
-                // If the form subit button has been clicked then update the category table
-
-                list($name, $visibility, $sub, $id, $org_name) = $array_merge;
-
-                return $this->category_model->update_category($name[1], ($visibility[1] ===
-                    "YES" ? 1 : 0), $id[1]);
-
-            }
-
-            if (preg_match($delete, $key, $matches)) {
-
-                // If the form submit button has been clicked then delete the entry
-
-                $delete2 = 1;
-
-                return $delete2;
-
-            }
-
-        }
-
-    }
 
 }
 

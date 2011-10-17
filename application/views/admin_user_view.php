@@ -126,15 +126,15 @@ foreach ($query as $user) {
 
     $form = '<div id="user-block-result-' . $user->id . '">';
     
-    if(isset($delete_now) && isset($_POST[$delete])) {
+    if(isset($finalDelete)) {
         
-    $attributesD = array('id' => "", 'name' => "");
+    $attributesD = array('id' => "delete-menu", 'name' => "deleteMenu");
         
     $form .= form_open_multipart('admin_user/delete_user', $attributesD);
     
-    $form .= form_fieldset('Are you sure you want to delete this user? It will not be possible to undo this action.');
+    $form .= form_fieldset('Are you sure you want to delete this menu item? It will not be possible to undo this action.');
     
-    $form .= form_hidden('delete_this', $delete_now);
+    $form .= form_hidden('delete_this', $finalDelete);
 
     $form .= form_submit('deleteFinal', 'delete');
 

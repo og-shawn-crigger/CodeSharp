@@ -27,8 +27,6 @@
 //echo $adCat->get_name();
 
 
-
-
 ?>
 
 <div id="admin-add-content-result">
@@ -38,10 +36,11 @@
 
 <?php
 
-
 if (isset($success)) {
 
     echo $success;
+
+    echo validation_errors();
 
 }
 
@@ -49,33 +48,9 @@ if (isset($error)) {
 
     echo $error;
 
-}
-
-if (isset($form)) {
-
-    $attributes = array('id' => "delete-category", 'name' => "deleteCategory");
-
-    $form = form_open_multipart('admin_category/delete_category', $attributes);
-
-    $form .= form_fieldset('Are you sure you want to delete this category?');
-
-    $form .= form_hidden('id', $this->uri->segment(3));
-
-    $form .= form_submit('delete', 'delete');
-
-    $form .= form_fieldset_close();
-
-    $form .= form_submit('submit', 'submit');
-
-    $form .= form_close();
-
-    $form .= '<p></p><p></p>';
-
-    echo $form;
+    echo validation_errors();
 
 }
-
-echo validation_errors();
 
 ?>
 
@@ -119,12 +94,9 @@ echo $form;
 <div></div>
 <h2>Edit the categories below</h2>
 
-
-
 <?php
 
 foreach ($categories as $category) {
-
 
     $del_id = 'delete' . $category->id;
     $delete = 'deleteButton' . $category->id;
@@ -133,14 +105,44 @@ foreach ($categories as $category) {
     $orig_name = 'hidden' . '00' . $category->id;
     $publish = 'publish' . $category->id;
     $name = 'name' . $category->id;
-    
-    echo '<div id="category-block-result-' . $category->id . '">';
 
-    if (isset($empty)) {
+    echo '<div id="category-block-result-' . $category->id . '" style="clear: both">';
 
-        echo $empty;
+    if (isset($_POST[$cat_id])) {
+
+        if (isset($success_error)) {
+
+            echo $success_error;
+
+            echo validation_errors();
+
+        }
+
+    } // end isset
+
+
+    if (isset($finalDelete)) {
+
+        $attributes = array('id' => "delete-category", 'name' => "deleteCategory");
+
+        $form = form_open_multipart('admin_category/delete_category', $attributes);
+
+        $form .= form_fieldset('Are you sure you want to delete this category?');
+
+        $form .= form_hidden('id', $finalDelete);
+
+        $form .= form_submit('submit', 'delete');
+
+        $form .= form_fieldset_close();
+
+        $form .= form_close();
+
+        //$form .= '<p></p><p></p>';
+
+        echo $form;
 
     }
+
 
     echo '</div>';
 
@@ -159,7 +161,8 @@ foreach ($categories as $category) {
     $attributes = array('id' => "admin-add-category-{$category->id}", 'name' =>
         "adminAddCategory{$category->id}");
 
-    $form = form_open_multipart("admin_category/validate_cat/{$category->id}", $attributes);
+    $form = form_open_multipart("admin_category/validate_cat#category-block-result-$category->id",
+        $attributes);
 
     $fattributes = array('id' => "legend{$category->id}");
 

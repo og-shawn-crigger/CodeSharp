@@ -26,6 +26,8 @@
 
 <h1>Admin index page</h1>
 
+<p><a href="admin_config">Admin configuration</a></p>
+
 <p><a href="admin_content">Add content article</a></p>
 
 <p><a href="admin_edit_content">Edit content articles</a></p>

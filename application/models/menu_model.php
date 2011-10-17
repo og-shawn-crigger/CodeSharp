@@ -91,11 +91,21 @@ class Menu_Model extends Model {
 
     public function display_menu_admin() {
 
-        //SELECT * FROM menu ORDER BY id = 1, name DESC
         $this->db->order_by("id", "1");
         $this->db->order_by("name", "desc");
         $query = $this->db->get("menu");
         return $query->result();
+
+    }
+    
+    
+    public function delete_menu($id = "") {
+
+        $this->db->limit(1);
+
+        $this->db->where('id', $id);
+
+        return $this->db->delete('menu');
 
     }
 

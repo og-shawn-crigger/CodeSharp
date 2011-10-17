@@ -120,9 +120,7 @@ class Admin_Category extends Controller {
 
         $data = array();
 
-        $form = $_POST;
-
-        if ($this->category_model->delete_category($form['id'])) {
+        if ($this->category_model->delete_category($this->input->post("id"))) {
 
             $data['success'] = '<p class="message">You have now deleted the category</p>';
 
@@ -133,26 +131,50 @@ class Admin_Category extends Controller {
     }
 
 
-    private function check_duplicates($form_input) {
+    public function check_duplicates($form_input = "", $orig_form = "") {
 
-        $result = $this->category_model->get_cats();
+        if ($orig_form === "") {
+
+            $result = $this->category_model->get_cats();
+
+        } else {
+
+            $result = $this->category_model->get_cats($orig_form);
+
+        } // end if
+
 
         foreach ($result as $row) {
 
-            if ($row['name'] === $form_input) {
+            if ($row->name == $form_input) {
 
                 $this->form_validation->set_message('check_duplicates',
                     'The %s field already exists. Please pick a unique name');
-                    
+
                 return false;
-
-            } else {
-
-                return true;
 
             }
 
+            // and if
+
+        } // foreach
+
+    }
+
+
+    private function array_key_change($existing, $newkeys) {
+
+        // a really simple check that the arrays are the same size
+        if (count($existing) !== count($newkeys))
+            return false; // or pipe out a useful message, or chuck exception
+
+        $data = array(); // set up a return array
+        $i = 0;
+        foreach ($existing as $k => $v) {
+            $data[$newkeys[$i]] = $v; // build up the new array
+            $i++;
         }
+        return $data; // return it
 
     }
 
@@ -161,34 +183,54 @@ class Admin_Category extends Controller {
 
         $data = array();
 
-        foreach ($_POST as $name => $value) {
+        // the rewrite keys in the correct order
+        $newkeys = array('one', 'two', 'three', 'four', 'five');
 
-            if (empty($_POST[$name])) {
+        // change the associative array of the form results - VALUES
+        $new_form = $this->array_key_change($_POST, $newkeys);
+        
+        //print '<pre>';
+        
+        //var_dump($new_form);
+        
+        //print '</pre>';
 
-                $data['empty'] = "<p>Please make sure all required fields are not empty</p>";
-                break;
+        // change the associative array forms results - KEYS
+        $array_keys = $this->array_key_change(array_keys($_POST), $newkeys);
 
-            } else {
+        if ($new_form['three'] === "submit") {
 
-                if ($this->category_model->update_cat($_POST) === true) {
+            $this->form_validation->set_rules($array_keys['one'], 'category name',
+                'trim|required|max_length[40]|callback_check_duplicates[' . $new_form['five'] .
+                ']');
 
-                    $data['success'] = "<p>Congratulations, you have updated the category</p>";
+            $this->form_validation->set_rules($array_keys['two'], 'published', 'required');
 
-                } else {
+            if ($this->form_validation->run() !== false) {
 
-                    // Offer fullback to ask whether they REALLY want to delete the category item
+                // successful validation
 
-                    $data['form'] = 'Delete form here';
+                if ($this->category_model->update_category($new_form['one'], $new_form['two'], $new_form['four'])) {
+
+                    $data['success_error'] = "<p>You have successfully updated the category</p>";
 
                 }
 
+            } else {
 
-            } // end if
+                // if problems with validation
 
-            break;
+                $data['success_error'] = "<p>There have been problems with the form:</p>";
 
-        } // end foreach
+            }
 
+        }
+
+        if ($new_form['three'] === "delete") {
+
+            $data['finalDelete'] = $new_form['four'];
+
+        }
 
         $this->add_theme($data);
 

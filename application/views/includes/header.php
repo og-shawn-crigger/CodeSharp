@@ -6,11 +6,86 @@
 <!--[if lt IE 9]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
-<title>Pinhead CMS - CodeIgnitor Version</title>
-<link type="text/css" rel="stylesheet" media="all" href="<?php echo base_url(); ?>css/styles.css" />
+<title>
 
+<?php
 
+if (isset($_SERVER['PATH_INFO'])) {
 
+    $page = $_SERVER['PATH_INFO'];
+
+} else {
+
+    $page = "index page";
+
+}
+
+switch ($page) {
+
+    case (preg_match('/^\/content\/node\/\d/', $page) ? true : false):
+        echo $full_node[0]->title . " / " . SITENAME;
+        break;
+
+    case (preg_match('/^\/content\/category\/\d/', $page) ? true : false):
+        echo $category_records[0]->name . " / " . SITENAME;
+        break;
+
+    case "/admin":
+        echo "Administration section " . " / " . SITENAME;
+        break;
+
+    case (preg_match('/^\/admin_config\/*/', $page) ? true : false):
+        echo "Main admin configuration " . " / " . SITENAME;
+        break;
+
+    case (preg_match('/^\/admin_content\/*/', $page) ? true : false):
+        echo "Add a content page " . " / " . SITENAME;
+        break;
+
+    case (preg_match('/^\/admin_edit_content$/', $page) ? true : false):
+        echo "Edit a content page " . " / " . SITENAME;
+        break;
+
+    case (preg_match('/^\/admin_edit_content\/edit_node\/\d/', $page) ? true : false):
+        echo "Edit an individual page " . " / " . SITENAME;
+        break;
+
+    case (preg_match('/^\/admin_category\/*/', $page) ? true : false):
+        echo "Edit categories " . " / " . SITENAME;
+        break;
+
+    case (preg_match('/^\/admin_user\/*/', $page) ? true : false):
+        echo "Add and edit user details " . " / " . SITENAME;
+        break;
+        
+    case (preg_match('/^\/admin_menu\/*/', $page) ? true : false):
+        echo "Add and edit menu details " . " / " . SITENAME;
+        break;
+
+    default:
+        echo SITENAME;
+        break;
+
+}
+
+?>
+
+</title>
+<link type="text/css" rel="stylesheet" media="all" href="<?php
+
+echo base_url();
+
+?>css/styles.css" />
 
 </head>
 <body>
+
+
+
+<?php
+
+
+?>
+
+
+
