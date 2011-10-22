@@ -25,22 +25,15 @@
 
 <?php
 
+if (isset($_POST['submitAdd'])) {
 
-if(isset($_POST['submitAdd'])) {
-    
-if (isset($error)) {
+    if (isset($success_error)) {
 
-    echo $error;
+        echo $success_error;
 
-}
+    }
 
-if (isset($success)) {
-
-    echo $success;
-
-}
-
-echo validation_errors();
+    echo validation_errors();
 
 }
 
@@ -108,7 +101,7 @@ echo $form;
 <?php
 
 foreach ($query as $user) {
-    
+
     $username = 'usernameOne' . $user->id;
     $email = 'emailEditOne' . $user->id;
     $emailTwo = 'emailEditTwo' . $user->id;
@@ -122,69 +115,72 @@ foreach ($query as $user) {
     $finalDelete = 'finalDelete' . $user->id;
     $orig_name = 'hidden' . '00' . $user->id;
     $orig_email = 'hidden' . 'email' . $user->id;
-    
 
-    $form = '<div id="user-block-result-' . $user->id . '">';
-    
-    if(isset($finalDelete)) {
-        
-    $attributesD = array('id' => "delete-menu", 'name' => "deleteMenu");
-        
-    $form .= form_open_multipart('admin_user/delete_user', $attributesD);
-    
-    $form .= form_fieldset('Are you sure you want to delete this menu item? It will not be possible to undo this action.');
-    
-    $form .= form_hidden('delete_this', $finalDelete);
 
-    $form .= form_submit('deleteFinal', 'delete');
+    $form = '<div id="user-block-result-' . $user->id . '" style="clear:both">';
 
-    $form .= form_fieldset_close();
+    if (isset($delete_now) && isset($_POST[$delete])) {
 
-    $form .= form_close();
-    
+        $attributesD = array('id' => "delete-menu", 'name' => "deleteMenu");
+
+        $form .= form_open_multipart('admin_user/delete_user', $attributesD);
+
+        $form .= form_fieldset('Are you sure you want to delete this menu item? It will not be possible to undo this action.');
+
+        $form .= form_hidden('delete_this', $finalDelete);
+
+        $form .= form_submit('deleteFinal', 'delete');
+
+        $form .= form_fieldset_close();
+
+        $form .= form_close();
+
     }
-    
-    
-    
-    $form .= isset($error) && isset($_POST[$submit])? $error: null;
-    
-    $form .= isset($success) && isset($_POST[$submit])? $success: null;
-  
-    $form .= isset($_POST[$submit])? validation_errors(): null;
+
+    $form .= isset($error) && isset($_POST[$submit]) ? $error : null;
+
+    $form .= isset($success) && isset($_POST[$submit]) ? $success : null;
+
+    $form .= isset($_POST[$submit]) ? validation_errors() : null;
 
     $form .= '</div>';
-    
-    $form .= '<div id="user-block-' . $user->id  . '">';
+
+
+    $form .= '<div id="user-block-' . $user->id . '">';
 
     $form .= '<div class="username">' . $user->username . '</div>';
 
     $attributes = array('id' => "admin-add-user-{$user->id}", 'name' =>
         "adminAddUser", 'method' => 'post');
 
-    $form .= form_open_multipart('admin_user/edit_users#user-block-result-' . $user->id, $attributes);
+    $form .= form_open_multipart('admin_user/edit_users#user-block-result-' . $user->
+        id, $attributes);
 
     $form .= form_fieldset('Edit ' . $user->username);
 
     $form .= form_label('Edit ' . $user->username, 'username' . $user->id);
 
     $form .= form_input(array('name' => $username, 'id' => 'username' . $user->id,
-        'maxlength' => '30', 'type' => 'text', 'value' =>  isset($_POST["$username"]) ? $_POST["$username"] : $user->username));
-        
+        'maxlength' => '30', 'type' => 'text', 'value' => isset($_POST["$username"]) ? $_POST["$username"] :
+        $user->username));
+
     $form .= form_label('Email:', 'email-' . $user->id);
 
     $form .= form_input(array('name' => "$email", 'id' => 'email-' . $user->id,
-        'maxlength' => '50', 'type' => 'text', 'value' => isset($_POST["$email"]) ? $_POST["$email"] : $user->email));
-        
+        'maxlength' => '50', 'type' => 'text', 'value' => isset($_POST["$email"]) ? $_POST["$email"] :
+        $user->email));
+
     $form .= form_label('Email again:', 'email-two-' . $user->id);
 
-    $form .= form_input(array('name' => "$emailTwo", 'id' => 'email-two-' . $user->id,
-        'maxlength' => '50', 'type' => 'text', 'value' => isset($_POST["$emailTwo"]) ? $_POST["$emailTwo"] : $user->email));
-        
+    $form .= form_input(array('name' => "$emailTwo", 'id' => 'email-two-' . $user->
+        id, 'maxlength' => '50', 'type' => 'text', 'value' => isset($_POST["$emailTwo"]) ?
+        $_POST["$emailTwo"] : $user->email));
+
     $form .= form_label('Password:', 'password-one-' . $user->id);
 
     $form .= form_input(array('name' => "$passwordOne", 'id' => 'password-one-' . $user->
         id, 'maxlength' => '40', 'type' => 'text', 'value' => set_value("$passwordOne")));
-    
+
     $form .= form_label('Password again:', 'password-two-' . $user->id);
 
     $form .= form_input(array('name' => "$passwordTwo", 'id' => 'password-two-' . $user->
@@ -192,30 +188,30 @@ foreach ($query as $user) {
 
     $form .= form_label('Admin rights:', 'admin-yes-' . $user->id);
 
-    $form .= form_radio(array('name' => "$admin", 'id' => 'admin-yes-' . $user->
-        id, 'value' => 'YES', 'checked' => $user->admin_rights == 1 || (isset($_POST["$admin"]) &&
+    $form .= form_radio(array('name' => "$admin", 'id' => 'admin-yes-' . $user->id,
+        'value' => 'YES', 'checked' => $user->admin_rights == 1 || (isset($_POST["$admin"]) &&
         $_POST["$admin"] == "YES") ? 'checked' : ''));
 
     $form .= form_label('No admin rights', 'admin-yes-' . $user->id);
 
-    $form .= form_radio(array('name' => "$admin", 'id' => 'admin-no-' . $user->
-        id, 'value' => 'NO', 'checked' => $user->admin_rights == 0 || (isset($_POST["$admin"]) &&
+    $form .= form_radio(array('name' => "$admin", 'id' => 'admin-no-' . $user->id,
+        'value' => 'NO', 'checked' => $user->admin_rights == 0 || (isset($_POST["$admin"]) &&
         $_POST["$admin"] == "NO") ? 'checked' : ''));
-        
+
     $form .= form_submit("$delete", 'delete');
-    
+
     $form .= form_submit("$submit", 'submit');
-    
+
     $form .= form_hidden("$id", $user->id);
-    
+
     $form .= form_hidden("$orig_name", $user->username);
-    
+
     $form .= form_hidden("$orig_email", $user->email);
 
     $form .= form_fieldset_close();
 
     $form .= form_close();
-    
+
     $form .= '</div>';
 
     echo $form;

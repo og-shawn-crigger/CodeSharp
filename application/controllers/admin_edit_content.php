@@ -74,13 +74,30 @@ class Admin_Edit_Content extends Controller {
         $this->add_theme($data);
 
     }
+    
+    
 
 
     public function edit_node() {
 
         $data = array();
 
+        if (ctype_digit($this->uri->segment(3))) {
+
+            $node = $this->uri->segment(3);
+
+        } else {
+
+            /**
+             * IF NON DIGIT OR EMPTY A 404 MESSAGE IS THROW
+             */
+
+            get_404();
+
+        }
+
         $this->add_theme($data);
+
 
     }
 
@@ -188,14 +205,29 @@ class Admin_Edit_Content extends Controller {
         }
 
 
-        if ($this->input->post("delete") == "delete") {
+        if ($this->input->post("submit") == "delete") {
 
-            echo "DELETE";
+            $data['delete_content'] = 1;
 
         }
 
+        $this->add_theme($data);
+    }
+
+
+    public function delete_content() {
+
+        $data = array();
+
+        if ($this->content_model->delete_content($this->input->post("delete_this"))) {
+
+            header('Location: ' . base_url() . 'index.php/admin_edit_content/');
+            exit;
+
+        }
 
         $this->add_theme($data);
+
     }
 
 }

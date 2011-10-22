@@ -47,7 +47,7 @@ switch ($page) {
         break;
 
     case (preg_match('/^\/admin_edit_content\/edit_node\/\d/', $page) ? true : false):
-        echo "Edit an individual page " . " / " . SITENAME;
+        echo isset($_POST["title"]) ? $_POST["title"] : $edit[0]->title . " / " . SITENAME;
         break;
 
     case (preg_match('/^\/admin_category\/*/', $page) ? true : false):
@@ -63,7 +63,7 @@ switch ($page) {
         break;
 
     default:
-        echo SITENAME;
+        echo SITENAME . " / " . SLOGAN;
         break;
 
 }

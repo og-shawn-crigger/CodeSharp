@@ -72,7 +72,7 @@ class Category_Model extends Model {
     }
 
     public function get_cats($value = "") {
-    
+
         if ($value === "") {
 
             $query = $this->db->get("category");
@@ -80,10 +80,11 @@ class Category_Model extends Model {
             return $query->result();
 
         } else {
-            
-            $query = $this->db->query('SELECT name FROM category WHERE name <> "' . $value . '"');
-            
-           return $query->result();
+
+            $query = $this->db->query('SELECT name FROM category WHERE name <> "' . $value .
+                '"');
+
+            return $query->result();
 
         }
 

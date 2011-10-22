@@ -24,28 +24,50 @@
 
 <div id="admin-edit-content-result">
 
+
 <?php
 
 if (isset($_POST['submit'])) {
 
-  
-   if (isset($success_error)) {
+
+    if (isset($success_error)) {
 
         echo $success_error;
 
     }
-  
-    
-    if (isset($file_error)){
-        
+
+
+    if (isset($file_error)) {
+
         echo $file_error;
-        
+
     }
 
     echo validation_errors();
 
 }
 
+
+if (isset($_POST['submit']) && isset($delete_content)) {
+
+    $attributesD = array('id' => "delete-node", 'name' => "deleteNode");
+
+    $form = form_open('admin_edit_content/delete_content', $attributesD);
+
+    $form .= form_fieldset('Are you sure you want to delete this content item? <br />
+    It will not be possible to undo this action.');
+
+    $form .= form_hidden('delete_this', $this->uri->segment(3));
+
+    $form .= form_submit('deleteFinal', 'delete');
+
+    $form .= form_fieldset_close();
+
+    $form .= form_close();
+
+    echo $form;
+
+}
 
 if (isset($edit)):
 
@@ -84,6 +106,8 @@ if (isset($edit)):
             ($_POST["body"]) ? $_POST["body"] : $row->body));
 
         $form .= '<p>Current image:</p>';
+        
+        $form .= '<img src="' . base_url() . 'images/thumbnail/' . $row->image_id . '" />';
 
         $form .= form_hidden('orig_name', $row->image_id);
 
@@ -150,7 +174,7 @@ endif;
 
 <?php
 
-if (empty($edit)) {
+if (empty($edit) && isset($nodes_all)) {
 
     echo '<ul>';
 

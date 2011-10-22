@@ -38,6 +38,8 @@
 
 <p><a href="admin_menu">Admin menu</a></p>
 
+<p><a href="login/letmeout">Log-out</a></p>
+
 </div><!-- end admin-add-content-result -->
 
 </section>

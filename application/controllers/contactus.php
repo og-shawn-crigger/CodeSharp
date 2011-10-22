@@ -45,24 +45,6 @@ class ContactUs extends Controller {
             $this->email->to('andy@suburban-glory.com');
 
             $this->email->subject('Email from ... ');
-
-            function strip_form($value) {
-                
-                // Place this function on its own page
-
-                // strips possible uses of form for sending junk mail
-
-                $value = str_replace(array('to:', 'cc:', 'bcc:', 'content-type:',
-                    'mime-version:', 'multipart-mixed:', 'content-transfer-encoding:'), ' ', $value);
-
-                // Users filter to stript nasty tages
-
-                $value = filter_var($value, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
-
-                // Returns sanitised info
-                return $value;
-
-            }
             
             // Build the email message body up below
             // Find if there is a CodeIngitor-friendly way of building up the message

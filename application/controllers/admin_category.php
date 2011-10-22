@@ -162,23 +162,6 @@ class Admin_Category extends Controller {
     }
 
 
-    private function array_key_change($existing, $newkeys) {
-
-        // a really simple check that the arrays are the same size
-        if (count($existing) !== count($newkeys))
-            return false; // or pipe out a useful message, or chuck exception
-
-        $data = array(); // set up a return array
-        $i = 0;
-        foreach ($existing as $k => $v) {
-            $data[$newkeys[$i]] = $v; // build up the new array
-            $i++;
-        }
-        return $data; // return it
-
-    }
-
-
     public function validate_cat() {
 
         $data = array();
@@ -187,16 +170,16 @@ class Admin_Category extends Controller {
         $newkeys = array('one', 'two', 'three', 'four', 'five');
 
         // change the associative array of the form results - VALUES
-        $new_form = $this->array_key_change($_POST, $newkeys);
-        
+        $new_form = array_key_change($_POST, $newkeys);
+
         //print '<pre>';
-        
+
         //var_dump($new_form);
-        
+
         //print '</pre>';
 
         // change the associative array forms results - KEYS
-        $array_keys = $this->array_key_change(array_keys($_POST), $newkeys);
+        $array_keys = array_key_change(array_keys($_POST), $newkeys);
 
         if ($new_form['three'] === "submit") {
 

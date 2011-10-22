@@ -41,7 +41,7 @@ class Admin_User extends Controller {
 
     // When a new user is created make sure that the username is unique
 
-    public function duplicate_username($name) {
+    public function duplicate_username($name = "") {
 
         $query = $this->user_model->find_all_users();
 
@@ -65,7 +65,7 @@ class Admin_User extends Controller {
     }
 
 
-    public function duplicate_email($email) {
+    public function duplicate_email($email = "") {
 
         $query = $this->user_model->find_all_users();
 
@@ -150,7 +150,7 @@ class Admin_User extends Controller {
     }
 
 
-    public function duplicate_username_edit($name, $orig_username = "") {
+    public function duplicate_username_edit($name = "", $orig_username = "") {
 
         $hiddenE = $orig_username;
 
@@ -185,6 +185,7 @@ class Admin_User extends Controller {
         } // end if error statement
 
     }
+
 
 
     // checks to see if the new email chosen in the user edit field hasn't already been used
@@ -225,23 +226,6 @@ class Admin_User extends Controller {
     }
 
 
-    private function array_key_change($existing, $newkeys) {
-
-        // a really simple check that the arrays are the same size
-        if (count($existing) !== count($newkeys))
-            return false; // or pipe out a useful message, or chuck exception
-
-        $data = array(); // set up a return array
-        $i = 0;
-        foreach ($existing as $k => $v) {
-            $data[$newkeys[$i]] = $v; // build up the new array
-            $i++;
-        }
-        return $data; // return it
-
-    }
-
-
     public function edit_users() {
 
         $data = array();
@@ -251,10 +235,10 @@ class Admin_User extends Controller {
             'nine', 'ten');
 
         // change the associative array of the form results - VALUES
-        $new_form = $this->array_key_change($_POST, $newkeys);
+        $new_form = array_key_change($_POST, $newkeys);
 
         // change the associative array forms results - KEYS
-        $array_keys = $this->array_key_change(array_keys($_POST), $newkeys);
+        $array_keys = array_key_change(array_keys($_POST), $newkeys);
 
         if ($new_form['seven'] === "submit") {
 
@@ -288,15 +272,15 @@ class Admin_User extends Controller {
             $this->form_validation->set_rules($array_keys['six'], 'admin rights', 'required');
 
             if ($this->form_validation->run() === false) {
-                
-                $data['error'] = "<p>There have been problems with the form:</p>";
+
+                $data['success_error'] = "<p>There have been problems with the form:</p>";
 
             } else {
 
                 if ($this->user_model->update_user($new_form['one'], $new_form['four'], $new_form['two'],
                     $new_form['six'], $new_form['eight'])) {
 
-                    $data['success'] = "<p>You have successfully submitted the form</p>";
+                    $data['success_error'] = "<p>You have successfully submitted the form</p>";
 
                 }
 
@@ -305,7 +289,7 @@ class Admin_User extends Controller {
         }
 
         if ($new_form['seven'] === "delete") {
-            
+
             $data['delete_now'] = $new_form['eight'];
 
         }
@@ -313,20 +297,20 @@ class Admin_User extends Controller {
         $this->add_theme($data);
 
     }
-    
-    
+
+
     public function delete_user() {
-        
+
         $data = array();
-        
-        if($this->user_model->delete_user($this->input->post("delete_this"))) {
-            
+
+        if ($this->user_model->delete_user($this->input->post("delete_this"))) {
+
             $data['success'] = "<p>You have successfully deleted the user</p>";
-            
+
         }
-        
+
         $this->add_theme($data);
-        
+
     }
 }
 

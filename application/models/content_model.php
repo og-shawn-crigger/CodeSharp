@@ -136,6 +136,17 @@ class Content_Model extends Model {
     }
 
 
+    public function delete_content($id = "") {
+
+        $this->db->limit(1);
+
+        $this->db->where('id', $id);
+
+        return $this->db->delete('content');
+
+    }
+
+
 }
 
 ?>

@@ -170,9 +170,9 @@ if (isset($_POST['submitMenu'])) {
 
 <form id="menu-order" name="menuOrder" method="post" action="<?php
 
-echo base_url();
+echo base_url() . INDEX;
 
-?>index.php/admin_menu/change_menu_order#menu-order-result">
+?>admin_menu/change_menu_order#menu-order-result">
 <fieldset>
 <legend><span>Change the number from 99 to 0. <br>The higher the number the higher it appears in the menu order</span></legend>
 
@@ -301,7 +301,7 @@ foreach ($display_menu as $menu_page) {
 
     $form .= 'method="post" action="';
 
-    $form .= base_url() . 'index.php/' . 'admin_menu/update_menu#menu-block-result-' .
+    $form .= base_url() . INDEX . 'admin_menu/update_menu#menu-block-result-' .
         $id;
 
     $form .= '">';

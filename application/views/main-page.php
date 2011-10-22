@@ -8,6 +8,8 @@
 
 ?>
 
+
+
 <div id="wrapper">
 
 <header class="clearfix">
@@ -19,6 +21,17 @@
 <div id="content" class="clearfix">
 
 <section id="column-one">
+
+
+<?php
+
+/**
+ * THIS IS IMPORTANT
+ * DISPLAYS 404 WHEN NODE OR CATEGORY NUMBER IS NOT SET
+ */
+
+?>
+
 
 <?php
 
@@ -38,7 +51,7 @@ if (isset($records)):
 
 <h2><?php
 
-        echo $rows->title;
+        echo html_special($rows->title);
 
 ?></h2>
 
@@ -55,24 +68,29 @@ if (isset($records)):
 ?></time>
 
 <div class="summary-category">Category: <a href="
-<?php echo base_url() . 'index.php/content/category/' . $rows->category_id;?>
-"><?php
-// the right category name from the node category id number
-// relational database
+<?php
 
-// ouch, this is messy - needs attention
+        echo base_url() . INDEX . 'content/category/' . $rows->category_id;
+
+?>
+"><?php
+
+        // the right category name from the node category id number
+        // relational database
+
+        // ouch, this is messy - needs attention
 
         foreach ($query_result as $result) {
 
             foreach ($result as $row) {
-                
-                if($row->id === $rows->category_id) {
-                    
-                    echo $row->name;
+
+                if ($row->id === $rows->category_id) {
+
+                    echo html_special($row->name);
                     break;
-                    
+
                 }
-                
+
             }
 
         }
@@ -85,13 +103,14 @@ if (isset($records)):
         // Also uses typograhpy class to add HTML to the database text
         // This produces nicely formatted blocks to text
 
-        echo $this->typography->auto_typography(character_limiter($rows->body, 320));
+        echo $this->typography->auto_typography(character_limiter(html_special($rows->
+            body), 320));
 
 ?></div>
 
 <div class="read-more"><a href="<?php
 
-        echo base_url() . 'index.php/content/node/' . $rows->id;
+        echo base_url() . INDEX . 'content/node/' . $rows->id;
 
 ?>">Read more</a></div>
 
@@ -105,9 +124,9 @@ if (isset($records)):
 
 <?php
 
-echo '<div id="pagination">';
-echo $this->pagination->create_links();
-echo '</div>';
+    echo '<div id="pagination">';
+    echo $this->pagination->create_links();
+    echo '</div>';
 
 endif;
 
@@ -116,8 +135,11 @@ endif;
 
 <?php
 
-// This is for the full node
-if (isset($full_node)):
+/**
+ * THIS IS FOR FULL NODE
+ */
+
+if (!empty($full_node)):
 
 ?>
 
@@ -125,7 +147,7 @@ if (isset($full_node)):
 
 <h1><?php
 
-    echo $full_node[0]->title;
+    echo html_special($full_node[0]->title);
 
 ?></h1>
 
@@ -141,53 +163,75 @@ if (isset($full_node)):
 
 <div id="node-author">Author: <?php
 
-    echo $author_name[0]->username;
+    echo html_special($author_name[0]->username);
 
 ?></div>
 
 <div id="node-category">Category: <a href="<?php
 
-    echo base_url() . 'index.php/content/category/' . $full_node[0]->category_id;
+    echo base_url() . INDEX . 'content/category/' . $full_node[0]->category_id;
 
 ?> "><?php
 
-    echo $cat_name[0]->name;
+    echo html_special($cat_name[0]->name);
 
 ?></a></div>
 
-<div id="node-image"><?php
+<div id="node-image">
+
+<img src="<?php
+
+    echo base_url();
+
+?>images/thumbnail/<?php
 
     echo $full_node[0]->image_id;
 
-?></div>
+?>" alt="<?php
+
+    echo $full_node[0]->image_id;
+
+?>" />
+
+</div>
 
 <div id="node-body"><?php
 
-    echo $this->typography->auto_typography($full_node[0]->body);
+    echo $this->typography->auto_typography(html_special($full_node[0]->body));
 
 ?></div></article>
 
 <?php
 
+
+
 endif;
+
+?>
+<?php
 
 ?>
 
 <?php
-//This is for the category pages
-if (!empty($category_records)):
+
+    /**
+     * THIS IS FOR THE CATEGORY PAGE
+     */
+
+
+    if (!empty($category_records)):
 
 ?>
 
 <h1><?php
 
-    echo $category_records[0]->name;
+        echo html_special($category_records[0]->name);
 
 ?></h1>
 
 <?php
 
-    foreach ($category_details as $cat):
+        foreach ($category_details as $cat):
 
 ?>
 
@@ -195,31 +239,32 @@ if (!empty($category_records)):
 
 <h2><?php
 
-        echo $cat->title;
+            echo html_special($cat->title);
 
 ?></h2>
 
 <div class="category-summary-date"><?php
 
-        echo strftime("%B %d, %Y", strtotime($cat->date));
+            echo strftime("%B %d, %Y", strtotime($cat->date));
 
 ?></div>
 
 <div class="category-summary-teaser">
 <?php
 
-        echo $this->typography->auto_typography(character_limiter($cat->body, 320));
+            echo $this->typography->auto_typography(character_limiter(html_special($cat->
+                body), 320));
 
 ?>
 </div>
 
 <div class="read-more"><a href="<?php
 
-        echo base_url();
+            echo base_url() . INDEX;
 
-?>index.php/content/node/<?php
+?>content/node/<?php
 
-        echo $cat->id
+            echo $cat->id
 
 ?>">Read more</a></div>
 
@@ -227,13 +272,15 @@ if (!empty($category_records)):
 
 <?php
 
-    endforeach;
+        endforeach;
 
 ?>
 
 <?php
 
-endif;
+      
+
+        endif;
 
 ?>
 
@@ -246,19 +293,19 @@ endif;
 <ul>
 <?php
 
-foreach ($full_menu as $menu_item):
+            foreach ($full_menu as $menu_item):
 
 ?>
 
 <li><a href=""><?php
 
-    echo $menu_item->name
+                echo html_special($menu_item->name);
 
 ?></a></li>
 
 <?php
 
-endforeach;
+            endforeach;
 
 ?>
 </ul>

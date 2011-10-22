@@ -15,7 +15,7 @@ class Image_Model extends Model {
     public function __construct() {
 
         parent::Model();
-        
+
         // set values for the two attributes and make sure that the file permissions are set to 777
 
         $this->gallery_path = realpath(APPPATH . '../images/uploads');
@@ -39,7 +39,7 @@ class Image_Model extends Model {
 
     }
 
-// create file row for new image
+    // create file row for new image
     private function upload_file_database($file_type = "", $filename = "") {
 
         // date('Y-m-d H:i:s') = MySQL now() function
@@ -56,9 +56,9 @@ class Image_Model extends Model {
     public function upload_image() {
 
         $config = array();
-/**
- * Make sure file is an image, path upload is set and the image is not more than the maz size of 1mb
- */
+        /**
+         * Make sure file is an image, path upload is set and the image is not more than the maz size of 1mb
+         */
         $config = array('allowed_types' => 'jpg|jpeg|png|gif', 'upload_path' => $this->
             gallery_path, 'max_size' => 1000);
 
@@ -82,14 +82,14 @@ class Image_Model extends Model {
     // function to resize image
     private function resize_image($image = "") {
 
-/**
- * Uses GD image library to resize images
- * Need to make sure that uploaded image is bigger than 250px before changing image size
- */
+        /**
+         * Uses GD image library to resize images
+         * Need to make sure that uploaded image is bigger than 250px before changing image size
+         */
 
-        $config = array('image_library' => 'GD', 'maintain_ratio' => true, 'width' =>
-            250, 'height' => 250, 'source_image' => $this->gallery_path . '/' . $image,
-            'new_image' => $this->thumb_path . '/' . $image);
+        $config = array('image_library' => 'GD2', 'maintain_ratio' => true, 'quality' =>
+            '100', 'width' => 250, 'height' => 250, 'source_image' => $this->gallery_path .
+            '/' . $image, 'new_image' => $this->thumb_path . '/' . $image);
 
         $this->load->library('image_lib', $config);
 
@@ -100,7 +100,7 @@ class Image_Model extends Model {
     }
 
 
-// delete image details from image table row
+    // delete image details from image table row
     private function delete_image($image_id) {
 
         // destroy image in user-images folder
@@ -186,7 +186,7 @@ class Image_Model extends Model {
         // from the images folder
 
         if ($image_id !== "") {
-            
+
             $this->delete_image($image_id);
 
         }

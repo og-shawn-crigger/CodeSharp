@@ -8,31 +8,14 @@
 
 class Admin extends Controller {
 
-    function __constructor() {
+    private $is_logged_in;
+
+    function __construct() {
 
         parent::Controller();
+        $this->is_logged_in();
 
     }
-    
-    /*
-
-    function _remap($method) {
-
-        switch ($method) {
-            case 'admin-add':
-                $this->admin_add();
-                break;
-            
-            case 'index':
-                $this->index();
-                break;
-           
-
-        }
-
-    }
-    
-    */
 
     public function index() {
 
@@ -44,6 +27,18 @@ class Admin extends Controller {
 
         $this->load->view("includes/template.php", $data);
 
+
+    }
+
+    public function is_logged_in() {
+
+        $is_logged_in = $this->session->userdata('is_logged_in');
+
+        if (!isset($is_logged_in) || $is_logged_in != true) {
+
+            redirect("login");
+
+        }
 
     }
     

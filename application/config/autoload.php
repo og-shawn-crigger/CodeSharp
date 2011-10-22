@@ -1,4 +1,7 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
 /*
 | -------------------------------------------------------------------
 | AUTO-LOADER
@@ -39,7 +42,8 @@
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database', 'form_validation', 'email', 'typography', 'pagination');
+$autoload['libraries'] = array('database', 'form_validation', 'email',
+    'typography', 'pagination', 'session');
 
 
 /*
@@ -51,7 +55,9 @@ $autoload['libraries'] = array('database', 'form_validation', 'email', 'typograp
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url','html','form','text','date');
+$autoload['helper'] = array('url', 'html', 'form', 'text', 'date',
+    'htmlspecial_helper', 'array_key_change_helper', 'error_helper',
+    'strip_form_helper');
 
 
 /*
@@ -108,8 +114,8 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('content_model','menu_model','category_model','author_model','image_model','user_model','admin_config_model');
-
+$autoload['model'] = array('content_model', 'menu_model', 'category_model',
+    'author_model', 'image_model', 'user_model', 'admin_config_model');
 
 
 /* End of file autoload.php */

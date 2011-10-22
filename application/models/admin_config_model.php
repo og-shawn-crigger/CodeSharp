@@ -18,7 +18,10 @@ class Admin_Config_Model extends Model {
 
         parent::Model();
         $this->add_admin();
+    
     }
+    
+ 
 
 
     /**

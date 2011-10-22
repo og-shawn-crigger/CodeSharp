@@ -46,5 +46,6 @@ defined("SALT") ? null : define("SALT", "7thes%*!%-");
 defined("DBSALT") ? null : define("DBSALT", uniqid());
 
 
+
 /* End of file constants.php */
 /* Location: ./system/application/config/constants.php */

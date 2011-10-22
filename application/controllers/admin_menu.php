@@ -63,22 +63,6 @@ class Admin_Menu extends Controller {
     }
 
 
-    private function array_key_change($existing, $newkeys) {
-
-        // a really simple check that the arrays are the same size
-        if (count($existing) !== count($newkeys))
-            return false; // or pipe out a useful message, or chuck exception
-
-        $data = array(); // set up a return array
-        $i = 0;
-        foreach ($existing as $k => $v) {
-            $data[$newkeys[$i]] = $v; // build up the new array
-            $i++;
-        }
-        return $data; // return it
-
-    }
-
     public function update_menu() {
 
         $data = array();
@@ -90,10 +74,10 @@ class Admin_Menu extends Controller {
             $newkeys = array('one', 'two', 'three', 'four', 'five', 'six');
 
             // change the associative array of the form results - VALUES
-            $new_form = $this->array_key_change($_POST, $newkeys);
+            $new_form = array_key_change($_POST, $newkeys);
 
             // change the associative array forms results - KEYS
-            $array_keys = $this->array_key_change(array_keys($_POST), $newkeys);
+            $array_keys = array_key_change(array_keys($_POST), $newkeys);
 
             $this->form_validation->set_rules($array_keys['one'], 'menu name',
                 'trim|required|max_length[40]');
