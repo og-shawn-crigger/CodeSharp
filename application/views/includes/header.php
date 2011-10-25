@@ -1,3 +1,4 @@
+<?php ob_start(); ?>
 <!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html>
@@ -6,9 +7,7 @@
 <!--[if lt IE 9]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
-<title>
-
-<?php
+<title><?php
 
 if (isset($_SERVER['PATH_INFO'])) {
 
@@ -22,11 +21,11 @@ if (isset($_SERVER['PATH_INFO'])) {
 
 switch ($page) {
 
-    case (preg_match('/^\/content\/node\/\d/', $page) ? true : false):
+    case (preg_match('/^\/article\/.*/', $page) ? true : false):
         echo $full_node[0]->title . " / " . SITENAME;
         break;
 
-    case (preg_match('/^\/content\/category\/\d/', $page) ? true : false):
+    case (preg_match('/^\/category\/.*/', $page) ? true : false):
         echo $category_records[0]->name . " / " . SITENAME;
         break;
 
@@ -68,16 +67,33 @@ switch ($page) {
 
 }
 
-?>
-
-</title>
+?></title>
 <link type="text/css" rel="stylesheet" media="all" href="<?php
 
 echo base_url();
 
 ?>css/styles.css" />
 
-</head>
+<!-- meta description here -->
+<?php
+
+if(isset($full_node)) {
+
+if($full_node[0]->meta_description !== "") {
+    
+    $meta = '<meta name="description" content="';
+    
+    $meta .= $full_node[0]->meta_description;
+    
+    $meta .= '" />';
+    
+    echo $meta;
+    
+}
+
+}
+
+?></head>
 <body>
 
 

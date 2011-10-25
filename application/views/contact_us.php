@@ -39,22 +39,22 @@ $form .= form_fieldset('You can contact us through the form below - * required')
 $form .= form_label('Your name', 'contact-name');
 
 $form .= form_input(array('name' => 'contactName', 'id' => 'contact-name',
-    'maxlength' => '100', 'type' => 'text', 'value' => set_value('contactName')));
+    'maxlength' => '100', 'type' => 'text', 'value' => form_prep(set_value('contactName'))));
 
 $form .= form_label('Your email address', 'contact-email');
 
 $form .= form_input(array('name' => 'contactEmail', 'id' => 'contact-email',
-    'maxlength' => '100', 'type' => 'text', 'value' => set_value('contactEmail')));
+    'maxlength' => '100', 'type' => 'text', 'value' => form_prep(set_value('contactEmail'))));
 
 $form .= form_label("Your phone number", 'contact-number');
 
 $form .= form_input(array('name' => 'contactNumber', 'id' => 'contact-number',
-    'maxlength' => '100', 'type' => 'text', 'value' => set_value('contactNumber')));
+    'maxlength' => '100', 'type' => 'text', 'value' => form_prep(set_value('contactNumber'))));
 
 $form .= form_label('Your message here', 'contact-details');
 
 $form .= form_textarea(array('name' => 'contactDetails', 'id' =>
-    'contact-details', 'value' => set_value('contactDetails')));
+    'contact-details', 'value' => form_prep(set_value('contactDetails'))));
 
 $form .= '<span class="zipcode">';
 

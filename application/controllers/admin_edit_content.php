@@ -14,24 +14,23 @@ class Admin_Edit_Content extends Controller {
 
     }
 
-    /*
-
+/*
     function _remap($method) {
 
-    switch ($method) {
-    case 'admin-add':
-    $this->admin_add();
-    break;
-    
-    case 'index':
-    $this->index();
-    break;
+        switch ($method) {
+            case 'content/node/15':
+                $this->admin_add();
+                break;
+
+            case 'index':
+                $this->index();
+                break;
+
+        }
 
     }
-
-    }
-    
     */
+
 
     // universal to all functions
     private function add_theme($array = "") {
@@ -55,10 +54,10 @@ class Admin_Edit_Content extends Controller {
 
         $data = array();
 
-        $config['base_url'] = base_url() . 'index.php/admin_edit_content/index';
+        $config['base_url'] = base_url() . INDEX . 'admin_edit_content/index';
 
         // place below into its own model
-        $config['total_rows'] = $this->db->get('content')->num_rows();
+        $config['total_rows'] = $this->content_model->find_content_rows($visible = false);
 
         $config['per_page'] = 3;
 
@@ -74,8 +73,6 @@ class Admin_Edit_Content extends Controller {
         $this->add_theme($data);
 
     }
-    
-    
 
 
     public function edit_node() {
@@ -221,7 +218,7 @@ class Admin_Edit_Content extends Controller {
 
         if ($this->content_model->delete_content($this->input->post("delete_this"))) {
 
-            header('Location: ' . base_url() . 'index.php/admin_edit_content/');
+            header('Location: ' . base_url() . INDEX . 'admin_edit_content/');
             exit;
 
         }

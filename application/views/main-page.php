@@ -6,11 +6,7 @@
  * 
  */
 
-?>
-
-
-
-<div id="wrapper">
+?><div id="wrapper">
 
 <header class="clearfix">
 
@@ -21,17 +17,6 @@
 <div id="content" class="clearfix">
 
 <section id="column-one">
-
-
-<?php
-
-/**
- * THIS IS IMPORTANT
- * DISPLAYS 404 WHEN NODE OR CATEGORY NUMBER IS NOT SET
- */
-
-?>
-
 
 <?php
 
@@ -68,34 +53,35 @@ if (isset($records)):
 ?></time>
 
 <div class="summary-category">Category: <a href="
+
 <?php
 
-        echo base_url() . INDEX . 'content/category/' . $rows->category_id;
+        echo base_url() . INDEX . 'category/';
 
 ?>
-"><?php
-
-        // the right category name from the node category id number
-        // relational database
-
-        // ouch, this is messy - needs attention
+<?php
 
         foreach ($query_result as $result) {
 
-            foreach ($result as $row) {
+            if ($result->id === $rows->category_id) {
 
-                if ($row->id === $rows->category_id) {
-
-                    echo html_special($row->name);
-                    break;
-
-                }
+                $cat_title = html_special($result->name);
+                echo url_title(strtolower($cat_title));
+                break;
 
             }
 
         }
 
-?></a></div>
+?>
+
+">
+<?php
+
+        echo $cat_title;
+
+?>
+</a></div>
 
 <div class="summary-teaser"><?php
 
@@ -103,14 +89,14 @@ if (isset($records)):
         // Also uses typograhpy class to add HTML to the database text
         // This produces nicely formatted blocks to text
 
-        echo $this->typography->auto_typography(character_limiter(html_special($rows->
+        echo $this->typography->auto_typography(character_limiter(utf8_special($rows->
             body), 320));
 
 ?></div>
 
 <div class="read-more"><a href="<?php
 
-        echo base_url() . INDEX . 'content/node/' . $rows->id;
+        echo base_url() . INDEX . 'article/' . url_title(strtolower($rows->title));
 
 ?>">Read more</a></div>
 
@@ -169,7 +155,17 @@ if (!empty($full_node)):
 
 <div id="node-category">Category: <a href="<?php
 
-    echo base_url() . INDEX . 'content/category/' . $full_node[0]->category_id;
+    echo base_url() . INDEX . 'category/';
+
+    foreach ($query_result as $cat) {
+
+        if ($cat->id == $full_node[0]->category_id) {
+
+            echo url_title(strtolower($cat->name));
+
+        }
+
+    }
 
 ?> "><?php
 
@@ -197,13 +193,11 @@ if (!empty($full_node)):
 
 <div id="node-body"><?php
 
-    echo $this->typography->auto_typography(html_special($full_node[0]->body));
+    echo $this->typography->auto_typography(utf8_special($full_node[0]->body));
 
 ?></div></article>
 
 <?php
-
-
 
 endif;
 
@@ -214,24 +208,24 @@ endif;
 
 <?php
 
-    /**
-     * THIS IS FOR THE CATEGORY PAGE
-     */
+/**
+ * THIS IS FOR THE CATEGORY PAGE
+ */
 
 
-    if (!empty($category_records)):
+if (!empty($category_records)):
 
 ?>
 
 <h1><?php
 
-        echo html_special($category_records[0]->name);
+    echo html_special($category_records[0]->name);
 
 ?></h1>
 
 <?php
 
-        foreach ($category_details as $cat):
+    foreach ($category_details as $cat):
 
 ?>
 
@@ -239,32 +233,32 @@ endif;
 
 <h2><?php
 
-            echo html_special($cat->title);
+        echo html_special($cat->title);
 
 ?></h2>
 
 <div class="category-summary-date"><?php
 
-            echo strftime("%B %d, %Y", strtotime($cat->date));
+        echo strftime("%B %d, %Y", strtotime($cat->date));
 
 ?></div>
 
 <div class="category-summary-teaser">
 <?php
 
-            echo $this->typography->auto_typography(character_limiter(html_special($cat->
-                body), 320));
+        echo $this->typography->auto_typography(character_limiter(utf8_special($cat->
+            body), 320));
 
 ?>
 </div>
 
 <div class="read-more"><a href="<?php
 
-            echo base_url() . INDEX;
+        echo base_url() . INDEX;
 
-?>content/node/<?php
+?>article/<?php
 
-            echo $cat->id
+        echo url_title(strtolower($cat->title));
 
 ?>">Read more</a></div>
 
@@ -272,15 +266,13 @@ endif;
 
 <?php
 
-        endforeach;
+    endforeach;
 
 ?>
 
 <?php
 
-      
-
-        endif;
+endif;
 
 ?>
 
@@ -289,23 +281,32 @@ endif;
 
 <section id="column-two">
 
+
+<?php
+
+/**
+ * BELOW IS FOR DISPLAYING THE MENU
+ */
+
+?>
+
 <menu>
 <ul>
 <?php
 
-            foreach ($full_menu as $menu_item):
+foreach ($full_menu as $menu_item):
 
 ?>
 
 <li><a href=""><?php
 
-                echo html_special($menu_item->name);
+    echo html_special($menu_item->name);
 
 ?></a></li>
 
 <?php
 
-            endforeach;
+endforeach;
 
 ?>
 </ul>

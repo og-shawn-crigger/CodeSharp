@@ -56,7 +56,7 @@ $form .= form_fieldset('Add content');
 $form .= form_label('Title', 'title');
 
 $form .= form_input(array('name' => 'title', 'id' => 'title', 'maxlength' =>
-    '100', 'type' => 'text', 'value' => set_value('title')));
+    '100', 'type' => 'text', 'value' => form_prep(set_value('title'))));
 
 $form .= form_label('Please pick a category', 'category');
 
@@ -66,12 +66,12 @@ $form .= form_dropdown('select', $full_cats, '0', 'id="category"');
 $form .= form_label('Add content', 'body');
 
 $form .= form_textarea(array('name' => 'body', 'id' => 'body', 'value' =>
-    set_value('body')));
+    form_prep(set_value('body'))));
 
 $form .= form_label('Meta description', 'meta-description');
 
 $form .= form_textarea(array('name' => 'metaDescription', 'id' =>
-    'meta-description', 'value' => set_value('metaDescription'), 'maxlength' =>
+    'meta-description', 'value' => form_prep(set_value('metaDescription')), 'maxlength' =>
     '255'));
 
 $form .= form_fieldset_close();

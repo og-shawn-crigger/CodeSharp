@@ -24,6 +24,18 @@ class Content_Model extends Model {
         return $query->result();
 
     }
+    
+    public function find_content_rows($visible = TRUE) {
+        
+        if($visible === TRUE) {
+        
+        $this->db->where('visible', 1);
+        
+        }
+        
+        return $this->db->get('content')->num_rows();
+        
+    }
 
     // get node content based on its id value
     public function get_node_content($value) {

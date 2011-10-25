@@ -57,7 +57,7 @@ $autoload['libraries'] = array('database', 'form_validation', 'email',
 
 $autoload['helper'] = array('url', 'html', 'form', 'text', 'date',
     'htmlspecial_helper', 'array_key_change_helper', 'error_helper',
-    'strip_form_helper');
+    'strip_form_helper', 'utf8special_helper');
 
 
 /*

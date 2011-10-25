@@ -6,12 +6,6 @@
  * 
  */
 
-
-/**
- * THIS PAGE NEED REFACTORING
- */
-
-
 class Content extends Controller {
 
     function __constructor() {
@@ -21,35 +15,13 @@ class Content extends Controller {
     }
 
 
-    function index() {
+    private function add_theme($array) {
 
-        $config['base_url'] = base_url() . 'index.php/admin_edit_content/index';
+        $data = $array;
 
-        $config['total_rows'] = $this->db->get('content')->num_rows();
+        $data['categories'] = $this->category_model->get_cats();
 
-        $config['per_page'] = 3;
-
-        $config['num_links'] = 10;
-
-        $this->pagination->initialize($config);
-
-        $data = array();
-
-        // PLACE THE MENU IN ITS OWN CLASS
-
-        $data['full_menu'] = $this->menu_model->display_menu();
-
-        if ($this->uri->segment(1) === "content" || !$this->uri->segment(0)) {
-
-            $data['records'] = $this->content_model->get_all_content($config['per_page'], $this->
-                uri->segment(3));
-
-            //This array is needed in order to find the category name when
-            // the nodes are summarised
-
-            $data['query_result'][] = $this->category_model->get_cat_title();
-
-        }
+        $data['query_result'] = $this->category_model->get_cat_title();
 
         $data['content'] = "main-page";
 
@@ -58,18 +30,64 @@ class Content extends Controller {
     }
 
 
-    public function node($id = "") {
+    function index() {
+        
+        /**
+         * Below is the pagination for the index page / articles
+         */
+
+        $config['base_url'] = base_url() . INDEX . 'content/index/';
+
+        $config['total_rows'] = $this->content_model->find_content_rows($visible = true);
+
+        $config['per_page'] = 3;
+
+        $config['num_links'] = 2;
+        
+        $config['uri_segment'] = 3;
+
+        $this->pagination->initialize($config);
 
         $data = array();
 
-        if (ctype_digit($this->uri->segment(3))) {
+        $data['full_menu'] = $this->menu_model->display_menu();
 
-            $node = $this->uri->segment(3);
+        $data['records'] = $this->content_model->get_all_content($config['per_page'], $this->
+            uri->segment(3));
 
-        } else {
+        $this->add_theme($data);
+        
+    }
+
+
+    public function article() {
+
+        $data = array();
+
+        $error = null;
+
+        /**
+         * Loop through content rows to see if item exists and if so
+         * set $node to the id of the row
+         */
+
+        foreach ($this->content_model->get_all_content() as $result) {
+
+            if (url_title(strtolower($result->title)) == $this->uri->segment(2)) {
+
+                $node = $result->id;
+                $error = 1;
+                break;
+
+            }
+
+        }
+
+        if (is_null($error)) {
 
             /**
-             * IF NON DIGIT OR EMPTY A 404 MESSAGE IS THROWN
+             * If segment title is not in the database then that means that the item does not exist
+             * If so then throw a 404 message
              */
 
             get_404();
@@ -80,7 +98,7 @@ class Content extends Controller {
 
         $data['full_menu'] = $this->menu_model->display_menu();
 
-        if ($this->uri->segment(2) === "node") {
+        if ($this->uri->segment(1) === "article") {
 
             $data['full_node'] = $this->content_model->get_node_content($node);
 
@@ -94,14 +112,16 @@ class Content extends Controller {
                 $data['cat_name'] = $this->category_model->get_categories_by_id($data['full_node'][0]->
                     category_id);
 
+            } else {
+
+                get_404();
+
             }
 
 
         } // end $this->uri->segment(2) === "node"
 
-        $data['content'] = "main-page";
-
-        $this->load->view("includes/template.php", $data);
+        $this->add_theme($data);
 
     } //
 
@@ -110,26 +130,39 @@ class Content extends Controller {
 
         $data = array();
 
-        if (ctype_digit($this->uri->segment(3))) {
+        $error = null;
 
-            $category = $this->uri->segment(3);
+        /**
+         * Loop through category rows to see if item exists and if so
+         * set $node to the id of the row
+         */
 
-        } else {
+        foreach ($this->category_model->get_cats() as $result) {
+
+            if (url_title(strtolower($result->name)) == $this->uri->segment(2)) {
+
+                $category = $result->id;
+                $error = 1;
+                break;
+
+            }
+
+        }
+
+        if (is_null($error)) {
 
             /**
-             * IF NON DIGIT OR EMPTY A 404 MESSAGE IS THROWN
+             * If segment title is not in the database then that means that the item does not exist
+             * If so then throw a 404 message
              */
 
             get_404();
 
         }
 
-        // Place the menu data in its own class
-
         $data['full_menu'] = $this->menu_model->display_menu();
 
-
-        if ($this->uri->segment(2) === "category" && $this->uri->segment(3) !== "") {
+        if ($this->uri->segment(1) === "category" && $this->uri->segment(2) !== "") {
 
             $data['category_records'] = $this->category_model->get_categories_by_id($category);
 
@@ -137,9 +170,7 @@ class Content extends Controller {
 
         }
 
-        $data['content'] = "main-page";
-
-        $this->load->view("includes/template.php", $data);
+        $this->add_theme($data);
 
     }
 

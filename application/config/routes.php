@@ -38,9 +38,20 @@
 | enabled in the controller in which you intend to use it.   The reserved 
 | routes must come before any wildcard or regular expression routes.
 |
+
 */
 
+// Makes sure that when edit article form is sumitted then the right method is called
 $route['admin_edit_content/edit_node/:num/submit'] = "admin_edit_content/submit";
+
+//rewrites uri for the article pages
+$route['article/(:any)'] = "content/article/$1";
+
+//rewrites uri for the category pages
+$route['category/(:any)'] = "content/category/$1";
+
+//rewrites uri for the pagination
+$route['index/(:any)'] = "content/index/$1";
 
 $route['default_controller'] = "content";
 $route['scaffolding_trigger'] = "";
