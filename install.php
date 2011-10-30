@@ -188,11 +188,9 @@ if (isset($_POST['submit'])) {
 
                 // Finally destroy all install files
 
-                //unlink('insert.sql');
-                //unlink('install.php');
-                //header('Location: http://' . $_SERVER['SERVER_NAME']);
-
-                echo "YES";
+                unlink('insert.sql');
+                unlink('install.php');
+                header('Location: http://' . $_SERVER['SERVER_NAME']);
                 exit;
 
             } else {
