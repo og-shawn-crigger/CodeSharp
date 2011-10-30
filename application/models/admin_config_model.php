@@ -20,9 +20,6 @@ class Admin_Config_Model extends Model {
         $this->add_admin();
     
     }
-    
- 
-
 
     /**
      * Look at placing the individual update database queries into one giant sql query
@@ -103,7 +100,7 @@ class Admin_Config_Model extends Model {
 
     }
 
-    public function admin_list() {
+    private function admin_list() {
 
         $query = $this->db->get("admin");
 

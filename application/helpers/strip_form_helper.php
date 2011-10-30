@@ -18,8 +18,9 @@ if (!function_exists('strip_form')) {
 
         // strips possible uses of form for sending junk mail
 
-        $value = str_replace(array('to:', 'cc:', 'bcc:', 'content-type:',
-            'mime-version:', 'multipart-mixed:', 'content-transfer-encoding:'), ' ', $value);
+        $value = str_replace(array("\r", "\n", "%0a", "%0d", "Content-Type:", "bcc:",
+            "to:", "cc:", 'mime-version:', 'multipart-mixed:', 'content-transfer-encoding:'),
+            ' ', $value);
 
         // Users filter to stript nasty tages
 

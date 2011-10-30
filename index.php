@@ -105,7 +105,25 @@ if (is_dir($application_folder)) {
 | And away we go...
 |
 */
+
 require_once BASEPATH . 'codeigniter/CodeIgniter' . EXT;
+
+/*
+
+if (!file_exists("install.php")) {
+
+    require_once BASEPATH . 'codeigniter/CodeIgniter' . EXT;
+
+} else {
+    
+    echo '<a href="install.php">Please fun the install file first</a>';
+    
+}
+
+*/
+
+
+
 
 /* End of file index.php */
 /* Location: ./index.php */

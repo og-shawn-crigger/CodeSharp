@@ -91,6 +91,22 @@ if($full_node[0]->meta_description !== "") {
     
 }
 
+/**
+ * NEED TO SORT OUT KEYWORDS BOX IN ADD AND EDIT NODE
+ */
+
+if($full_node[0]->meta_keywords !== "") {
+    
+    $meta = '<meta name="keywords" content="';
+    
+    $meta .= $full_node[0]->meta_keywords;
+    
+    $meta .= '" />';
+    
+    echo $meta;
+    
+}
+
 }
 
 ?></head>

@@ -180,7 +180,6 @@ class Login extends Controller {
     
     
     
-    
 
 
 //http://localhost/CodeSharp/new_password/login/561451/1
