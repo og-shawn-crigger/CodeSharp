@@ -193,9 +193,17 @@ if (is_dir($application_folder)) {
 * And away we go...
 *
 */
-require_once BASEPATH . 'core/CodeIgniter.php';
+if (!file_exists("install.php")) {
 
+    require_once BASEPATH . 'codeigniter/CodeIgniter' . EXT;
 
+} else {
+    
+    echo '<a href="install.php">Please fun the install file first</a>';
+    
+}
+
+//require_once BASEPATH . 'codeigniter/CodeIgniter' . EXT;
 
 
 
