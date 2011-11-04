@@ -27,21 +27,25 @@
 
 <?php
 
-if (isset($success_fail)) {
+if (isset($_POST['submit'])) {
 
-    echo $success_fail;
+    if (isset($success_fail)) {
+
+        echo $success_fail;
+
+    }
+
+
+    if (isset($file_error)) {
+
+        echo $file_error;
+
+    }
+
+    echo validation_errors();
 
 }
 
-
-
-if (isset($file_error)) {
-
-    echo $file_error;
-
-}
-
-echo validation_errors();
 
 $attributes = array('id' => "admin-add-content", 'name' => "adminAddContent");
 
@@ -129,10 +133,6 @@ echo $form;
 
 <section id="column-three">
 
-
-
 </section><!-- End column three -->
-
-
 
 </div><!-- End content -->

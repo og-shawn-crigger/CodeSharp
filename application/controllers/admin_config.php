@@ -18,7 +18,6 @@ class Admin_Config extends CI_Controller {
     }
 
 
-
     function _remap($method) {
 
         switch ($method) {
@@ -26,7 +25,7 @@ class Admin_Config extends CI_Controller {
                 $this->submit_form();
                 break;
 
-            case 'index':
+            default:
                 $this->index();
                 break;
 
@@ -72,8 +71,8 @@ class Admin_Config extends CI_Controller {
         if ($this->form_validation->run() === false) {
 
             $data['error_success'] = "<p>There are problems with your form submission:</p>";
-            
-           
+
+
         } else {
 
             $this->admin_config_model->update_admin($_POST);
@@ -81,8 +80,8 @@ class Admin_Config extends CI_Controller {
             $data['error_success'] = "<p>You have successfully updated the database.</p>";
 
         }
-        
-        
+
+
         $this->add_theme($data);
 
     }

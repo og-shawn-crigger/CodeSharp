@@ -361,8 +361,17 @@ $config['proxy_ips'] = '';
  * Reuired for image manipulation with the Imagine image script
  */
 
-require_once 'phar://application/third_party/imagine.phar';
+//require_once 'phar://application/third_party/imagine.phar';
 
-
+// Needed for Imagine image manipulation classes
+set_include_path('Imagine' . PATH_SEPARATOR . get_include_path());
+function imagineLoader($class) {
+    $path = $class;
+    $path = str_replace('\\', DIRECTORY_SEPARATOR, $path) . '.php';
+    if (file_exists($path)) {
+        include $path;
+    }
+}
+spl_autoload_register('\imagineLoader');
 /* End of file config.php */
 /* Location: ./application/config/config.php */

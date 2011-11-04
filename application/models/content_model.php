@@ -144,6 +144,8 @@ class Content_Model extends CI_Model {
         $this->db->where('id', $id);
 
         return $this->db->update('content', $data);
+        
+        
 
     }
 

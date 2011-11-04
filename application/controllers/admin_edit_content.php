@@ -31,7 +31,7 @@ class Admin_Edit_Content extends CI_Controller {
                 $this->submit();
                 break;
 
-            case 'index':
+            default:
                 $this->index();
                 break;
 
@@ -45,7 +45,11 @@ class Admin_Edit_Content extends CI_Controller {
 
         $data = $array;
 
-        $data['edit'] = $this->content_model->get_content_by_id($this->uri->segment(3));
+        if ($this->uri->segment(2) != "index") { // <- this is necessary to prevent a odd clash with pagination
+
+            $data['edit'] = $this->content_model->get_content_by_id($this->uri->segment(3));
+
+        }
 
         $data['full_users'] = $this->author_model->get_users_title_mutli();
 
@@ -62,14 +66,14 @@ class Admin_Edit_Content extends CI_Controller {
 
         $data = array();
 
-        $config['base_url'] = base_url() . INDEX . 'admin_edit_content/index';
+        $config['base_url'] = base_url() . INDEX . 'admin-edit-content/index';
 
         // place below into its own model
         $config['total_rows'] = $this->content_model->find_content_rows($visible = false);
 
-        $config['per_page'] = 3;
+        $config['per_page'] = 5;
 
-        $config['num_links'] = 10;
+        $config['num_links'] = 3;
 
         $this->pagination->initialize($config);
 
@@ -184,11 +188,9 @@ class Admin_Edit_Content extends CI_Controller {
 
                     $image_result = $this->image_model->update_image($this->input->post("orig_image"));
 
-
                 } else {
 
                     $image_result = $this->input->post("orig_name");
-
 
                 }
 
@@ -201,7 +203,7 @@ class Admin_Edit_Content extends CI_Controller {
                     input->post('date'), $this->input->post('body'), $this->input->post('publish'),
                     $this->input->post('metaDescription'), $meta_keywords, $this->uri->segment(3))) {
 
-                    $data['success'] = '<p>You have successfully edited the content item</p>';
+                    $data['success_error'] = '<p>You have successfully edited the content item</p>';
 
                 }
 
@@ -226,7 +228,7 @@ class Admin_Edit_Content extends CI_Controller {
 
         if ($this->content_model->delete_content($this->input->post("delete_this"))) {
 
-            header('Location: ' . base_url() . INDEX . 'admin_edit_content/');
+            header('Location: ' . base_url() . INDEX . 'admin-edit-content/');
             exit;
 
         }

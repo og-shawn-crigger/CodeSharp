@@ -42,7 +42,7 @@ if (!defined('BASEPATH'))
 */
 
 // Makes sure that when edit article form is sumitted then the right method is called
-$route['admin_edit_content/edit_node/:num/submit'] = "admin_edit_content/submit";
+$route['admin-edit-content/edit-node/:num/submit'] = "admin_edit_content/submit";
 
 //rewrites uri for the article pages
 $route['article/(:any)'] = "content/article/$1";
@@ -77,6 +77,10 @@ $route['admin-edit-content'] = "admin_edit_content";
 //Admin_Edit_Content
 $route['admin-edit-content/(:any)'] = "admin_edit_content/$1";
 
+//Admin_Edit_Content
+$route['admin-edit-content/index/(:any)'] = "admin_edit_content/index/$1";
+
+
 //Admin_Menu
 $route['admin-menu'] = "admin_menu";
 
@@ -88,6 +92,8 @@ $route['admin-user'] = "admin_user";
 
 //Admin_User
 $route['admin-user/(:any)'] = "admin_user/$1";
+
+
 
 
 $route['default_controller'] = "content";

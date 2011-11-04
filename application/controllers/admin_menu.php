@@ -43,7 +43,7 @@ class Admin_Menu extends CI_Controller {
                 $this->menu_add();
                 break;
 
-            case 'index':
+            default:
                 $this->index();
                 break;
 

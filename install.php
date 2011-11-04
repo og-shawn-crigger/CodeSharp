@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
 
     foreach ($input as $result) {
 
-        if (empty($_POST[$result])){
+        if (empty($_POST[$result])) {
 
             $error[] = "Please make sure that no fields in the form are empty";
             break;
@@ -140,7 +140,7 @@ if (isset($_POST['submit'])) {
 
             $query_two = "INSERT INTO `menu` (`id`, `menu_id`, `number`, `name`, `url`, `date`, `visible`) VALUES
 (1, 'M', 10, 'Home', '/', now(), 1),
-(2, 'M', 3, 'Admin Home', 'index.php/admin', now(), 1)";
+(2, 'M', 3, 'Admin Home', 'admin', now(), 1)";
 
             $unique = uniqid();
 
@@ -186,6 +186,12 @@ if (isset($_POST['submit'])) {
             if ($insert_result > 5) {
 
                 // create image folders
+
+                if (!is_dir("images")) {
+
+                    mkdir("images");
+
+                }
 
                 if (!is_dir("images/thumbnail")) {
 

@@ -20,19 +20,11 @@ class Admin_Content extends CI_Controller {
 
         switch ($method) {
 
-            case 'form-success':
-                $this->form_success();
-                break;
-
-            case 'form-failure':
-                $this->form_failure();
-                break;
-
             case 'admin-add-content':
                 $this->admin_add_content();
                 break;
 
-            case 'index':
+            default:
                 $this->index();
                 break;
 
@@ -63,29 +55,19 @@ class Admin_Content extends CI_Controller {
 
     }
 
-    function form_success($array) {
+    private function form_success() {
 
-        $data = array();
-
-        $data = $array;
-
-        $data['success-fail'] = "<p>You have successfully created a new article!</p>";
-
-        $this->add_theme($data);
+        return "<p>You have successfully created a new article!</p>";
 
     }
 
-    function form_failure($array) {
 
-        $data = array();
+    private function form_failure() {
 
-        $data = $array;
-
-        $data['success_fail'] = "<p>Unforunately there have been some errors:</p>";
-
-        $this->add_theme($data);
+        return "<p>Unforunately there have been some errors:</p>";
 
     }
+
 
     public function admin_add_content() {
 
@@ -106,7 +88,7 @@ class Admin_Content extends CI_Controller {
                 'trim|max_length[255]');
 
         }
-        
+
         if ($this->input->post('metaKeywords')) {
 
             $this->form_validation->set_rules('metaKeywords', 'Meta Keywords',
@@ -142,11 +124,11 @@ class Admin_Content extends CI_Controller {
 
                 if (isset($data['file_error'])) {
 
-                    $this->form_failure($data);
+                    $data['success_fail'] = $this->form_failure();
 
                 } else {
 
-                    $this->form_success($data);
+                    $data['success_fail'] = $this->form_success();
                     // ultimate success here
 
                     $target_file = $this->image_model->update_image();
@@ -162,7 +144,7 @@ class Admin_Content extends CI_Controller {
 
             } else {
 
-                $this->form_success($data);
+                $data['success_fail'] = $this->form_success();
                 // ultimate success here
 
                 $target_file = $this->image_model->update_image();
@@ -174,14 +156,15 @@ class Admin_Content extends CI_Controller {
                     $target_file, $this->input->post('title'), $this->input->post('body'), $this->
                     input->post('metaDescription'), $this->input->post('metaKeywords'), $visibility);
 
-
             }
 
         } else {
 
-            $this->form_failure($data);
+            $data['success_fail'] = $this->form_failure();
 
         }
+
+        $this->add_theme($data);
 
     }
 

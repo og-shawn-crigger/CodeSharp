@@ -28,24 +28,24 @@ class Admin_Category extends CI_Controller {
             case 'form-failure':
                 $this->form_failure();
                 break;
-                
+
             case 'add-category':
                 $this->add_category();
                 break;
-                
+
             case 'delete-category':
                 $this->delete_category();
                 break;
-                
+
             case 'check-duplicates':
                 $this->check_duplicates();
                 break;
-                
+
             case 'validate-cat':
                 $this->validate_cat();
-                break; 
+                break;
 
-            case 'index':
+            default:
                 $this->index();
                 break;
 

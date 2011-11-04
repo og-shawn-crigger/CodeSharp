@@ -95,130 +95,112 @@ class Image_Model extends CI_Model {
             try {
                 $imagine = new Imagine\Gd\Imagine();
 
-                $imagine->open('images/uploads/' . $image)
-                ->thumbnail(new Imagine\Image\Box(250, 250))
-                ->save('images/thumbnail/' . $image);
+                $imagine->open('images/uploads/' . $image)->thumbnail(new Imagine\Image\Box(250,
+                    250))->save('images/thumbnail/' . $image);
             }
             catch (Imagine\exception \exception $e) {
                 // handle the exception
-                
-                echo $e;
-  
-            }
 
-
-          
-        }
-
-
-        /*
-
-        $config = array('image_library' => 'GD2', 'maintain_ratio' => true, 'quality' =>
-        '100', 'width' => 250, 'height' => 250, 'source_image' => $this->gallery_path .
-        '/' . $image, 'new_image' => $this->thumb_path . '/' . $image);
-
-        $this->load->library('image_lib', $config);
-
-        $this->image_lib->resize();
-
-        return $this->image_lib->display_errors();
-        
-        */
-
-    }
-
-
-    // delete image details from image table row
-    private function delete_image($image_id) {
-
-        // destroy image in user-images folder
-        if (file_exists($this->gallery_path . $imaqe_id)) {
-
-            unlink($this->gallery_path . $imaqe_id);
-
-        }
-
-        // Destroy the thumbnail image
-        if (file_exists("image-thumbnail/" . $imaqe_id)) {
-
-            unlink($this->thumb_path . $imaqe_id);
-
-        }
-
-        $this->db->limit(1);
-
-        $this->db->where('filename', $image_id);
-
-        return $this->db->delete('user');
-
-
-    }
-
-
-    // function for updating image database
-    // It is important that image name is unique
-
-    public function update_image($image_id = "") {
-
-        $duplicate = null;
-
-        $data = array('upload_data' => $this->upload->data());
-
-        $target_file = $data['upload_data']['orig_name'];
-
-        // Check to see if target file is already named in the database
-        // if so add random number at beginning in order to create unique title
-        foreach ($this->check_image_duplicate() as $row) {
-
-            if ($row->filename == $target_file) {
-
-                //give filename a new name if already a duplicate
-                $target_file = rand() . $target_file;
-
-                $duplicate = 1;
-
-                break;
+                print "No Imagine image manipulation class exists";
 
             }
-        }
-
-        if ($duplicate !== null) {
-
-            $this->upload_file_database($data['upload_data']['file_type'], $target_file);
-
-            // rename uploaded file
-
-            rename($this->gallery_path . "/" . $data['upload_data']['orig_name'], $this->
-                gallery_path . "/" . $target_file);
-
-            // resize image
-
-            $this->resize_image($target_file);
-
-            return $target_file;
-
-        } else {
-
-            $this->upload_file_database($data['upload_data']['file_type'], $target_file);
-
-            // resize image
-
-            $this->resize_image($target_file);
-
-            return $target_file;
-
-        }
-
-
-        // if image comes from edit content form then make sure previous image is deleted from the database and
-        // from the images folder
-
-        if ($image_id !== "") {
-
-            $this->delete_image($image_id);
-
-        }
 
     }
+
+}
+
+
+// delete image details from image table row
+private function delete_image($image_id) {
+
+    // destroy image in user-images folder
+    if (file_exists($this->gallery_path . $imaqe_id)) {
+
+        unlink($this->gallery_path . $imaqe_id);
+
+    }
+
+    // Destroy the thumbnail image
+    if (file_exists("image-thumbnail/" . $imaqe_id)) {
+
+        unlink($this->thumb_path . $imaqe_id);
+
+    }
+
+    $this->db->limit(1);
+
+    $this->db->where('filename', $image_id);
+
+    return $this->db->delete('user');
+
+
+}
+
+
+// function for updating image database
+// It is important that image name is unique
+
+public function update_image($image_id = "") {
+
+    $duplicate = null;
+
+    $data = array('upload_data' => $this->upload->data());
+
+    $target_file = $data['upload_data']['orig_name'];
+
+    // Check to see if target file is already named in the database
+    // if so add random number at beginning in order to create unique title
+    foreach ($this->check_image_duplicate() as $row) {
+
+        if ($row->filename == $target_file) {
+
+            //give filename a new name if already a duplicate
+            $target_file = rand() . $target_file;
+
+            $duplicate = 1;
+
+            break;
+
+        }
+    }
+
+    if ($duplicate !== null) {
+
+        $this->upload_file_database($data['upload_data']['file_type'], $target_file);
+
+        // rename uploaded file
+
+        rename($this->gallery_path . "/" . $data['upload_data']['orig_name'], $this->
+            gallery_path . "/" . $target_file);
+
+        // resize image
+
+        $this->resize_image($target_file);
+
+        return $target_file;
+
+    } else {
+
+        $this->upload_file_database($data['upload_data']['file_type'], $target_file);
+
+        // resize image
+
+        $this->resize_image($target_file);
+
+        return $target_file;
+
+    }
+
+
+    // if image comes from edit content form then make sure previous image is deleted from the database and
+    // from the images folder
+
+    if ($image_id !== "") {
+
+        $this->delete_image($image_id);
+
+    }
+
+}
 
 } // end of class

@@ -14,7 +14,7 @@ class Admin_User extends CI_Controller {
         parent::__construct();
 
     }
-    
+
     function _remap($method) {
 
         switch ($method) {
@@ -31,8 +31,7 @@ class Admin_User extends CI_Controller {
                 $this->delete_user();
                 break;
 
-          
-            case 'index':
+            default:
                 $this->index();
                 break;
 
@@ -210,7 +209,6 @@ class Admin_User extends CI_Controller {
         } // end if error statement
 
     }
-
 
 
     // checks to see if the new email chosen in the user edit field hasn't already been used
