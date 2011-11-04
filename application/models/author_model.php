@@ -41,7 +41,4 @@ class Author_Model extends CI_Model {
 
     }
 
-
 }
-
-?>

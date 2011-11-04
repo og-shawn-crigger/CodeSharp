@@ -247,10 +247,6 @@ class Menu_Model extends CI_Model {
         
         return $query->row();
 
-
     }
 
-
 }
-
-?>

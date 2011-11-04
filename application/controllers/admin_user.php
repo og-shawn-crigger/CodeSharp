@@ -338,5 +338,3 @@ class Admin_User extends CI_Controller {
 
     }
 }
-
-?>

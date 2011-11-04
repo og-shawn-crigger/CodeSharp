@@ -172,6 +172,3 @@ class Content extends CI_Controller {
 
 
 } // end of class
-
-
-?>

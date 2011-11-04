@@ -88,5 +88,3 @@ class Admin_Config extends CI_Controller {
     }
 
 }
-
-?>

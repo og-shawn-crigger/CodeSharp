@@ -263,5 +263,3 @@ class Admin_Menu extends CI_Controller {
     }
 
 }
-
-?>

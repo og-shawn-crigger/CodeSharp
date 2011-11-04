@@ -126,7 +126,4 @@ class Category_Model extends CI_Model {
 
     }
 
-
 }
-
-?>

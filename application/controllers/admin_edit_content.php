@@ -236,5 +236,3 @@ class Admin_Edit_Content extends CI_Controller {
     }
 
 }
-
-?>

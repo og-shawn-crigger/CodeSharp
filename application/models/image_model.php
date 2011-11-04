@@ -222,6 +222,3 @@ class Image_Model extends CI_Model {
     }
 
 } // end of class
-
-
-?>

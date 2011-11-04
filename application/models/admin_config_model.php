@@ -169,8 +169,4 @@ class Admin_Config_Model extends CI_Model {
 
     }
 
-
 } // end class
-
-
-?>

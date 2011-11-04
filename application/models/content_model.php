@@ -147,7 +147,6 @@ class Content_Model extends CI_Model {
 
     }
 
-
     public function delete_content($id = "") {
 
         $this->db->limit(1);
@@ -158,7 +157,4 @@ class Content_Model extends CI_Model {
 
     }
 
-
 }
-
-?>

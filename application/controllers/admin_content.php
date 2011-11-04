@@ -186,5 +186,3 @@ class Admin_Content extends CI_Controller {
     }
 
 }
-
-?>

@@ -239,5 +239,3 @@ class Admin_Category extends CI_Controller {
 
 
 }
-
-?>
