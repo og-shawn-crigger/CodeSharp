@@ -42,12 +42,12 @@ if (isset($_POST['submit'])) {
 
     foreach ($input as $result) {
 
-        if (empty($_POST[$result])):
+        if (empty($_POST[$result])){
 
             $error[] = "Please make sure that no fields in the form are empty";
             break;
 
-        endif;
+        }
 
     }
 
@@ -88,7 +88,7 @@ if (isset($_POST['submit'])) {
 
     foreach ($input as $result) {
 
-        if (!empty($_POST[$result])):
+        if (!empty($_POST[$result])) {
 
             // If all database fields are full then run script to make sure that the details are correct
 
@@ -103,8 +103,7 @@ if (isset($_POST['submit'])) {
 
             break;
 
-
-        endif;
+        }
 
     }
 
@@ -186,6 +185,20 @@ if (isset($_POST['submit'])) {
 
             if ($insert_result > 5) {
 
+                // create image folders
+
+                if (!is_dir("images/thumbnail")) {
+
+                    mkdir("images/thumbnail");
+
+                }
+
+                if (!is_dir("images/uploads")) {
+
+                    mkdir("images/uploads");
+
+                }
+
                 // Finally destroy all install files
 
                 unlink('insert.sql');
@@ -211,11 +224,11 @@ if (isset($_POST['submit'])) {
 
     } else {
 
-        foreach ($error as $result):
+        foreach ($error as $result) {
 
             echo '<p class="install-warning">' . $result . "</p>";
 
-        endforeach;
+        }
 
     }
 
