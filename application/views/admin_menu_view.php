@@ -63,7 +63,7 @@ if (isset($_POST['submit'])) {
 
 $attributes = array('id' => "addMenu", 'name' => "addMenu");
 
-$form = form_open('admin_menu/menu_add', $attributes);
+$form = form_open('admin-menu/menu-add', $attributes);
 
 $form .= form_fieldset('Add a new menu item');
 
@@ -122,7 +122,7 @@ if (isset($_POST['submitCat'])) {
 
 $attributes = array('id' => "addCategories", 'name' => "addCategories");
 
-$form = form_open('admin_menu/add_categories_to_menu', $attributes);
+$form = form_open('admin-menu/add-categories-to-menu', $attributes);
 
 $form .= form_fieldset('Add categories to the menus?');
 
@@ -172,7 +172,7 @@ if (isset($_POST['submitMenu'])) {
 
 echo base_url() . INDEX;
 
-?>admin_menu/change_menu_order#menu-order-result">
+?>admin-menu/change-menu-order#menu-order-result">
 <fieldset>
 <legend><span>Change the number from 99 to 0. <br>The higher the number the higher it appears in the menu order</span></legend>
 
@@ -217,6 +217,7 @@ foreach ($admin_menu_order as $menuItem) {
 <input name="submitMenu" value="submit" type="submit">
 </fieldset>
 </form>
+<h1>Leave URL empty for link to home page</h1>
 <?php
 
 foreach ($display_menu as $menu_page) {
@@ -254,7 +255,7 @@ foreach ($display_menu as $menu_page) {
 
         $attributesD = array('id' => "delete-menu_item", 'name' => "deleteMenuItem");
 
-        $Dform = form_open_multipart('admin_menu/delete_menu', $attributesD);
+        $Dform = form_open_multipart('admin-menu/delete-menu', $attributesD);
 
         $Dform .= form_fieldset('Are you sure you want to delete this menu item? <br />It will not be possible to undo this action.');
 
@@ -301,7 +302,7 @@ foreach ($display_menu as $menu_page) {
 
     $form .= 'method="post" action="';
 
-    $form .= base_url() . INDEX . 'admin_menu/update_menu#menu-block-result-' .
+    $form .= base_url() . INDEX . 'admin-menu/update-menu#menu-block-result-' .
         $id;
 
     $form .= '">';

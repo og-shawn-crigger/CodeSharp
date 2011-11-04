@@ -54,7 +54,7 @@ if (isset($_POST['submit']) && isset($delete_content)) {
 
     $attributesD = array('id' => "delete-node", 'name' => "deleteNode");
 
-    $form = form_open('admin_edit_content/delete_content', $attributesD);
+    $form = form_open('admin-edi-content/delet-content', $attributesD);
 
     $form .= form_fieldset('Are you sure you want to delete this content item? <br />
     It will not be possible to undo this action.');
@@ -81,7 +81,7 @@ if (isset($edit)):
 
         $attributes = array('id' => "admin-edit-content", 'name' => "adminEditContent");
 
-        $form = form_open_multipart('admin_edit_content/edit_node/' . $this->uri->
+        $form = form_open_multipart('admin-edit-content/edit-node/' . $this->uri->
             segment(3) . '/submit', $attributes);
 
         $form .= form_fieldset('Edit article: ');
@@ -184,7 +184,7 @@ if (empty($edit) && isset($nodes_all)) {
 
         $list = '<li>';
 
-        $list .= '<a href="' . base_url() . 'index.php/admin_edit_content/edit_node/' .
+        $list .= '<a href="' . base_url() . 'index.php/admin-edit-content/edit-node/' .
             $node->id . '">';
 
         $list .= $node->title;

@@ -36,21 +36,15 @@
 
 <?php
 
-if (isset($success)) {
+if (isset($success_error)) {
 
-    echo $success;
-
-    echo validation_errors();
-
-}
-
-if (isset($error)) {
-
-    echo $error;
+    echo $success_error;
 
     echo validation_errors();
 
 }
+
+
 
 ?>
 
@@ -60,7 +54,7 @@ if (isset($error)) {
 
 $attributes = array('id' => "addCategory", 'name' => "addCategory");
 
-$form = form_open_multipart('admin_category/add_category', $attributes);
+$form = form_open_multipart('admin-category/add-category', $attributes);
 
 $form .= form_fieldset('Add content');
 
@@ -125,7 +119,7 @@ foreach ($categories as $category) {
 
         $attributes = array('id' => "delete-category", 'name' => "deleteCategory");
 
-        $form = form_open_multipart('admin_category/delete_category', $attributes);
+        $form = form_open_multipart('admin-category/delete-category', $attributes);
 
         $form .= form_fieldset('Are you sure you want to delete this category?');
 
@@ -161,7 +155,7 @@ foreach ($categories as $category) {
     $attributes = array('id' => "admin-add-category-{$category->id}", 'name' =>
         "adminAddCategory{$category->id}");
 
-    $form = form_open_multipart("admin_category/validate_cat#category-block-result-$category->id",
+    $form = form_open_multipart("admin-ategory/validate-cat#category-block-result-$category->id",
         $attributes);
 
     $fattributes = array('id' => "legend{$category->id}");

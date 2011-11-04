@@ -31,6 +31,8 @@ class ContactUs extends CI_Controller {
             $data['error'] = "Opps, there have been problems with the form:";
             $data['content'] = "contact_us";
             $this->load->view("includes/template.php", $data);
+            
+            sleep(2);
 
         } else {
           
@@ -69,6 +71,8 @@ class ContactUs extends CI_Controller {
             $this->email->message($body);
 
             $this->email->send();
+            
+            sleep(2);
 
             //echo $this->email->print_debugger();
 

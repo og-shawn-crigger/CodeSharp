@@ -27,17 +27,13 @@
 
 <?php
 
-if (isset($success)) {
+if (isset($success_fail)) {
 
-    echo $success;
-
-}
-
-if (isset($error)) {
-
-    echo $error;
+    echo $success_fail;
 
 }
+
+
 
 if (isset($file_error)) {
 
@@ -49,7 +45,7 @@ echo validation_errors();
 
 $attributes = array('id' => "admin-add-content", 'name' => "adminAddContent");
 
-$form = form_open_multipart('admin_content/admin_add_content', $attributes);
+$form = form_open_multipart('admin-content/admin-add-content', $attributes);
 
 $form .= form_fieldset('Add content');
 
@@ -68,11 +64,24 @@ $form .= form_label('Add content', 'body');
 $form .= form_textarea(array('name' => 'body', 'id' => 'body', 'value' =>
     form_prep(set_value('body'))));
 
-$form .= form_label('Meta description', 'meta-description');
+if (DESCRIPTION === "1") {
 
-$form .= form_textarea(array('name' => 'metaDescription', 'id' =>
-    'meta-description', 'value' => form_prep(set_value('metaDescription')), 'maxlength' =>
-    '255'));
+    $form .= form_label('Meta description', 'meta-description');
+
+    $form .= form_textarea(array('name' => 'metaDescription', 'id' =>
+        'meta-description', 'value' => form_prep(set_value('metaDescription')),
+        'maxlength' => '255'));
+
+}
+
+if (KEYWORDS === "1") {
+
+    $form .= form_label('Meta keywords', 'meta-keywords');
+
+    $form .= form_textarea(array('name' => 'metaKeywords', 'id' => 'meta-keywords',
+        'value' => form_prep(set_value('metaKeywords')), 'maxlength' => '255'));
+
+}
 
 $form .= form_fieldset_close();
 
@@ -89,12 +98,14 @@ $form .= form_fieldset('Published?');
 $form .= form_label('Publish', 'publish');
 
 $form .= form_radio(array('name' => 'publish', 'id' => 'publish', 'value' =>
-    'YES', 'checked' => (isset($_POST['publish']) && $_POST['publish'] == "YES") ? 'checked' : '')); 
+    'YES', 'checked' => (isset($_POST['publish']) && $_POST['publish'] == "YES") ?
+    'checked' : ''));
 
 $form .= form_label('Not publish', 'not-publish');
 
 $form .= form_radio(array('name' => 'publish', 'id' => 'not-publish', 'value' =>
-    'NO', 'checked' => (isset($_POST['publish']) && $_POST['publish'] == "NO") ? 'checked' : '')); 
+    'NO', 'checked' => (isset($_POST['publish']) && $_POST['publish'] == "NO") ?
+    'checked' : ''));
 
 $form .= form_fieldset_close();
 
@@ -103,7 +114,6 @@ $form .= form_submit('submit', 'submit');
 $form .= form_close();
 
 echo $form;
-
 
 ?>
 

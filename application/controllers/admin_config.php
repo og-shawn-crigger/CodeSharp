@@ -16,29 +16,24 @@ class Admin_Config extends CI_Controller {
 
 
     }
-    
-    
-    
-    
 
-    /*
+
 
     function _remap($method) {
 
-    switch ($method) {
-    case 'admin-add':
-    $this->admin_add();
-    break;
-    
-    case 'index':
-    $this->index();
-    break;
+        switch ($method) {
+            case 'submit-form':
+                $this->submit_form();
+                break;
+
+            case 'index':
+                $this->index();
+                break;
+
+        }
 
     }
 
-    }
-    
-    */
 
     // universal to all functions
     private function add_theme($array) {
@@ -73,11 +68,12 @@ class Admin_Config extends CI_Controller {
 
         $this->form_validation->set_rules('emailForm', 'email',
             'trim|required|max_length[50]|valid_email');
-            
+
         if ($this->form_validation->run() === false) {
 
             $data['error_success'] = "<p>There are problems with your form submission:</p>";
-
+            
+           
         } else {
 
             $this->admin_config_model->update_admin($_POST);
@@ -85,7 +81,8 @@ class Admin_Config extends CI_Controller {
             $data['error_success'] = "<p>You have successfully updated the database.</p>";
 
         }
-
+        
+        
         $this->add_theme($data);
 
     }

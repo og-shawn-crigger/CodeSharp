@@ -14,12 +14,21 @@ class Admin_Edit_Content extends CI_Controller {
 
     }
 
-/*
+
     function _remap($method) {
 
         switch ($method) {
-            case 'content/node/15':
-                $this->admin_add();
+
+            case 'edit-node':
+                $this->edit_node();
+                break;
+
+            case 'delete-content':
+                $this->delete_content();
+                break;
+
+            case 'submit':
+                $this->submit();
                 break;
 
             case 'index':
@@ -29,7 +38,6 @@ class Admin_Edit_Content extends CI_Controller {
         }
 
     }
-    */
 
 
     // universal to all functions

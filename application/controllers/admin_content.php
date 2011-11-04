@@ -7,7 +7,7 @@
  */
 
 class Admin_Content extends CI_Controller {
-    
+
 
     function __constructor() {
 
@@ -15,36 +15,43 @@ class Admin_Content extends CI_Controller {
 
     }
 
-    /*
 
     function _remap($method) {
 
-    switch ($method) {
-    case 'admin-add':
-    $this->admin_add();
-    break;
-    
-    case 'index':
-    $this->index();
-    break;
+        switch ($method) {
+
+            case 'form-success':
+                $this->form_success();
+                break;
+
+            case 'form-failure':
+                $this->form_failure();
+                break;
+
+            case 'admin-add-content':
+                $this->admin_add_content();
+                break;
+
+            case 'index':
+                $this->index();
+                break;
+
+        }
 
     }
 
-    }
-    
-    */
-    
-        // universal to all functions
+
+    // universal to all functions
     private function add_theme($array) {
-        
+
         $data = $array;
-        
+
         $data['full_cats'] = $this->category_model->get_cat_title_mutli();
 
         $data['content'] = "admin_new_content";
 
         $this->load->view("includes/template.php", $data);
-        
+
     }
 
 
@@ -55,14 +62,14 @@ class Admin_Content extends CI_Controller {
         $this->add_theme($data);
 
     }
-    
+
     function form_success($array) {
 
         $data = array();
-        
+
         $data = $array;
 
-        $data['success'] = "<p>Yes, success!</p>";
+        $data['success-fail'] = "<p>You have successfully created a new article!</p>";
 
         $this->add_theme($data);
 
@@ -71,10 +78,10 @@ class Admin_Content extends CI_Controller {
     function form_failure($array) {
 
         $data = array();
-        
+
         $data = $array;
 
-        $data['error'] = "<p>Unforunately there have been some errors:</p>";
+        $data['success_fail'] = "<p>Unforunately there have been some errors:</p>";
 
         $this->add_theme($data);
 
@@ -99,7 +106,13 @@ class Admin_Content extends CI_Controller {
                 'trim|max_length[255]');
 
         }
+        
+        if ($this->input->post('metaKeywords')) {
 
+            $this->form_validation->set_rules('metaKeywords', 'Meta Keywords',
+                'trim|max_length[255]');
+
+        }
 
         if ($this->input->post('publish') === "YES") {
 
@@ -110,8 +123,6 @@ class Admin_Content extends CI_Controller {
             $visibility = 0;
 
         }
-
-        $meta_keywords = null;
 
 
         /**
@@ -145,9 +156,7 @@ class Admin_Content extends CI_Controller {
                     $this->content_model->insert_content($this->input->post('select'), 1,
                         // Need to change user value based on cookie value
                         $target_file, $this->input->post('title'), $this->input->post('body'), $this->
-                        input->post('metaDescription'), $meta_keywords, $visibility);
-
-                    sleep(2);
+                        input->post('metaDescription'), $this->input->post('metaKeywords'), $visibility);
 
                 }
 
@@ -163,9 +172,8 @@ class Admin_Content extends CI_Controller {
                 $this->content_model->insert_content($this->input->post('select'), 1,
                     // Need to change user value based on cookie value
                     $target_file, $this->input->post('title'), $this->input->post('body'), $this->
-                    input->post('metaDescription'), $meta_keywords, $visibility);
+                    input->post('metaDescription'), $this->input->post('metaKeywords'), $visibility);
 
-                sleep(2);
 
             }
 

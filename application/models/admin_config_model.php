@@ -18,7 +18,7 @@ class Admin_Config_Model extends CI_Model {
 
         parent::__construct();
         $this->add_admin();
-    
+
     }
 
     /**
@@ -56,7 +56,7 @@ class Admin_Config_Model extends CI_Model {
 
                 case "metaDescription":
 
-                    $data = array('okay' => ($value == "YES" ? 1 : 0));
+                    $data = array('okay' => $value);
                     $this->db->where('name', "meta_description");
                     $this->db->limit(1);
                     $this->db->update('admin', $data);
@@ -64,7 +64,7 @@ class Admin_Config_Model extends CI_Model {
 
                 case "metaKeywords":
 
-                    $data = array('okay' => ($value == "YES" ? 1 : 0));
+                    $data = array('okay' => $value);
                     $this->db->where('name', "meta_keywords");
                     $this->db->limit(1);
                     $this->db->update('admin', $data);
@@ -72,7 +72,7 @@ class Admin_Config_Model extends CI_Model {
 
                 case "errorReporting":
 
-                    $data = array('okay' => ($value == "YES" ? 1 : 0));
+                    $data = array('okay' => $value);
                     $this->db->where('name', "error_reporting");
                     $this->db->limit(1);
                     $this->db->update('admin', $data);
@@ -88,7 +88,7 @@ class Admin_Config_Model extends CI_Model {
 
                 case "errorEmail":
 
-                    $data = array('okay' => ($value == "YES" ? 1 : 0));
+                    $data = array('okay' => $value);
                     $this->db->where('name', "error_email");
                     $this->db->limit(1);
                     $this->db->update('admin', $data);

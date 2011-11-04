@@ -14,6 +14,31 @@ class Admin_User extends CI_Controller {
         parent::__construct();
 
     }
+    
+    function _remap($method) {
+
+        switch ($method) {
+
+            case 'add-user':
+                $this->add_user();
+                break;
+
+            case 'edit-users':
+                $this->edit_users();
+                break;
+
+            case 'delete-user':
+                $this->delete_user();
+                break;
+
+          
+            case 'index':
+                $this->index();
+                break;
+
+        }
+
+    }
 
     private function add_theme($array) {
 

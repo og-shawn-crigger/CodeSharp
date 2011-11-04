@@ -26,11 +26,14 @@
 
 <?php
 
+//echo $_POST['metaDescription'];
+
 if (isset($error_success)) {
 
     echo $error_success;
-
+    
     echo validation_errors();
+    
 }
 
 ?>
@@ -41,7 +44,7 @@ if (isset($error_success)) {
 
 $attributes = array('id' => "submit-various", 'name' => "submitVarious");
 
-$form = form_open('admin_config/submit_form', $attributes);
+$form = form_open('admin-config/submit-form', $attributes);
 
 $form .= form_fieldset();
 
@@ -50,8 +53,6 @@ $form .= form_label('Name of site:', 'name-form');
 $form .= form_input(array('name' => 'nameForm', 'id' => 'name-form', 'maxlength' =>
     '100', 'type' => 'text', 'value' => isset($_POST['nameForm']) ? $_POST['nameForm'] :
     SITENAME));
-
-//$form .= form_hidden("submitName");
 
 $form .= form_fieldset_close();
 
@@ -94,38 +95,24 @@ $form .= form_fieldset_close();
 
 <?php
 
-$form .= form_fieldset('Meta Description:');
 
-$form .= form_label('Yes', 'meta-description-yes');
+$form .= form_fieldset('Use meta descriptions:');
 
-$form .= form_radio(array('name' => 'metaDescription', 'id' =>
-    'meta-description-yes', 'value' => 'YES', 'class' => 'admin-top', 'checked' =>
-    DESCRIPTION == 1 || (isset($_POST['metaDescription']) && $_POST['metaDescription'] ==
-    "YES") ? 'checked' : ''));
+$form .= form_hidden('metaDescription','0');
 
-$form .= form_label('No', 'meta-description-no');
-
-$form .= form_radio(array('name' => 'metaDescription', 'id' =>
-    'meta-description-no', 'value' => 'NO', 'class' => 'admin-top', 'checked' =>
-    DESCRIPTION == 0 || (isset($_POST['metaDescription']) && $_POST['metaDescription'] ==
-    "NO") ? 'checked' : ''));
+$form .= form_checkbox(array('name' => 'metaDescription', 'id' => 'meta-description','checked' => 
+isset($_POST['metaDescription'])? $_POST['metaDescription'] : DESCRIPTION, 'value' => "1"
+));
 
 $form .= form_fieldset_close();
 
+$form .= form_fieldset('Use meta keywords:');
 
-$form .= form_fieldset('Meta Keywords:');
+$form .= form_hidden('metaKeywords','0');
 
-$form .= form_label('Yes', 'meta-keywords-yes');
-
-$form .= form_radio(array('name' => 'metaKeywords', 'id' => 'meta-keywords-yes',
-    'value' => 'YES', 'class' => 'admin-top', 'checked' => KEYWORDS == 1 || (isset($_POST['metaKeywords']) &&
-    $_POST['metaKeywords'] == "YES") ? 'checked' : ''));
-
-$form .= form_label('No', 'meta-keywords-no');
-
-$form .= form_radio(array('name' => 'metaKeywords', 'id' => 'meta-keywords-no',
-    'value' => 'NO', 'class' => 'admin-top', 'checked' => KEYWORDS == 0 || (isset($_POST['metaKeywords']) &&
-    $_POST['metaKeywords'] == "NO") ? 'checked' : ''));
+$form .= form_checkbox(array('name' => 'metaKeywords', 'id' => 'meta-keywords','checked' => 
+isset($_POST['metaKeywords'])? $_POST['metaKeywords'] : KEYWORDS, 'value' => "1"
+));
 
 $form .= form_fieldset_close();
 
@@ -137,18 +124,13 @@ $form .= form_fieldset_close();
 
 $form .= form_fieldset("Report errors to logs: ");
 
-$form .= form_label('Yes', 'report-error-yes');
+$form .= form_label('Error reporting', 'report-error');
 
-$form .= form_radio(array('name' => 'errorReporting', 'id' => 'report-error-yes',
-    'value' => 'YES', 'class' => 'admin-top', 'checked' => ERROR_REPORTING == 1 || (isset
-    ($_POST['errorReporting']) && $_POST['errorReporting'] == "YES") ? 'checked' :
-    ''));
+$form .= form_hidden('errorReporting','0');
 
-$form .= form_label('No', 'report-error-no');
-
-$form .= form_radio(array('name' => 'errorReporting', 'id' => 'report-error-no',
-    'value' => 'NO', 'class' => 'admin-top', 'checked' => ERROR_REPORTING == 0 || (isset
-    ($_POST['errorReporting']) && $_POST['errorReporting'] == "NO") ? 'checked' : ''));
+$form .= form_checkbox(array('name' => 'errorReporting', 'id' => 'report-error','checked' => 
+isset($_POST['errorReporting'])? $_POST['errorReporting'] : ERROR_REPORTING, 'value' => "1"
+));
 
 $form .= form_fieldset_close();
 
@@ -163,17 +145,13 @@ $form .= form_fieldset_close();
 
 $form .= form_fieldset("Send email message to admin when error produced");
 
-$form .= form_label('Yes', 'email-error-yes');
+$form .= form_label('Error email', 'email-error');
 
-$form .= form_radio(array('name' => 'errorEmail', 'id' => 'email-error-yes',
-    'value' => 'YES', 'class' => 'admin-top', 'checked' => ERROR_EMAIL == 1 || (isset
-    ($_POST['errorEmail']) && $_POST['errorEmail'] == "YES") ? 'checked' : ''));
+$form .= form_hidden('errorEmail','0');
 
-$form .= form_label('No', 'email-error-no');
-
-$form .= form_radio(array('name' => 'errorEmail', 'id' => 'email-error-no',
-    'value' => 'NO', 'class' => 'admin-top', 'checked' => ERROR_EMAIL == 0 || (isset
-    ($_POST['errorEmail']) && $_POST['errorEmail'] == "NO") ? 'checked' : ''));
+$form .= form_checkbox(array('name' => 'errorEmail', 'id' => 'meta-keywords','checked' => 
+isset($_POST['errorEmail'])? $_POST['errorEmail'] : ERROR_EMAIL, 'value' => "1"
+));
 
 $form .= form_fieldset_close();
 

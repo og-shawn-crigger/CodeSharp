@@ -26,17 +26,17 @@
 
 <h1>Admin index page</h1>
 
-<p><a href="admin_config">Admin configuration</a></p>
+<p><a href="admin-config">Admin configuration</a></p>
 
-<p><a href="admin_content">Add content article</a></p>
+<p><a href="admin-content">Add content article</a></p>
 
-<p><a href="admin_edit_content">Edit content articles</a></p>
+<p><a href="admin-edit-content">Edit content articles</a></p>
 
-<p><a href="admin_category">Add or edit exisiting catagories</a></p>
+<p><a href="admin-category">Add or edit exisiting catagories</a></p>
 
-<p><a href="admin_user">Add or edit existing users</a></p>
+<p><a href="admin-user">Add or edit existing users</a></p>
 
-<p><a href="admin_menu">Admin menu</a></p>
+<p><a href="admin-menu">Admin menu</a></p>
 
 <p><a href="login/letmeout">Log-out</a></p>
 

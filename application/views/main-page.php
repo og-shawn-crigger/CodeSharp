@@ -294,21 +294,56 @@ endif;
 <ul>
 <?php
 
-foreach ($full_menu as $menu_item):
+//var_dump($menu);
+
+
+foreach ($menu as $main_menu) {
+
+    $main_front = '<li>';
+
+    $main_front .= '<a href="';
+
+    if ($main_menu['menu_id'] === "C") {
+
+        $main_front .= base_url() . INDEX . 'category/' . url_title(strtolower($main_menu['name']));
+
+    }
+
+    if ($main_menu['menu_id'] === "M") {
+
+        /**
+         * LOOK AT BELOW - REMOVE DIRECT CALL TO DATABASE MODEL
+         */
+
+        $menu_url = $this->menu_model->menu_url($main_menu['id']);
+
+        if ($menu_url->url !== "") {
+
+            $main_front .= base_url() . INDEX . $menu_url->url;
+
+        } else {
+
+            $main_front .= base_url() . INDEX . "";
+
+        }
+
+
+    }
+
+    $main_front .= '">';
+
+    $main_front .= $main_menu['name'];
+
+    $main_front .= '</a>';
+
+    $main_front .= '</li>';
+
+    echo $main_front;
+
+}
 
 ?>
 
-<li><a href=""><?php
-
-    echo html_special($menu_item->name);
-
-?></a></li>
-
-<?php
-
-endforeach;
-
-?>
 </ul>
 </menu>
 

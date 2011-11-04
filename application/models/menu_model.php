@@ -11,7 +11,7 @@ class Menu_Model extends CI_Model {
     var $cat_menu;
 
     public function __construct() {
-        
+
         parent::__construct();
         // load model file below in order to gain access to their constants
         $this->load->model('admin_config_model');
@@ -97,8 +97,8 @@ class Menu_Model extends CI_Model {
         return $query->result();
 
     }
-    
-    
+
+
     public function delete_menu($id = "") {
 
         $this->db->limit(1);
@@ -164,13 +164,13 @@ class Menu_Model extends CI_Model {
     }
 
 
-    public function menu_order() {
+    public function menu_order($visible = "") {
 
         if ($this->cat_menu === true) {
 
             $sql = ' SELECT id, menu_id, name, number from category ';
             $sql .= ' UNION ';
-            $sql .= ' SELECT id, menu_id, name, number from menu ';
+            $sql .= ' SELECT id, menu_id, name, number from menu ' . $visible;
             $sql .= ' ORDER by number DESC ';
 
             $result = $this->db->query($sql);
@@ -179,7 +179,7 @@ class Menu_Model extends CI_Model {
 
         } else {
 
-            $sql = ' SELECT id, menu_id, name, number from menu ';
+            $sql = ' SELECT id, menu_id, name, number from menu ' . $visible;
             $sql .= ' ORDER by number DESC ';
 
             $result = $this->db->query($sql);
@@ -233,6 +233,20 @@ class Menu_Model extends CI_Model {
         $this->db->where('id', $id);
 
         return $this->db->update('menu', $data);
+
+    }
+
+
+    public function menu_url($id = "") {
+        
+        $this->db->select('url');
+        
+        $this->db->where('id', $id);
+        
+        $query = $this->db->get("menu");
+        
+        return $query->row();
+
 
     }
 

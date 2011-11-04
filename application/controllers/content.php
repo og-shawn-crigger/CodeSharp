@@ -22,6 +22,8 @@ class Content extends CI_Controller {
         $data['categories'] = $this->category_model->get_cats();
 
         $data['query_result'] = $this->category_model->get_cat_title();
+        
+        $data['menu'] = $this->menu_model->menu_order("where visible = 1");
 
         $data['content'] = "main-page";
 
@@ -49,8 +51,6 @@ class Content extends CI_Controller {
         $this->pagination->initialize($config);
 
         $data = array();
-
-        $data['full_menu'] = $this->menu_model->display_menu();
 
         $data['records'] = $this->content_model->get_all_content($config['per_page'], $this->
             uri->segment(3));
@@ -95,8 +95,6 @@ class Content extends CI_Controller {
         }
 
         // Place the menu data in its own class
-
-        $data['full_menu'] = $this->menu_model->display_menu();
 
         if ($this->uri->segment(1) === "article") {
 
@@ -159,8 +157,6 @@ class Content extends CI_Controller {
             get_404();
 
         }
-
-        $data['full_menu'] = $this->menu_model->display_menu();
 
         if ($this->uri->segment(1) === "category" && $this->uri->segment(2) !== "") {
 

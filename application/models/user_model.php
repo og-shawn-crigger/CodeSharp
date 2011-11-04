@@ -270,19 +270,20 @@ class User_Model extends CI_Model {
 
             $this->db->where('id', $user->id);
 
-            if($this->db->update('user', $data)) {
-                
-                return "<p>Your new password is " . $new_password . " Please log in below with your user details</p>";
-                
-            }// end if $this->db->update('user', $data)
+            if ($this->db->update('user', $data)) {
+
+                return "<p>Your new password is " . $new_password .
+                    " Please log in below with your user details</p>";
+
+            } // end if $this->db->update('user', $data)
 
         } else {
-            
+
             return "<p>Your user details can not be found. Please contact the administrator for help.</p>";
-            
+
         }
-        
-        
+
+
         // end if $this->db->affected_rows() === 1
 
     }

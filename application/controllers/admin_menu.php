@@ -15,6 +15,43 @@ class Admin_Menu extends CI_Controller {
 
     }
 
+    function _remap($method) {
+
+        switch ($method) {
+
+            case 'duplicate-menu-name':
+                $this->duplicate_menu_name();
+                break;
+
+            case 'update-menu':
+                $this->update_menu();
+                break;
+
+            case 'delete-menu':
+                $this->delete_menu();
+                break;
+
+            case 'change-menu-order':
+                $this->change_menu_order();
+                break;
+
+            case 'add-categories-to-menu':
+                $this->add_categories_to_menu();
+                break;
+
+            case 'menu-add':
+                $this->menu_add();
+                break;
+
+            case 'index':
+                $this->index();
+                break;
+
+        }
+
+    }
+
+
     // universal to all functions
     private function add_theme($array) {
 
@@ -83,7 +120,7 @@ class Admin_Menu extends CI_Controller {
                 'trim|required|max_length[40]');
 
             $this->form_validation->set_rules($array_keys['two'], 'menu url',
-                'trim|required|max_length[40]');
+                'trim|max_length[40]');
 
             $this->form_validation->set_rules($array_keys['three'], 'publish',
                 'trim|required');

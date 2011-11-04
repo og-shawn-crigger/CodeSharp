@@ -80,10 +80,10 @@ class Category_Model extends CI_Model {
             return $query->result();
 
         } else {
-            
+
             /*
-             This is to make sure that the category name is unique 
-             */
+            This is to make sure that the category name is unique 
+            */
 
             $query = $this->db->query('SELECT name FROM category WHERE name <> "' . $value .
                 '"');

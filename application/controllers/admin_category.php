@@ -17,24 +17,42 @@ class Admin_Category extends CI_Controller {
     }
 
 
-    /*
-
     function _remap($method) {
 
-    switch ($method) {
-    case 'admin-add':
-    $this->admin_add();
-    break;
-    
-    case 'index':
-    $this->index();
-    break;
+        switch ($method) {
+
+            case 'form-success':
+                $this->form_success();
+                break;
+
+            case 'form-failure':
+                $this->form_failure();
+                break;
+                
+            case 'add-category':
+                $this->add_category();
+                break;
+                
+            case 'delete-category':
+                $this->delete_category();
+                break;
+                
+            case 'check-duplicates':
+                $this->check_duplicates();
+                break;
+                
+            case 'validate-cat':
+                $this->validate_cat();
+                break; 
+
+            case 'index':
+                $this->index();
+                break;
+
+        }
 
     }
 
-    }
-    
-    */
 
     private function add_theme($array) {
 
@@ -60,7 +78,7 @@ class Admin_Category extends CI_Controller {
 
         $data = array();
 
-        $data['success'] = "<p>You have successfully added another category</p>";
+        $data['success_error'] = "<p>You have successfully added another category</p>";
 
         $this->add_theme($data);
 
@@ -71,7 +89,7 @@ class Admin_Category extends CI_Controller {
 
         $data = array();
 
-        $data['error'] = "<p>Unfortunately there have been some errors:</p>";
+        $data['success_error'] = "<p>Unfortunately there have been some errors:</p>";
 
         $this->add_theme($data);
 
