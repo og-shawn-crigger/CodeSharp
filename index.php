@@ -193,9 +193,11 @@ if (is_dir($application_folder)) {
 * And away we go...
 *
 */
+
+
 if (!file_exists("install.php")) {
 
-    require_once BASEPATH . 'codeigniter/CodeIgniter' . EXT;
+    require_once BASEPATH.'core/CodeIgniter.php';
 
 } else {
     
@@ -203,7 +205,9 @@ if (!file_exists("install.php")) {
     
 }
 
-//require_once BASEPATH . 'codeigniter/CodeIgniter' . EXT;
+
+
+//require_once BASEPATH.'core/CodeIgniter.php';
 
 
 
