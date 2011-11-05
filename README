@@ -1,1 +1,8 @@
-A CodeIgniter version of my PHP CMS Pinhead
+1. Create the database and include the database details in file application/config/database.php
+
+Change the $config['base_url'] value to your domain name in application/config/config.php
+
+Run install file : http://www.example.com/install.php
+
+Enter values requested
+Remove "index.php" file from application/config/config.php file

@@ -26,8 +26,9 @@ $config['base_url']	= 'http://localhost/CodeSharp/';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'index.php';
-defined("INDEX") ? null: define("INDEX", $config['index_page'] . "/");
+$config['index_page'] = 'index.php/';
+defined("INDEX") ? null: define("INDEX", $config['index_page']);
+
 /*
 |--------------------------------------------------------------------------
 | URI PROTOCOL
@@ -44,7 +45,7 @@ defined("INDEX") ? null: define("INDEX", $config['index_page'] . "/");
 | 'ORIG_PATH_INFO'	Uses the ORIG_PATH_INFO
 |
 */
-$config['uri_protocol']	= 'AUTO';
+$config['uri_protocol']	= 'REQUEST_URI';
 
 /*
 |--------------------------------------------------------------------------
@@ -224,7 +225,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = 'Sjl[C53B6=b!XUqs"\+.+;#n&Xz:aQyA';
+$config['encryption_key'] = 'Gx.-n>:Kp]=n?[ZS_L=LMi4Sfw>h+wXX';
 
 /*
 |--------------------------------------------------------------------------
@@ -357,12 +358,6 @@ $config['rewrite_short_tags'] = FALSE;
 */
 $config['proxy_ips'] = '';
 
-/**
- * Reuired for image manipulation with the Imagine image script
- */
-
-//require_once 'phar://application/third_party/imagine.phar';
-
 // Needed for Imagine image manipulation classes
 set_include_path('Imagine' . PATH_SEPARATOR . get_include_path());
 function imagineLoader($class) {
@@ -373,5 +368,7 @@ function imagineLoader($class) {
     }
 }
 spl_autoload_register('\imagineLoader');
+
+
 /* End of file config.php */
 /* Location: ./application/config/config.php */
