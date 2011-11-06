@@ -1,0 +1,1146 @@
+@charset "utf-8";
+/* CSS Document 
+Based on Golden Grid: http://www.gridsystemgenerator.com/gs02.php?GridWidth=970&GridColumns=12&GridMarginLeft=10
+
+*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+	margin:0;
+	padding:0;
+	border:0;
+	vertical-align:baseline;
+	font-size: 100.01%;
+	background:transparent;
+}
+h1, h2, h3, h4, h5, h6, th, td, caption {
+	font-weight:normal;
+}
+article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time {
+	display:block;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+	content: '';
+	content: none;
+}
+ul {
+	list-style-position:inside;
+}
+.ie7 ul {
+	list-style-position:outside;
+}
+textarea {
+	resize:vertical;
+}
+input[type=submit]:hover {
+	cursor: pointer
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+input, select {
+	vertical-align: middle;
+}
+body {
+	font : 62.5% Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman", serif;
+	height : 100%;
+	line-height : 2em;
+}
+a {
+	color : black;
+}
+a:link {
+	color : #3C3E4F;
+}
+a:visited {
+	color : #296D61
+}
+a:focus {
+	color : #8B0000
+}
+a:hover {
+	color : #8B0000
+}
+a:active {
+	color : #8B0000
+}
+#wrapper {
+	width : 950px;
+	margin : 10px auto;
+	padding : 10px;
+	border : 1px solid #e8e8e8;
+	border-radius : 20px;
+	min-height : 700px;
+}
+#wrapper header h1 {
+	font: 5em 'PacificoRegular', sans-serif;
+	margin-bottom : 0.8em;
+	text-align : center;
+}
+/* admin */
+
+/* animation */
+
+
+@-moz-keyframes ripple {
+ 0% {
+ -moz-box-shadow: 
+ 0 0 85px 10px rgba(160, 160, 160, 1), 0 0 0px 0 rgba(255, 255, 255, .0), 0 0 100px 10px rgba(160, 160, 160, 1);
+}
+ 15% {
+ -moz-box-shadow: 
+ 0 0 25px 0 rgba(160, 160, 160, 1), 0 0 0px 0 rgba(255, 255, 255, .4), 0 0 100px 10px rgba(160, 160, 160, 1);
+}
+ 50% {
+ -moz-box-shadow: 
+ 0 0 45px 20px rgba(160, 160, 160, 1), 0 0 80px 10px rgba(255, 255, 255, .4), 0 0 100px 10px rgba(160, 160, 160, 1);
+}
+ 95% {
+ -moz-box-shadow: 
+ 0 0 100px 20px rgba(160, 160, 160, 1), 0 0 75px 5px rgba(255, 255, 255, 0), 0 0 100px 10px rgba(160, 160, 160, 1);
+}
+ 100% {
+ -moz-box-shadow: 
+ 0 0 100px 20px rgba(160, 160, 160, 1), 0 0 0 0 rgba(255, 255, 255, 0), 0 0 100px 10px rgba(160, 160, 160, 1);
+}
+}
+ @-webkit-keyframes ripple {
+ 0% {
+ -webkit-box-shadow: 
+ 0 0 85px 10px rgba(160, 160, 160, 1), 0 0 0px 0 rgba(255, 255, 255, .0), 0 0 100px 10px rgba(160, 160, 160, 1);
+}
+ 15% {
+ -webkit-box-shadow: 
+ 0 0 25px 0 rgba(160, 160, 160, 1), 0 0 0px 0 rgba(255, 255, 255, .4), 0 0 100px 10px rgba(160, 160, 160, 1);
+}
+ 50% {
+ -webkit-box-shadow: 
+ 0 0 45px 20px rgba(160, 160, 160, 1), 0 0 80px 10px rgba(255, 255, 255, .4), 0 0 100px 10px rgba(160, 160, 160, 1);
+}
+ 95% {
+ -webkit-box-shadow: 
+ 0 0 100px 20px rgba(160, 160, 160, 1), 0 0 75px 5px rgba(255, 255, 255, 0), 0 0 100px 10px rgba(160, 160, 160, 1);
+}
+ 100% {
+ -webkit-box-shadow: 
+ 0 0 100px 20px rgba(160, 160, 160, 1), 0 0 0 0 rgba(255, 255, 255, 0), 0 0 100px 10px rgba(160, 160, 160, 1);
+}
+}
+ @-moz-keyframes pulse {
+ 0% {
+ -moz-box-shadow: 
+ 0 0 5px 0 rgba(224, 224, 224, 1), 0 0 0px 0 rgba(140, 180, 180, .9);
+}
+ 75% {
+ -moz-box-shadow: 
+ 0 0 15px 10px rgba(224, 224, 224, 1), 0 0 90px 0 rgba(140, 180, 180, .9);
+}
+ 100% {
+ -moz-box-shadow: 
+ 0 0 2px 0 rgba(224, 224, 224, 1), 0 0 2px 0 rgba(140, 180, 180, .8);
+}
+}
+ @-webkit-keyframes pulse {
+ 0% {
+ -webkit-box-shadow: 
+ 0 0 5px 0 rgba(224, 224, 224, 1), 0 0 0px 0 rgba(140, 180, 180, .9);
+}
+ 75% {
+ -webkit-box-shadow: 
+ 0 0 15px 10px rgba(224, 224, 224, 1), 0 0 90px 0 rgba(140, 180, 180, .9);
+}
+ 100% {
+ -webkit-box-shadow: 
+ 0 0 2px 0 rgba(224, 224, 224, 1), 0 0 2px 0 rgba(140, 180, 180, .8);
+}
+}
+/* admin content header */
+
+
+#content > header {
+	text-align : right;
+	margin-bottom : 4em;
+}
+#content > header a {
+	font-size : 2em;
+	padding : 5px;
+	border : 1px solid #e8e8e8;
+	border-radius : 5px;
+	box-shadow : 5px 5px 5px #ccc;
+	text-decoration : none;
+}
+#content > header a:hover {
+	border : 1px solid darkred;
+	text-decoration : none;
+	box-shadow : inset -2px -2px 5px #e8e8e8, 5px 5px 5px #ccc;
+}
+#content header a:first-child {
+	margin-right : 20px;
+}
+#content header a:last-child {
+	margin-left : 20px;
+}
+
+
+/* admin menu */
+
+nav ul li {
+list-style : none;
+font-size : 1.6em;
+margin-bottom : 1.25em;
+}
+nav ul li a {
+display : block;
+text-decoration : none;
+border : 1px solid #e8e8e8;
+padding : 5px 2px;
+border-radius : 5px;
+}
+nav ul li a:hover {
+text-decoration : underline;
+border : 1px solid darkred;
+}
+
+
+
+
+
+
+
+
+/* login page */
+
+#admin-login-box {
+	width : 400px;
+	margin : 100px auto;
+	border-radius : 20px;
+	padding : 10px;
+	font-size : 1.6em;
+	border : 1px solid #ccc;
+	box-shadow : 5px 5px 5px #ccc;
+}
+#admin-login-box h1, #admin-login-box p {
+	margin-bottom : 1.25em;
+}
+#admin-login-box p {
+	color : darkred;
+}
+#admin-login-box span {
+	display : block;
+	margin-bottom : 1.25em;
+}
+#admin-login input[type=text], #admin-login input[type=password], #admin-login label {
+	float : left;
+	width : 180px;
+	padding : 5px;
+}
+#admin-login input[type=text], #admin-login input[type=password] {
+	border : 1px solid #ccc;
+	margin-bottom : 1.25em;
+	border-radius : 5px;
+}
+#admin-login input[type=text]:focus, #admin-login input[type=password]:focus {
+	border : 1px solid darkred;
+	color : darkred;
+}
+#admin-login input[type=submit] {
+	clear : both;
+	margin: 20px auto;
+	display : block;
+	color : #000;
+	background : #e8e8e8;
+	border : none;
+	padding : 5px;
+	font-size : 16px;
+	border-radius : 5px;
+}
+/* Main admin page */
+
+#main-admin section {
+	width : 284px;
+	float : left;
+	margin : 0 10px 10px 0;
+	border : 1px solid #e8e8e8;
+	padding : 10px;
+	border-radius : 10px;
+	min-height : 200px;
+}
+#main-admin a {
+	text-decoration : none;
+}
+#main-admin section:hover {
+	box-shadow : inset -1px -1px 10px #e8e8e8, 5px 5px 5px #ccc;
+}
+#main-admin section:nth-of-type(3n) {
+margin : 0 0 10px 0;
+}
+#main-admin section header {
+	font: 2em 'PacificoRegular', sans-serif;
+	margin-bottom : 1em;
+}
+#main-admin section header a {
+	text-decoration : none;
+}
+#main-admin section article {
+	font-size : 1.6em;
+	margin-bottom : 1.25em;
+}
+/* admin various */
+
+#column-one {
+	width : 310px;
+	float : left;
+	margin-right : 10px;
+}
+#column-two {
+	width : 630px;
+	float : left;
+}
+#inner-column-one {
+	width : 310px;
+	float : left;
+	margin-right : 10px;
+}
+#inner-column-two {
+	width : 310px;
+	float : left;
+}
+#admin-various h1, #admin-various p {
+	font-size : 1.6em;
+	margin-bottom : 1.25em;
+	color : darkred;
+}
+#admin-various form {
+	font-size : 1.6em;
+}
+#admin-various label, #admin-various input[type=text], #admin-various legend span {
+	width : 300px;
+	float : left;
+	margin-bottom : 20px;
+}
+#admin-various input[type=text]:focus, #admin-various input[type=checkbox]:focus {
+	border : 1px solid darkred;
+	color : darkred;
+}
+#admin-various legend span {
+	padding-top : 50px;
+}
+#admin-various input[type=checkbox] {
+	margin-bottom : 20px;
+	width:20px;
+	height:20px;
+	border : 1px solid #e8e8e8;
+}
+#admin-various label, #admin-various legend span {
+	padding : 5px 5px 5px 0;
+}
+#admin-various input[type=text] {
+	padding : 5px;
+}
+#admin-various input {
+	font-size : 16px;
+}
+#admin-various select {
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+}
+#admin-various input[type=text] {
+	border : 1px solid #e8e8e8;
+}
+#admin-various input[type=submit] {
+	background : #fff;
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+	border-radius : 5px;
+	margin-left : 400px;
+	margin-bottom : 30px;
+}
+#admin-various input[type=submit]:hover {
+	border : 1px solid darkred;
+	-moz-animation-name: ripple;
+	-moz-animation-duration: 1s;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-direction: normal;
+	-moz-animation-timing-function: ease-in-out;
+	-webkit-animation-name: ripple;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-direction: normal;
+	-webkit-animation-timing-function: ease-in-out;
+}
+/* add article */
+
+#admin-add-article h1, #admin-add-article p {
+	font-size : 1.6em;
+	margin-bottom : 1.25em;
+	color : darkred;
+}
+#admin-add-article form {
+	font-size : 1.6em;
+}
+#admin-add-article input, #admin-add-article textarea, #admin-add-article select {
+	font-size : 16px;
+	font-family : monospace;
+}
+#admin-add-article label, #admin-add-article input[type=text] {
+	width : 300px;
+	float : left;
+	margin-bottom : 20px;
+}
+#admin-add-article legend span {
+	margin-bottom : 20px;
+	display : block;
+}
+#admin-add-article input[type=text] {
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+}
+#admin-add-article input[type=text]:focus, #admin-add-article textarea:focus, #admin-add-article select:focus {
+	border : 1px solid darkred;
+	color : darkred;
+}
+#admin-add-article select {
+	width :250px;
+	float : left;
+	margin-bottom : 20px;
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+}
+#admin-add-article label[for=body] {
+	clear : both;
+}
+#admin-add-article textarea {
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+	margin-bottom : 20px;
+	width : 600px;
+}
+#admin-add-article #body {
+	min-height : 300px;
+}
+#admin-add-article #meta-description, #admin-add-article #meta-keywords {
+	min-height : 200px;
+}
+#admin-add-article input[type=text]:focus, #admin-add-article input[type=checkbox]:focus {
+	border : 1px solid darkred;
+	color : darkred;
+}
+#admin-add-article select {
+	clear : both;
+}
+#admin-add-article input[type=file] {
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+	margin-bottom : 20px;
+}
+#admin-add-article input[type=file]:focus {
+	border : 1px solid darkred;
+	color : darkred;
+}
+#admin-add-article input[type=radio] {
+	margin-bottom : 20px;
+	margin-right : 200px;
+}
+#admin-add-article label[for=not-publish] {
+	clear : both;
+}
+#admin-add-article input[type=submit] {
+	background : #fff;
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+	border-radius : 5px;
+	margin-left : 400px;
+	margin-bottom : 30px;
+}
+#admin-add-article input[type=submit]:hover {
+	border : 1px solid darkred;
+	-moz-animation-name: pulse;
+ -moz-animation-duration: .5s;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-timing-function: ease-out;
+	-webkit-animation-name: pulse;
+ -webkit-animation-duration: .5s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: ease-out;
+}
+/* article list */
+
+#article-list {
+	font-size : 1.6em;
+}
+#article-list h1 {
+	color : darkred;
+	margin-bottom : 1.25em;
+}
+#article-list ul li {
+	margin-bottom : 1.25em;
+	list-style-type : circle;
+}
+/* article list item*/
+
+
+
+#article-list-item h1, #article-list-item p {
+	font-size : 1.6em;
+	margin-bottom : 1.25em;
+	color : darkred;
+}
+#article-list-item form {
+	font-size : 1.6em;
+}
+#article-list-item input, #article-list-item textarea, #article-list-item select {
+	font-size : 16px;
+	font-family : monospace;
+}
+#article-list-item label, #article-list-item input[type=text] {
+	width : 300px;
+	float : left;
+	margin-bottom : 20px;
+}
+#article-list-item legend span {
+	margin-bottom : 20px;
+	display : block;
+}
+#article-list-item input[type=text] {
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+}
+#article-list-item input[type=text]:focus, #article-list-item textarea:focus, #article-list-item select:focus {
+	border : 1px solid darkred;
+	color : darkred;
+}
+#article-list-item select {
+	width :250px;
+	float : left;
+	margin-bottom : 20px;
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+}
+#article-list-item textarea {
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+	margin-bottom : 20px;
+	width : 600px;
+}
+#article-list-item input[type=text]:focus, #article-list-iteminput[type=checkbox]:focus {
+	border : 1px solid darkred;
+	color : darkred;
+}
+#article-list-item input[type=file] {
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+	margin-bottom : 20px;
+}
+#article-list-item input[type=file]:focus {
+	border : 1px solid darkred;
+	color : darkred;
+}
+#article-list-item input[type=radio] {
+	margin-bottom : 20px;
+	margin-right : 200px;
+}
+#article-list-item input[type=submit] {
+	background : #fff;
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+	border-radius : 5px;
+	margin-left : 400px;
+	margin-bottom : 30px;
+}
+#article-list-item input[type=submit]:hover {
+	border : 1px solid darkred;
+	-moz-animation-name: pulse;
+ -moz-animation-duration: .5s;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-timing-function: ease-out;
+	-webkit-animation-name: pulse;
+ -webkit-animation-duration: .5s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: ease-out;
+}
+#admin-edit-content > fieldset > span {
+	clear : both;
+	display : block;
+	margin-bottom : 20px;
+}
+#article-list-item label[for=file_upload] {
+	clear : both;
+}
+#article-list-item #body {
+	min-height : 300px;
+}
+#article-list-item #meta-description, #article-list-item #meta-keywords {
+	min-height : 200px;
+}
+#article-list-item label[for=not-publish] {
+	clear : both;
+}
+/* delete node */
+
+#delete-node {
+	border : 1px solid darkred;
+	text-align : center;
+	padding : 10px;
+	margin-bottom : 20px;
+	border-radius : 10px;
+}
+/* add categories */
+
+#add-category {
+margin : 0 10px
+}
+#add-category h1, #add-category p {
+	font-size : 1.6em;
+	margin-bottom : 1.25em;
+	color : darkred;
+}
+#add-category form {
+	font-size : 1.6em;
+}
+#add-category input {
+	font-size : 16px;
+	font-family : monospace;
+}
+#add-category label, #add-category input[type=text] {
+	width : 280px;
+	float : left;
+	margin-bottom : 20px;
+}
+#add-category legend span {
+	margin-bottom : 20px;
+	display : block;
+}
+#add-category input[type=text] {
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+}
+#add-category input[type=text]:focus {
+	border : 1px solid darkred;
+	color : darkred;
+}
+#add-category input[type=text]:focus {
+	border : 1px solid darkred;
+	color : darkred;
+}
+#add-category input[type=radio] {
+	margin-bottom : 20px;
+	float : left;
+width : 20px;
+height : 20px;
+}
+#add-category label[for=not-publish], #add-category label[for=publish] {
+	clear : both;
+	width : 150px;
+}
+#add-category input[type=submit] {
+	background : #fff;
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+	border-radius : 5px;
+	margin-left : 200px;
+	margin-bottom : 30px;
+}
+#add-category input[type=submit]:hover {
+	border : 1px solid darkred;
+	-moz-animation-name: pulse;
+ -moz-animation-duration: .5s;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-timing-function: ease-out;
+	-webkit-animation-name: pulse;
+ -webkit-animation-duration: .5s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: ease-out;
+}
+/* edit categories */
+
+#edit-category {
+margin : 0 10px;
+}
+#edit-category h1, #edit-category p {
+	font-size : 1.6em;
+	margin-bottom : 1.25em;
+	color : darkred;
+}
+.category-title {
+	background : darkred;
+	color : #fff;
+	font-size : 1.6em;
+	margin-bottom : 1.25em;
+	padding : 5px 1px;
+	border-radius : 5px;
+}
+#edit-category form {
+	font-size : 1.6em;
+}
+#edit-category input {
+	font-size : 16px;
+	font-family : monospace;
+}
+#edit-category label, #edit-category input[type=text] {
+	width : 280px;
+	float : left;
+	margin-bottom : 20px;
+}
+#edit-category legend span {
+	margin-bottom : 20px;
+	display : block;
+}
+#edit-category input[type=text] {
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+}
+#edit-category input[type=text]:focus {
+	border : 1px solid darkred;
+	color : darkred;
+}
+#edit-category input[type=radio] {
+	margin-bottom : 20px;
+	float : left;
+width : 20px;
+height : 20px;
+}
+#edit-category label[for=not-publish], #edit-category label[for=publish] {
+	clear : both;
+	width : 150px;
+}
+#edit-category input[type=submit] {
+	background : #fff;
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+	border-radius : 5px;
+	margin-left : 200px;
+	margin-bottom : 30px;
+}
+#edit-category input[type=submit]:hover {
+	border : 1px solid darkred;
+	-moz-animation-name: ripple;
+	-moz-animation-duration: 1s;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-direction: normal;
+	-moz-animation-timing-function: ease-in-out;
+	-webkit-animation-name: ripple;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-direction: normal;
+	-webkit-animation-timing-function: ease-in-out;
+}
+/* delete category */
+#delete-category {
+	border : 1px solid darkred;
+	padding : 10px;
+	margin-bottom : 20px;
+	border-radius : 10px;
+}
+/* admin add user */
+
+#admin-add-user {
+margin : 0 10px;
+}
+#admin-add-user h1, #admin-add-user p {
+	font-size : 1.6em;
+	margin-bottom : 1.25em;
+	color : darkred;
+}
+#admin-add-user form {
+	font-size : 1.6em;
+}
+#admin-add-user input {
+	font-size : 16px;
+	font-family : monospace;
+}
+#admin-add-user label, #admin-add-user input[type=text] {
+	width : 280px;
+	float : left;
+	margin-bottom : 20px;
+}
+#admin-add-user legend span {
+	margin-bottom : 20px;
+	display : block;
+}
+#admin-add-user input[type=text] {
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+}
+#admin-add-user input[type=text]:focus {
+	border : 1px solid darkred;
+	color : darkred;
+}
+
+#admin-add-user input[type=radio] {
+	margin-bottom : 20px;
+	float : left;
+width : 20px;
+height : 20px;
+}
+#admin-add-user label[for=admin-yes], #admin-add-user label[for=admin-no] {
+	clear : both;
+	width : 150px;
+}
+#admin-add-user input[type=submit] {
+	background : #fff;
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+	border-radius : 5px;
+	margin-left : 200px;
+	margin-bottom : 30px;
+}
+#admin-add-user input[type=submit]:hover {
+	border : 1px solid darkred;
+	-moz-animation-name: ripple;
+	-moz-animation-duration: 1s;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-direction: normal;
+	-moz-animation-timing-function: ease-in-out;
+	-webkit-animation-name: ripple;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-direction: normal;
+	-webkit-animation-timing-function: ease-in-out;
+}
+/* edit-users */
+
+#edit-users {
+margin : 0 10px;
+}
+#edit-users h1, #edit-users p, .username {
+	font-size : 1.6em;
+	margin-bottom : 1.25em;
+	color : darkred;
+}
+#edit-users form {
+	font-size : 1.6em;
+}
+#edit-users input {
+	font-size : 16px;
+	font-family : monospace;
+}
+#edit-users label, #edit-users input[type=text] {
+	width : 280px;
+	float : left;
+	margin-bottom : 20px;
+}
+#edit-users legend span {
+	margin-bottom : 20px;
+	display : block;
+}
+#edit-users input[type=text] {
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+}
+#edit-users input[type=text]:focus {
+	border : 1px solid darkred;
+	color : darkred;
+}
+#edit-users input[type=radio] {
+	margin-bottom : 20px;
+	float : left;
+width : 20px;
+height : 20px;
+}
+#edit-users label[for=admin-yes], #edit-users label[for=admin-no] {
+	clear : both;
+	width : 150px;
+}
+#edit-users input[type=submit] {
+	background : #fff;
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+	border-radius : 5px;
+	margin-left : 200px;
+	margin-bottom : 30px;
+}
+#edit-users input[type=submit]:hover {
+	border : 1px solid darkred;
+	-moz-animation-name: pulse;
+ -moz-animation-duration: .5s;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-timing-function: ease-out;
+	-webkit-animation-name: pulse;
+ -webkit-animation-duration: .5s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: ease-out;
+}
+/* delete-menu */
+
+#delete-menu {
+	padding : 10px;
+	border : 1px solid darkred;
+	margin-bottom : 20px;
+	border-radius : 10px;
+}
+/* add-categories */
+
+#add-categories {
+	margin : 30px 10px;
+}
+#add-categories h1, #add-categories p {
+	font-size : 1.6em;
+	margin-bottom : 1.25em;
+	color : darkred;
+}
+#add-categories form {
+	font-size : 1.6em;
+}
+#add-categories input {
+
+	font-size : 16px;
+	font-family : monospace;
+}
+#add-categories label, #add-categories input[type=text] {
+	width : 280px;
+	float : left;
+	margin-bottom : 20px;
+}
+#add-categories legend span {
+	margin-bottom : 20px;
+	display : block;
+}
+#add-categories input[type=radio] {
+	margin-bottom : 20px;
+	float : left;
+	width : 20px;
+	height : 20px;
+	border : 1px solid #e8e8e8;
+}
+#add-categories label[for=yes-categories], #add-categories label[for=no-categories] {
+	clear : both;
+	width : 100px;
+}
+#add-categories input[type=submit] {
+	background : #fff;
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+	border-radius : 5px;
+	margin-left : 200px;
+	margin-bottom : 30px;
+}
+#add-categories input[type=submit]:hover {
+	border : 1px solid darkred;
+	-moz-animation-name: ripple;
+	-moz-animation-duration: 1s;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-direction: normal;
+	-moz-animation-timing-function: ease-in-out;
+	-webkit-animation-name: ripple;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-direction: normal;
+	-webkit-animation-timing-function: ease-in-out;
+}
+/* #add-menu */
+
+#add-menu {
+	margin : 0px 10px 30px 10px;
+}
+#add-menu h1, #add-menu p {
+	font-size : 1.6em;
+	margin-bottom : 1.25em;
+	color : darkred;
+}
+#add-menu form {
+	font-size : 1.6em;
+}
+#add-menu input {
+	font-size : 16px;
+	font-family : monospace;
+}
+#add-menu label, #add-menu input[type=text] {
+	width : 280px;
+	float : left;
+	margin-bottom : 20px;
+}
+#add-menu legend span {
+	margin-bottom : 20px;
+	display : block;
+}
+#add-menu input[type=text] {
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+}
+#add-menu input[type=text]:focus {
+	border : 1px solid darkred;
+	color : darkred;
+}
+#add-menu input[type=radio] {
+	margin-bottom : 20px;
+	float : left;
+	width : 20px;
+	height : 20px;
+	border : 1px solid #e8e8e8;
+}
+#add-menu label[for=publish], #add-menu label[for=not-publish] {
+	clear : both;
+	width : 100px;
+}
+#add-menu input[type=submit] {
+	background : #fff;
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+	border-radius : 5px;
+	margin-left : 200px;
+	margin-bottom : 30px;
+}
+#add-menu input[type=submit]:hover {
+	border : 1px solid darkred;
+	-moz-animation-name: ripple;
+	-moz-animation-duration: 1s;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-direction: normal;
+	-moz-animation-timing-function: ease-in-out;
+	-webkit-animation-name: ripple;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-direction: normal;
+	-webkit-animation-timing-function: ease-in-out;
+}
+/* rearrange-menu */
+
+#rearrange-menu {
+	margin : 30px 10px;
+}
+#rearrange-menu h1, #rearrange-menu p {
+	font-size : 1.6em;
+	margin-bottom : 1.25em;
+	color : darkred;
+}
+#rearrange-menu form {
+	font-size : 1.6em;
+}
+#rearrange-menu input {
+	font-size : 16px;
+	font-family : monospace;
+}
+#rearrange-menu label, #rearrange-menu input[type=text] {
+	width : 280px;
+	float : left;
+	margin-bottom : 20px;
+}
+#rearrange-menu legend span {
+	margin-bottom : 20px;
+	display : block;
+}
+#rearrange-menu input[type=text] {
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+}
+#rearrange-menu input[type=text]:focus {
+	border : 1px solid darkred;
+	color : darkred;
+}
+#rearrange-menu input[type=submit] {
+	background : #fff;
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+	border-radius : 5px;
+	margin-left : 200px;
+	margin-bottom : 30px;
+}
+#rearrange-menu input[type=submit]:hover {
+	border : 1px solid darkred;
+	-moz-animation-name: ripple;
+	-moz-animation-duration: 1s;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-direction: normal;
+	-moz-animation-timing-function: ease-in-out;
+	-webkit-animation-name: ripple;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-direction: normal;
+	-webkit-animation-timing-function: ease-in-out;
+}
+/* #edit-menu */
+
+#edit-menu {
+	margin : 0px 10px 30px 10px;
+}
+#edit-menu h1, #edit-menu p {
+	font-size : 1.6em;
+	margin-bottom : 1.25em;
+	color : darkred;
+}
+.menuname {
+	background : darkred;
+	padding : 5px 2px;
+	color : #fff;
+	font-size : 1.6em;
+	border-radius : 5px;
+	margin-bottom : 20px;
+}
+#edit-menu form {
+	font-size : 1.6em;
+}
+#edit-menu input {
+	font-size : 16px;
+	font-family : monospace;
+}
+#edit-menu label, #edit-menu input[type=text] {
+	width : 280px;
+	float : left;
+	margin-bottom : 20px;
+}
+#edit-menu input[type=text] {
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+}
+#edit-menu input[type=text]:focus {
+	border : 1px solid darkred;
+	color : darkred;
+}
+#edit-menu legend span {
+	margin-bottom : 20px;
+	display : block;
+}
+#edit-menu input[type=radio] {
+	margin-bottom : 20px;
+	float : left;
+	width : 20px;
+	height : 20px;
+	border : 1px solid #e8e8e8;
+}
+#edit-menu label[for=yes-categories], #edit-menu label[for=no-categories] {
+	clear : both;
+	width : 100px;
+}
+#edit-menu input[type=submit] {
+	background : #fff;
+	border : 1px solid #e8e8e8;
+	padding : 5px;
+	border-radius : 5px;
+	margin-left : 200px;
+	margin-bottom : 30px;
+}
+#edit-menu input[type=submit]:hover {
+	border : 1px solid darkred;
+	-moz-animation-name: ripple;
+	-moz-animation-duration: 1s;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-direction: normal;
+	-moz-animation-timing-function: ease-in-out;
+	-webkit-animation-name: ripple;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-direction: normal;
+	-webkit-animation-timing-function: ease-in-out;
+}
+/* Footer */
+
+#wrapper > footer {
+	font-size : 1.6em;
+	text-align : right;
+	margin-top : 40px;
+}
+/* new clearfix */
+.clearfix:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+}
+* html .clearfix {
+	zoom: 1;
+} /* IE6 */
+*:first-child+html .clearfix {
+	zoom: 1;
+} /* IE7 */

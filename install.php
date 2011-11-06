@@ -35,9 +35,7 @@ if (isset($_POST['submit'])) {
 
     }
 
-    $input = array("databaseName", //"server",
-        //"databaseUsername",
-    //"databasePassword",
+    $input = array("databaseName", "server","databaseUsername","databasePassword",
     "websiteName", "websiteSlogan", "adminEmail", "adminPassword", "adminUsername");
 
     foreach ($input as $result) {
