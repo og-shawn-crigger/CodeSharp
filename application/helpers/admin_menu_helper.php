@@ -15,12 +15,12 @@ if (!function_exists('admin_menu')) {
 	
 	$menu = '<nav>';
 	$menu .= '<ul>';
-	$menu .= '<li><a href="' . base_url() . 'admin">Home</a></li>';
-	$menu .= '<li><a href="' . base_url() . 'admin-content">Add article</a></li>';
-	$menu .= '<li><a href="' . base_url() . 'admin-edit-content">Edit articles</a></li>';
-	$menu .= '<li><a href="' . base_url() . 'admin-category">Add / edit categories</a></li>';
-	$menu .= '<li><a href="' . base_url() . 'admin-user">Add / edit users</a></li>';
-	$menu .= '<li><a href="' . base_url() . 'admin-menu">Add / edit menu items</a></li>';
+	$menu .= '<li><a href="' . base_url() . INDEX . 'admin">Home</a></li>';
+	$menu .= '<li><a href="' . base_url() . INDEX . 'admin-content">Add article</a></li>';
+	$menu .= '<li><a href="' . base_url() . INDEX . 'admin-edit-content">Edit articles</a></li>';
+	$menu .= '<li><a href="' . base_url() . INDEX . 'admin-category">Add / edit categories</a></li>';
+	$menu .= '<li><a href="' . base_url() . INDEX . 'admin-user">Add / edit users</a></li>';
+	$menu .= '<li><a href="' . base_url() . INDEX . 'admin-menu">Add / edit menu items</a></li>';
 	$menu .= '</ul>';
 	$menu .= '</nav>';
 	

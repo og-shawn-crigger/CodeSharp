@@ -1122,10 +1122,20 @@ height : 20px;
 	-webkit-animation-direction: normal;
 	-webkit-animation-timing-function: ease-in-out;
 }
+
+/* pagination */
+
+#pagination {
+font-size : 1.6em;
+}
+#pagination a, #pagination strong {
+margin-right : 5px;
+}
+
 /* Footer */
 
 #wrapper > footer {
-	font-size : 1.6em;
+	font-size : 1.6em; 
 	text-align : right;
 	margin-top : 40px;
 }
