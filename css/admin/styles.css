@@ -45,7 +45,7 @@ body {
 	font : 62.5% Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman", serif;
 	height : 100%;
 	line-height : 2em;
-    background : url("images/fancy_deboss.png");
+	background : url("images/fancy_deboss.png");
 }
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
 	-webkit-transition: all 0.3s linear;
@@ -79,7 +79,7 @@ a:active {
 	border : 1px solid #e8e8e8;
 	border-radius : 20px;
 	min-height : 700px;
-    background : #fff;
+	background : #fff;
 }
 #wrapper header h1 {
 	font: 5em 'PacificoRegular', sans-serif;
@@ -189,34 +189,24 @@ a:active {
 #content header a:last-child {
 	margin-left : 20px;
 }
-
-
 /* admin menu */
 
 nav ul li {
-list-style : none;
-font-size : 1.6em;
-margin-bottom : 1.25em;
+	list-style : none;
+	font-size : 1.6em;
+	margin-bottom : 1.25em;
 }
 nav ul li a {
-display : block;
-text-decoration : none;
-border : 1px solid #e8e8e8;
-padding : 5px 2px;
-border-radius : 5px;
+	display : block;
+	text-decoration : none;
+	border : 1px solid #e8e8e8;
+	padding : 5px 2px;
+	border-radius : 5px;
 }
 nav ul li a:hover {
-text-decoration : underline;
-border : 1px solid darkred;
+	text-decoration : underline;
+	border : 1px solid darkred;
 }
-
-
-
-
-
-
-
-
 /* login page */
 
 #admin-login-box {
@@ -447,8 +437,8 @@ margin : 0 0 10px 0;
 	color : darkred;
 }
 #admin-add-article input[type=checkbox] {
-width : 20px;
-height : 20px;
+	width : 20px;
+	height : 20px;
 }
 #admin-add-article label[for=not-publish] {
 	clear : both;
@@ -545,8 +535,8 @@ height : 20px;
 	color : darkred;
 }
 #article-list-item input[type=checkbox] {
-width : 20px;
-height : 20px;
+	width : 20px;
+	height : 20px;
 }
 #article-list-item input[type=submit] {
 	background : #fff;
@@ -596,7 +586,7 @@ height : 20px;
 /* add categories */
 
 #add-category {
-margin : 0 10px
+	margin : 0 10px
 }
 #add-category h1, #add-category p {
 	font-size : 1.6em;
@@ -633,12 +623,12 @@ margin : 0 10px
 }
 #add-category input[type=checkbox] {
 	float : left;
-width : 20px;
-height : 20px;
+	width : 20px;
+	height : 20px;
 }
 #add-category label[for$=publish] {
-	clear : both;
-	width : 150px;
+ clear : both;
+ width : 150px;
 }
 #add-category input[type=submit] {
 	background : #fff;
@@ -662,7 +652,7 @@ height : 20px;
 /* edit categories */
 
 #edit-category {
-margin : 0 10px;
+	margin : 0 10px;
 }
 #edit-category h1, #edit-category p {
 	font-size : 1.6em;
@@ -703,12 +693,12 @@ margin : 0 10px;
 }
 #edit-category input[type=checkbox] {
 	float : left;
-width : 20px;
-height : 20px;
+	width : 20px;
+	height : 20px;
 }
 #edit-category label[for*=publish] {
-	clear : both;
-	width : 150px;
+ clear : both;
+ width : 150px;
 }
 #edit-category input[type=submit] {
 	background : #fff;
@@ -741,7 +731,7 @@ height : 20px;
 /* admin add user */
 
 #admin-add-user {
-margin : 0 10px;
+	margin : 0 10px;
 }
 #admin-add-user h1, #admin-add-user p {
 	font-size : 1.6em;
@@ -774,12 +764,12 @@ margin : 0 10px;
 }
 #admin-add-user input[type=checkbox] {
 	float : left;
-width : 20px;
-height : 20px;
+	width : 20px;
+	height : 20px;
 }
 #admin-add-user label[for^=admin] {
-	clear : both;
-	width : 150px;
+ clear : both;
+ width : 150px;
 }
 #admin-add-user input[type=submit] {
 	background : #fff;
@@ -805,7 +795,7 @@ height : 20px;
 /* edit-users */
 
 #edit-users {
-margin : 0 10px;
+	margin : 0 10px;
 }
 #edit-users h1, #edit-users p, .username {
 	font-size : 1.6em;
@@ -838,12 +828,12 @@ margin : 0 10px;
 }
 #edit-users input[type=checkbox] {
 	float : left;
-width : 20px;
-height : 20px;
+	width : 20px;
+	height : 20px;
 }
-#edit-users label[for^=admin]{
-	clear : both;
-	width : 150px;
+#edit-users label[for^=admin] {
+ clear : both;
+ width : 150px;
 }
 #edit-users input[type=submit] {
 	background : #fff;
@@ -886,7 +876,6 @@ height : 20px;
 	font-size : 1.6em;
 }
 #add-categories input {
-
 	font-size : 16px;
 	font-family : monospace;
 }
@@ -907,8 +896,8 @@ height : 20px;
 	border : 1px solid #e8e8e8;
 }
 #add-categories label[for$=categories] {
-	clear : both;
-	width : 100px;
+ clear : both;
+ width : 100px;
 }
 #add-categories input[type=submit] {
 	background : #fff;
@@ -973,8 +962,8 @@ height : 20px;
 	border : 1px solid #e8e8e8;
 }
 #add-menu label[for$=publish] {
-	clear : both;
-	width : 100px;
+ clear : both;
+ width : 100px;
 }
 #add-menu input[type=submit] {
 	background : #fff;
@@ -1095,15 +1084,15 @@ height : 20px;
 	display : block;
 }
 #edit-menu input[type=checkbox] {
-margin-bottom : 20px;
+	margin-bottom : 20px;
 	float : left;
 	width : 20px;
 	height : 20px;
 	border : 1px solid #e8e8e8;
 }
 #edit-menu label[for^=publish] {
-	float : left;
-	width : 100px;
+ float : left;
+ width : 100px;
 }
 #edit-menu input[type=submit] {
 	background : #fff;
@@ -1126,20 +1115,18 @@ margin-bottom : 20px;
 	-webkit-animation-direction: normal;
 	-webkit-animation-timing-function: ease-in-out;
 }
-
 /* pagination */
 
 #pagination {
-font-size : 1.6em;
+	font-size : 1.6em;
 }
 #pagination a, #pagination strong {
-margin-right : 5px;
+	margin-right : 5px;
 }
-
 /* Footer */
 
 #wrapper > footer {
-	font-size : 1.6em; 
+	font-size : 1.6em;
 	text-align : right;
 	margin-top : 40px;
 }

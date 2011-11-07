@@ -14,6 +14,11 @@
 <![endif]-->
 <title>
 <?php
+
+/**
+ * Do not remove below. This is needed for page titles
+ */
+
 $pageURL = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
 
 if ($_SERVER["SERVER_PORT"] != "80"){
@@ -46,24 +51,17 @@ switch ($page) {
 
 ?>
 </title>
-<?php if(isset($admin)): 
 
-// THE CSS SHEET BELOW IS FOR THE ADMIN SECTION ONLY
+<!-- css here -->
 
-?>
-<link type="text/css" rel="stylesheet" media="all" href="<?php
 
-echo base_url();
 
-?>css/styles.css" />
-<link type="text/css" rel="stylesheet" media="all" href="<?php
-
-echo base_url();
-
-?>css/fonts.css" />
-<?php endif; ?>
 <!-- meta description here -->
 <?php
+
+/**
+ * Do not remove below. This is needed for description and keywords meta values
+ */
 
 if(isset($full_node)) {
 
@@ -98,7 +96,18 @@ if($full_node[0]->meta_keywords !== "") {
 }
 
 ?>
+<link rel="canonical" href="<?php
+
+echo site_url() . $this->uri->uri_string();
+
+?>" />
+
+
+<!-- JavaScript here -->
+
+
 </head>
+<?php flush(); ?>
 <body>
 <!--[if lt IE 7]>
           <div id="ie6-alert" style="width: 100%; text-align:center;">

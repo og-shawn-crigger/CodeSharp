@@ -1,8 +1,4 @@
-<?php
-
-ob_start();
-
-?>
+<?php ob_start();?>
 <!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <!--[if lt IE 7 ]><html class="ie6" lang="en"><![endif]-->
@@ -13,9 +9,6 @@ ob_start();
 <!--<![endif]-->
 <head>
 <meta charset="utf-8" />
-<!--[if lt IE 9]>
-<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
 <title>
 <?php
 
@@ -123,6 +116,7 @@ echo base_url("css/admin/markitup/sets/textile/set.js");
 /* <![CDATA[ */
 $(document).ready(function() {
     
+    // for markItUp editor. Don't touch
     $("#body").markItUp(mySettings);
 
     }); // End document ready
@@ -143,6 +137,7 @@ echo site_url() . $this->uri->uri_string();
 ?>" />
 
 </head>
+<?php flush(); ?>
 <body>
 
 <!--[if lt IE 7]>
