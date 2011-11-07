@@ -197,7 +197,8 @@ if (!empty($full_node)):
 
 <div id="node-body"><?php
 
-    echo $this->typography->auto_typography(utf8_special($full_node[0]->body));
+    echo $this->typography->auto_typography(utf8_special($this->textile->
+        TextileThis($full_node[0]->body)));
 
 ?></div></article>
 

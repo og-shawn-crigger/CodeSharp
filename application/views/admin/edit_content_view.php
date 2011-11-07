@@ -215,7 +215,7 @@ if (empty($edit) && isset($nodes_all)) {
 
         $list .= 'Date published: ';
 
-        $list .= strftime("%M:%H %B %d, %Y", strtotime(strip_tags($node->date)));
+        $list .= strftime("%H:%M %B %d, %Y", strtotime(strip_tags($node->date)));
 
         $list .= '<br />';
 

@@ -67,6 +67,8 @@ class Content_Model extends CI_Model {
     // used for edit content list
 
     public function get_all_content_edit($limit = "", $offset = "") {
+        
+        $this->db->order_by("date", "desc");
 
         $query = $this->db->get("content", $limit, $offset);
 
@@ -109,7 +111,6 @@ class Content_Model extends CI_Model {
         $this->db->where('id', $id);
 
         return $this->db->update('content', $data);
-        
         
 
     }

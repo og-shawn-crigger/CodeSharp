@@ -1,4 +1,8 @@
-<?php ob_start(); ?>
+<?php
+
+ob_start();
+
+?>
 <!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <!--[if lt IE 7 ]><html class="ie6" lang="en"><![endif]-->
@@ -17,14 +21,14 @@
 
 $pageURL = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
 
-if ($_SERVER["SERVER_PORT"] != "80"){
+if ($_SERVER["SERVER_PORT"] != "80") {
 
-    $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
-	
+    $pageURL .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
+
 } else {
 
-    $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
-	
+    $pageURL .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+
 }
 
 $page = $pageURL;
@@ -48,7 +52,8 @@ switch ($page) {
         break;
 
     case (preg_match('/^.*\/admin-edit-content\/edit-node\/\d/', $page) ? true : false):
-        echo isset($_POST["title"]) ? $_POST["title"] : $edit[0]->title . " / " . SITENAME;
+        echo isset($_POST["title"]) ? $_POST["title"]:
+        $edit[0]->title . " / " . SITENAME;
         break;
 
     case (preg_match('/^.*\/admin-category\/*/', $page) ? true : false):
@@ -58,7 +63,7 @@ switch ($page) {
     case (preg_match('/^.*\/admin-user\/*/', $page) ? true : false):
         echo "Add and edit user details " . " / " . SITENAME;
         break;
-        
+
     case (preg_match('/^.*\/admin-menu\/*/', $page) ? true : false):
         echo "Add and edit menu details " . " / " . SITENAME;
         break;
@@ -84,14 +89,46 @@ echo base_url("css/admin/styles.css");
 echo base_url("css/admin/fonts.css");
 
 ?>" />
+<link rel="stylesheet" type="text/css" href="<?php
+
+echo base_url("css/admin/markitup/skins/simple/style.css");
+
+?>" />
+<link rel="stylesheet" type="text/css" href="<?php
+
+echo base_url("css/admin/markitup/sets/textile/style.css");
+
+?>" />
+
 
 <!-- JavaScript -->
 
 <script src="<?php
 
-echo base_url("javascript/jquery-1.7.min.js");
+echo base_url("javascript/admin/jquery-1.7.min.js");
 
 ?>"></script>
+<script src="<?php
+
+echo base_url("css/admin/markitup/jquery.markitup.js");
+
+?>"></script>
+<script src="<?php
+
+echo base_url("css/admin/markitup/sets/textile/set.js");
+
+?>"></script>
+
+<script>
+/* <![CDATA[ */
+$(document).ready(function() {
+    
+    $("#body").markItUp(mySettings);
+
+    }); // End document ready
+/* ]]> */
+</script>
+    
 
 <!--[if lt IE 9]>
 <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
@@ -99,7 +136,11 @@ echo base_url("javascript/jquery-1.7.min.js");
 
 <!-- meta tags -->
 
-<link rel="canonical" href="<?php echo site_url().$this->uri->uri_string();?>" />
+<link rel="canonical" href="<?php
+
+echo site_url() . $this->uri->uri_string();
+
+?>" />
 
 </head>
 <body>
