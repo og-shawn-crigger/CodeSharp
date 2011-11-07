@@ -122,10 +122,10 @@ class Admin_User extends CI_Controller {
             'trim|required|max_length[30]|callback_duplicate_username');
 
         $this->form_validation->set_rules('passwordAdd', 'first password',
-            'trim|required|max_length[40]');
+            'trim|required|max_length[40]|min_length[8]');
 
         $this->form_validation->set_rules('passwordTwoAdd', 'second password',
-            'trim|required|max_length[40]|matches[passwordAdd]');
+            'trim|required|max_length[40]|min_length[8]|matches[passwordAdd]');
 
         $this->form_validation->set_rules('emailAdd', 'first email',
             'trim|required|max_length[50]|valid_email|callback_duplicate_email');
@@ -156,8 +156,8 @@ class Admin_User extends CI_Controller {
             // form success here
 
 
-            if ($this->user_model->insert_user($this->input->post('usernameAdd'), $this->
-                input->post('passwordAdd'), $this->input->post('emailAdd'), $admin_rights)) {
+            if ($this->user_model->insert_user($this->input->post('usernameAdd'), $this->input->post('passwordAdd'), 
+            $this->input->post('emailAdd'), $admin_rights)) {
 
                 $data['success'] = "<p>You have successfully created a new user.</p>";
 
@@ -281,14 +281,14 @@ class Admin_User extends CI_Controller {
             if (isset($form[$array_keys['four']])) {
 
                 $this->form_validation->set_rules($array_keys['four'], 'first password',
-                    'trim|max_length[40]');
+                    'trim|max_length[40]|min_length[8]');
 
             }
 
             if (isset($form[$array_keys['five']])) {
 
                 $this->form_validation->set_rules($array_keys['five'], 'second password',
-                    'trim|max_length[40]|matches[' . $array_keys['four'] . ']');
+                    'trim|max_length[40]|min_length[8]|matches[' . $array_keys['four'] . ']');
 
             }
 

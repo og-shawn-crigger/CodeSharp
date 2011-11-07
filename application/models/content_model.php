@@ -47,39 +47,15 @@ class Content_Model extends CI_Model {
 
     }
 
-    /**
-     * This creates the version of the aricle title that can be used in the URI
-     */
-
-    private function pretty_url($str) {
-
-        // only allow numeralpha charaters
-        $str = preg_replace("/[^a-zA-Z0-9]/", "-", $str);
-
-        // remove unneccsary white space
-        $str = preg_replace('/\s\s+/', ' ', $str);
-
-        // if more than one hyphen then cut down to just one
-        $str = preg_replace('/[-]{2,}/', '-', $str);
-
-        // make sure everything is lowercase
-        $str = strtolower($str);
-
-        return $str;
-
-    }
-
+ 
     // insert content - creates new content database entry
 
     public function insert_content($category = "", $user_id = "", $image_id = "", $title =
         "", $body = "", $meta_description = "", $meta_keywords = "", $visibility = "") {
 
-        // make a url friendly version of the title
-        $url = $this->pretty_url($title);
-
         // date('Y-m-d H:i:s') = MySQL now() function
         $data = array('category_id' => $category, 'user_id' => $user_id, 'image_id' => $image_id,
-            'date' => date('Y-m-d H:i:s'), 'title' => $title, 'url' => $url, 'body' => $body,
+            'date' => date('Y-m-d H:i:s'), 'title' => $title,  'body' => $body,
             'meta_description' => $meta_description, 'meta_keywords' => $meta_keywords,
             'visible' => $visibility);
 
@@ -132,9 +108,7 @@ class Content_Model extends CI_Model {
 
         }
 
-        $url = $this->pretty_url($title);
-
-        $data = array('title' => $title, 'url' => $url, 'category_id' => $select,
+        $data = array('title' => $title, 'category_id' => $select,
             'user_id' => $user_id, 'image_id' => $image_id, 'date' => $date, 'body' => $body,
             'meta_keywords' => $meta_keywords, 'meta_description' => $meta_description,
             'visible' => $visibility);

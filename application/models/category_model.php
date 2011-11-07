@@ -46,19 +46,33 @@ class Category_Model extends CI_Model {
 
     }
 
-    function get_cat_content($id) {
+    function get_cat_content($id,$limit = null, $offset = null) {
 
-        // Find all items of the content node where third item equals the third segment
+        // Find all items of the content node where second item equals the second segment
         $this->db->where('category_id', $id);
 
         $this->db->where('visible', 1);
 
         $this->db->order_by("date", "desc");
 
-        $query = $this->db->get("content");
+        $query = $this->db->get("content", $limit, $offset);
 
         return $query->result();
 
+    }
+    
+    public function find_category_rows($visible = TRUE, $id = "") {
+        
+        if($visible === TRUE) {
+        
+        $this->db->where('visible', 1);
+        
+        }
+        
+        $this->db->where('category_id', $id);
+        
+        return $this->db->get('content')->num_rows();
+        
     }
 
     function add_category($name = "", $publish = "") {

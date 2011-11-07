@@ -10,11 +10,17 @@
 
 <div id="wrapper" class="admin">
 <header class="clearfix">
-  <h1><?php echo SITENAME; ?> / admin</h1>
+  <h1><?php
+
+echo SITENAME;
+
+?> / admin</h1>
 </header>
 <!-- End header -->
 <div id="content" class="clearfix">
-  <header> <a href="admin-config">Global Settings</a> / <a href="login/letmeout">Logout</a> </header>
+  <header>  <?php echo top_admin_menu(); 
+  // function to be found in admin_top_menu_helper
+  ?></header>
   <div id="main-admin"> <a href="admin-config">
     <section>
       <header>Admin configuration</header>

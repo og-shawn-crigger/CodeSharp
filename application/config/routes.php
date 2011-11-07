@@ -41,6 +41,15 @@ if (!defined('BASEPATH'))
 |
 */
 
+$route['default_controller'] = "content";
+$route['404_override'] = '';
+
+
+
+
+
+
+
 // Makes sure that when edit article form is sumitted then the right method is called
 $route['admin-edit-content/edit-node/:num/submit'] = "admin_edit_content/submit";
 
@@ -96,8 +105,7 @@ $route['admin-user/(:any)'] = "admin_user/$1";
 
 
 
-$route['default_controller'] = "content";
-$route['404_override'] = '';
+
 
 
 /* End of file routes.php */

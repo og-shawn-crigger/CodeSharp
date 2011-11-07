@@ -14,7 +14,9 @@
 </header>
 <!-- End header -->
 <div id="content" class="clearfix">
-  <header> <a href="admin-config">Global Settings</a> / <a href="login/letmeout">Logout</a> </header>
+  <header>  <?php echo top_admin_menu(); 
+  // function to be found in admin_top_menu_helper
+  ?> </header>
   <section  id="column-one"> <?php echo admin_menu();
  // above is a helper - admin_menu_helper
  ?> </section>

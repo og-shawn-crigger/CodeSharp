@@ -76,26 +76,31 @@ switch ($page) {
 
 <link type="text/css" rel="stylesheet" media="all" href="<?php
 
-echo base_url();
+echo base_url("css/admin/styles.css");
 
-?>css/admin/styles.css" />
+?>" />
 <link type="text/css" rel="stylesheet" media="all" href="<?php
 
-echo base_url();
+echo base_url("css/admin/fonts.css");
 
-?>css/admin/fonts.css" />
+?>" />
 
 <!-- JavaScript -->
 
 <script src="<?php
 
-echo base_url();
+echo base_url("javascript/jquery-1.7.min.js");
 
-?>javascript/jquery-1.7.min"></script>
+?>"></script>
 
 <!--[if lt IE 9]>
 <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
 <![endif]-->
+
+<!-- meta tags -->
+
+<link rel="canonical" href="<?php echo site_url().$this->uri->uri_string();?>" />
+
 </head>
 <body>
 

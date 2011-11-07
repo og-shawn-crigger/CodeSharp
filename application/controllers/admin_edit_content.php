@@ -66,7 +66,7 @@ class Admin_Edit_Content extends CI_Controller {
 
         $data = array();
 
-        $config['base_url'] = base_url() . INDEX . 'admin-edit-content/index';
+        $config['base_url'] = site_url('admin-edit-content/index');
 
         // place below into its own model
         $config['total_rows'] = $this->content_model->find_content_rows($visible = false);

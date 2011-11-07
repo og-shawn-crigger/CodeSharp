@@ -14,7 +14,9 @@
 </header>
 <!-- End header -->
 <div id="content" class="clearfix">
-  <header> <a href="admin-config">Global Settings</a> / <a href="login/letmeout">Logout</a> </header>
+  <header>  <?php echo top_admin_menu(); 
+  // function to be found in admin_top_menu_helper
+  ?> </header>
   <section id="column-one"> 
  <?php echo admin_menu();
  // above is a helper - admin_menu_helper
@@ -161,10 +163,10 @@ if (isset($_POST['submitMenu'])) {
 
 ?>
         <form id="menu-order" name="menuOrder" method="post" action="<?php
+        
+site_url("admin-menu/change-menu-order#menu-order-result");
 
-echo base_url() . INDEX;
-
-?>admin-menu/change-menu-order#menu-order-result">
+?>">
           <fieldset>
           <legend><span>Change the number from 99 to 0. <br>
           The higher the number the higher it appears in the menu order</span></legend>
@@ -299,9 +301,8 @@ foreach ($display_menu as $menu_page) {
 
     $form .= 'method="post" action="';
 
-    $form .= base_url() . INDEX . 'admin-menu/update-menu#menu-block-result-' .
-        $id;
-
+    $form .= site_url("admin-menu/update-menu#menu-block-result-") . $id;
+    
     $form .= '">';
 
     $form .= '<fieldset class="fieldset-hidden">';

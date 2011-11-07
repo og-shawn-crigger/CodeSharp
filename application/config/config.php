@@ -27,7 +27,6 @@ $config['base_url']	= 'http://localhost/CodeSharp/';
 |
 */
 $config['index_page'] = 'index.php/';
-defined("INDEX") ? null: define("INDEX", $config['index_page']);
 
 /*
 |--------------------------------------------------------------------------

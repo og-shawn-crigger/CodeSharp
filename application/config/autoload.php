@@ -54,7 +54,7 @@ $autoload['packages'] = array();
 
 
 $autoload['libraries'] = array('database', 'form_validation', 'email',
-    'typography', 'pagination', 'session');
+    'typography', 'pagination', 'session', 'encrypt');
 
 
 
@@ -69,7 +69,10 @@ $autoload['libraries'] = array('database', 'form_validation', 'email',
 
 $autoload['helper'] = array('url', 'html', 'form', 'text', 'date',
     'htmlspecial_helper', 'array_key_change_helper', 'error_helper',
-    'strip_form_helper', 'utf8special_helper', 'admin_menu_helper');
+    'strip_form_helper', 'utf8special_helper', 
+    'admin_menu_helper', 'encrypt_helper', 
+    'decrypt_helper', 
+    'admin_top_menu_helper');
 
 
 /*

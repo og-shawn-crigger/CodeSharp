@@ -19,8 +19,9 @@ class User_Model extends CI_Model {
 
         // date('Y-m-d H:i:s') = MySQL now() function
         $data = array('created' => date('Y-m-d H:i:s'), 'username' => $name, 'password' =>
-            $password, 'email' => $email, 'member' => $member, 'admin_rights' => $admin_rights,
-            'dbsalt' => $dbsalt);
+            $this->encrypt->encode($password), 'email' => $email, 'member' => $this->
+            encrypt->encode($member), 'admin_rights' => $admin_rights, 'dbsalt' => $this->
+            encrypt->encode($dbsalt));
 
         return $this->db->insert('user', $data);
 
@@ -54,8 +55,9 @@ class User_Model extends CI_Model {
             // Add fixed salt and unique user salt to the password
             $password = hash_hmac('sha1', $password, SALT . $dbsalt);
 
-            $data = array('username' => $username, 'password' => $password, 'email' => $email,
-                'admin_rights' => $admin, 'dbsalt' => $dbsalt);
+            $data = array('username' => $username, 'password' => $this->encrypt->encode($password),
+                'email' => $email, 'admin_rights' => $admin, 'dbsalt' => $this->encrypt->encode
+                ($dbsalt));
 
             $this->db->limit(1);
 
@@ -102,7 +104,7 @@ class User_Model extends CI_Model {
          * If it doesn't exist then display an error message
          */
 
-        $this->db->select('dbsalt');
+        $this->db->select('dbsalt,password');
 
         $this->db->where('username', $username);
 
@@ -119,24 +121,28 @@ class User_Model extends CI_Model {
              * dbsalt from database and salt constant
              */
 
-            // Add fixed salt and unique user salt to the password
-            $password = hash_hmac('sha1', $password, SALT . $result->dbsalt);
-
-            $this->db->select('id, username');
-
-            $this->db->where('username', $username);
-            $this->db->where('password', $password);
-
-            $query = $this->db->get("user");
-
-            $user = $query->row();
-
             /**
-             * If the password is wrong then display an error message
-             * But if it is correct then return the user values as an object
+             * Need to decrypt the salt and password first.
+             * Then compare the user entered info to that of the database value
+             * If okay then take id and username from the database row to be used in the cookie
              */
 
-            if ($user) {
+            $dec_dbsalt = $this->encrypt->decode($result->dbsalt);
+
+            $dec_password = $this->encrypt->decode($result->password);
+
+            // Add fixed salt and unique user salt to the password
+            $password = hash_hmac('sha1', $password, SALT . $dec_dbsalt);
+
+            if ($dec_password === $password) {
+
+                $this->db->select('id, username');
+
+                $this->db->where('username', $username);
+
+                $query = $this->db->get("user");
+
+                $user = $query->row();
 
                 return $user;
 
@@ -160,8 +166,6 @@ class User_Model extends CI_Model {
     // Method used on admin-newpassword.inc.php
     public function new_password($username = "", $email = "") {
 
-        //$STH = $this->db->prepare("SELECT email,member,username FROM user WHERE email = :email OR username = :username");
-
         $this->db->select('email, member, username');
 
         $this->db->where('username', $username);
@@ -180,7 +184,7 @@ class User_Model extends CI_Model {
             $this->email->from(SITENAME);
             $this->email->to($user->email);
 
-            $this->email->subject('Email from SITENAME. Change password details.');
+            $this->email->subject('Email from ' . SITENAME. '. New password details.');
 
             // Build the email message body up below
             // Find if there is a CodeIngitor-friendly way of building up the message

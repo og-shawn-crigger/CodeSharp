@@ -22,7 +22,7 @@ class Content extends CI_Controller {
         $data['categories'] = $this->category_model->get_cats();
 
         $data['query_result'] = $this->category_model->get_cat_title();
-        
+
         $data['menu'] = $this->menu_model->menu_order("where visible = 1");
 
         $data['content'] = "main-page";
@@ -33,19 +33,19 @@ class Content extends CI_Controller {
 
 
     function index() {
-        
+
         /**
          * Below is the pagination for the index page / articles
          */
 
-        $config['base_url'] = base_url() . INDEX . 'content/index/';
+        $config['base_url'] = site_url("content/index/");
 
         $config['total_rows'] = $this->content_model->find_content_rows($visible = true);
 
         $config['per_page'] = 3;
 
         $config['num_links'] = 2;
-        
+
         $config['uri_segment'] = 3;
 
         $this->pagination->initialize($config);
@@ -56,7 +56,7 @@ class Content extends CI_Controller {
             uri->segment(3));
 
         $this->add_theme($data);
-        
+
     }
 
 
@@ -158,11 +158,32 @@ class Content extends CI_Controller {
 
         }
 
+        /**
+         * Database calls for category section ->
+         * $category variable comes from above: section section of the URI
+         */
+
         if ($this->uri->segment(1) === "category" && $this->uri->segment(2) !== "") {
 
             $data['category_records'] = $this->category_model->get_categories_by_id($category);
 
-            $data['category_details'] = $this->category_model->get_cat_content($category);
+            /**
+             * Category pagination 
+             */
+
+            $config['base_url'] = site_url('category/' . $this->uri->segment(2) . "/index/");
+
+            $config['total_rows'] = $this->category_model->find_category_rows($visible = true,$category);
+
+            $config['per_page'] = 3;
+
+            $config['num_links'] = 2;
+
+            $config['uri_segment'] = 3;
+            
+            $data['category_details'] = $this->category_model->get_cat_content($category,$config['per_page'],$this->uri->segment(4));
+
+            $this->pagination->initialize($config);
 
         }
 

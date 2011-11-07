@@ -10,7 +10,11 @@
 
 <header class="clearfix">
 
-<h1>Pinhead CMS (CodeIgniter version)</h1>
+<h1><?php
+
+echo SITENAME;
+
+?></h1>
 
 </header><!-- End header -->
 
@@ -56,7 +60,7 @@ if (isset($records)):
 
 <?php
 
-        echo base_url() . INDEX . 'category/';
+        echo site_url() . 'category/';
 
 ?>
 <?php
@@ -96,7 +100,7 @@ if (isset($records)):
 
 <div class="read-more"><a href="<?php
 
-        echo base_url() . INDEX . 'article/' . url_title(strtolower($rows->title));
+        echo site_url('article/' . url_title(strtolower($rows->title)));
 
 ?>">Read more</a></div>
 
@@ -155,7 +159,7 @@ if (!empty($full_node)):
 
 <div id="node-category">Category: <a href="<?php
 
-    echo base_url() . INDEX . 'category/';
+    echo site_url() . 'category/';
 
     foreach ($query_result as $cat) {
 
@@ -254,11 +258,7 @@ if (!empty($category_records)):
 
 <div class="read-more"><a href="<?php
 
-        echo base_url() . INDEX;
-
-?>article/<?php
-
-        echo url_title(strtolower($cat->title));
+        echo site_url("article/" . url_title(strtolower($cat->title)))
 
 ?>">Read more</a></div>
 
@@ -271,6 +271,10 @@ if (!empty($category_records)):
 ?>
 
 <?php
+
+    echo '<div id="pagination">';
+    echo $this->pagination->create_links();
+    echo '</div>';
 
 endif;
 
@@ -305,7 +309,7 @@ foreach ($menu as $main_menu) {
 
     if ($main_menu['menu_id'] === "C") {
 
-        $main_front .= base_url() . INDEX . 'category/' . url_title(strtolower($main_menu['name']));
+        $main_front .= site_url('category/' . url_title(strtolower($main_menu['name'])));
 
     }
 
@@ -319,11 +323,12 @@ foreach ($menu as $main_menu) {
 
         if ($menu_url->url !== "") {
 
-            $main_front .= base_url() . INDEX . $menu_url->url;
+            $main_front .= site_url($menu_url->url);
+
 
         } else {
 
-            $main_front .= base_url() . INDEX . "";
+            $main_front .= site_url();
 
         }
 

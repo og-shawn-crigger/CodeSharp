@@ -45,6 +45,14 @@ body {
 	font : 62.5% Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman", serif;
 	height : 100%;
 	line-height : 2em;
+    background : url("images/fancy_deboss.png");
+}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+	-webkit-transition: all 0.3s linear;
+	-o-transition: all 0.3s linear;
+	-moz-transition: all 0.3s linear;
+	-ms-transition: all 0.3s linear;
+	transition: all 0.3s linear;
 }
 a {
 	color : black;
@@ -71,6 +79,7 @@ a:active {
 	border : 1px solid #e8e8e8;
 	border-radius : 20px;
 	min-height : 700px;
+    background : #fff;
 }
 #wrapper header h1 {
 	font: 5em 'PacificoRegular', sans-serif;
@@ -440,6 +449,8 @@ margin : 0 0 10px 0;
 #admin-add-article input[type=radio] {
 	margin-bottom : 20px;
 	margin-right : 200px;
+width : 20px;
+height : 20px;
 }
 #admin-add-article label[for=not-publish] {
 	clear : both;
@@ -538,6 +549,8 @@ margin : 0 0 10px 0;
 #article-list-item input[type=radio] {
 	margin-bottom : 20px;
 	margin-right : 200px;
+width : 20px;
+height : 20px;
 }
 #article-list-item input[type=submit] {
 	background : #fff;
@@ -628,7 +641,7 @@ margin : 0 10px
 width : 20px;
 height : 20px;
 }
-#add-category label[for=not-publish], #add-category label[for=publish] {
+#add-category label[for$=publish] {
 	clear : both;
 	width : 150px;
 }
@@ -699,7 +712,7 @@ margin : 0 10px;
 width : 20px;
 height : 20px;
 }
-#edit-category label[for=not-publish], #edit-category label[for=publish] {
+#edit-category label[for*=publish] {
 	clear : both;
 	width : 150px;
 }
@@ -765,14 +778,13 @@ margin : 0 10px;
 	border : 1px solid darkred;
 	color : darkred;
 }
-
 #admin-add-user input[type=radio] {
 	margin-bottom : 20px;
 	float : left;
 width : 20px;
 height : 20px;
 }
-#admin-add-user label[for=admin-yes], #admin-add-user label[for=admin-no] {
+#admin-add-user label[for^=admin] {
 	clear : both;
 	width : 150px;
 }
@@ -837,7 +849,7 @@ margin : 0 10px;
 width : 20px;
 height : 20px;
 }
-#edit-users label[for=admin-yes], #edit-users label[for=admin-no] {
+#edit-users label[for^=admin]{
 	clear : both;
 	width : 150px;
 }
@@ -902,7 +914,7 @@ height : 20px;
 	height : 20px;
 	border : 1px solid #e8e8e8;
 }
-#add-categories label[for=yes-categories], #add-categories label[for=no-categories] {
+#add-categories label[for$=categories] {
 	clear : both;
 	width : 100px;
 }
@@ -968,7 +980,7 @@ height : 20px;
 	height : 20px;
 	border : 1px solid #e8e8e8;
 }
-#add-menu label[for=publish], #add-menu label[for=not-publish] {
+#add-menu label[for$=publish] {
 	clear : both;
 	width : 100px;
 }
@@ -1092,13 +1104,15 @@ height : 20px;
 }
 #edit-menu input[type=radio] {
 	margin-bottom : 20px;
+margin-right : 10px;
 	float : left;
 	width : 20px;
 	height : 20px;
 	border : 1px solid #e8e8e8;
+clear : left;
 }
-#edit-menu label[for=yes-categories], #edit-menu label[for=no-categories] {
-	clear : both;
+#edit-menu label[for^=publish] {
+	float : left;
 	width : 100px;
 }
 #edit-menu input[type=submit] {
