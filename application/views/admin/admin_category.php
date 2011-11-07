@@ -10,36 +10,46 @@
 
 <div id="wrapper" class="admin">
 <header class="clearfix">
-  <h1><?php echo SITENAME; ?> / admin</h1>
+  <h1><?php
+
+echo SITENAME;
+
+?> / admin</h1>
 </header>
 <!-- End header -->
 <div id="content" class="clearfix">
-  <header>  <?php echo top_admin_menu(); 
-  // function to be found in admin_top_menu_helper
-  ?> </header>
-  <section  id="column-one"> <?php echo admin_menu();
- // above is a helper - admin_menu_helper
- ?> </section>
+  <header>  <?php
+
+echo top_admin_menu();
+// function to be found in admin_top_menu_helper
+
+
+?> </header>
+  <section  id="column-one"> <?php
+
+echo admin_menu();
+// above is a helper - admin_menu_helper
+
+
+?> </section>
   <!-- End column one-->
   <section id="column-two">
     <section id="inner-column-one">
       <section id="add-category">
         <h1>Add a menu item or edit an existing one in the right hand column</h1>
         <?php
-		
-		if(isset($_POST['submit'])) {
 
-if (isset($success_error)) {
+if (isset($_POST['submit'])) {
 
-    echo $success_error;
+    if (isset($success_error)) {
 
-    echo validation_errors();
+        echo $success_error;
+
+        echo validation_errors();
+
+    }
 
 }
-
-}
-
-
 
 ?>
         <?php
@@ -57,15 +67,11 @@ $form .= form_input(array('name' => 'nameAdd', 'id' => 'nameAdd', 'maxlength' =>
 
 $form .= form_label('Publish', 'publish');
 
-$form .= form_radio(array('name' => 'publishAdd', 'id' => 'publish', 'value' =>
-    'YES', 'checked' => (isset($_POST['publishAdd']) && $_POST['publishAdd'] ==
-    "YES") ? 'checked' : ''));
+$form .= form_hidden('publishAdd', '0');
 
-$form .= form_label('Not publish', 'not-publish');
-
-$form .= form_radio(array('name' => 'publishAdd', 'id' => 'not-publish', 'value' =>
-    'NO', 'checked' => (isset($_POST['publishAdd']) && $_POST['publishAdd'] == "NO") ?
-    'checked' : ''));
+$form .= form_checkbox(array('name' => 'publishAdd', 'id' => 'publish',
+    'checked' => isset($_POST['publishAdd']) ? $_POST['publishAdd'] : null, 'value' =>
+    "1"));
 
 $form .= form_fieldset_close();
 
@@ -95,7 +101,8 @@ foreach ($categories as $category) {
     $publish = 'publish' . $category->id;
     $name = 'name' . $category->id;
 
-    echo '<div id="category-block-result-' . $category->id . '" style="clear: both">';
+    echo '<div id="category-block-result-' . $category->id .
+        '" style="clear: both">';
 
     if (isset($_POST[$cat_id])) {
 
@@ -125,7 +132,7 @@ foreach ($categories as $category) {
         $form .= form_fieldset_close();
 
         $form .= form_close();
-        
+
         echo $form;
 
     }
@@ -163,15 +170,10 @@ foreach ($categories as $category) {
 
     $form .= form_label('Publish', $publish);
 
-    $form .= form_radio(array('name' => $publish, 'id' => $publish, 'value' => 'YES',
-        'class' => 'admin-top', 'checked' => $category->visible == 1 || (isset($_POST[$publish]) &&
-        $_POST[$publish] == "YES") ? 'checked' : ''));
+    $form .= form_hidden($publish, '0');
 
-    $form .= form_label('Not publish', "not-" . $publish);
-
-    $form .= form_radio(array('name' => $publish, 'id' => "not-{$publish}", 'value' =>
-        'NO', 'class' => 'admin-top', 'checked' => $category->visible == 0 || (isset($_POST[$publish]) &&
-        $_POST[$publish] == "NO") ? 'checked' : ''));
+    $form .= form_checkbox(array('name' => $publish, 'id' => $publish, 'checked' =>
+        isset($_POST[$publish]) ? $_POST[$publish] : $category->visible, 'value' => "1"));
 
     $form .= form_fieldset_close();
 

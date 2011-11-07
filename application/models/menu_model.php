@@ -48,23 +48,13 @@ class Menu_Model extends CI_Model {
 
     public function add_categories_to_menu() {
 
-        if ($_POST['categoriesAdd'] == "YES") {
-
-            $value = 1;
-
-        } else {
-
-            $value = 0;
-
-        }
-
-        $data = array('okay' => $value);
+        $data = array('okay' => $_POST['categoriesAdd']);
         $this->db->where('name', "cat_menu");
         $this->db->limit(1);
 
         if ($this->db->update('admin', $data)) {
 
-            if ($value == 1) {
+            if ($_POST['categoriesAdd'] == 1) {
 
                 $this->cat_menu = true;
 
@@ -196,16 +186,6 @@ class Menu_Model extends CI_Model {
 
     function insert_menu($name, $url, $visibility) {
 
-        if ($visibility === "YES") {
-
-            $visibility = 1;
-
-        } else {
-
-            $visibility = 0;
-
-        }
-
         $data = array('name' => $name, 'url' => $url, 'date' => date('Y-m-d H:i:s'),
             'visible' => $visibility, 'menu_id' => 'M');
 
@@ -215,16 +195,6 @@ class Menu_Model extends CI_Model {
 
 
     public function update_menu($name, $url, $visible, $id) {
-
-        if ($visible === "YES") {
-
-            $visible = 1;
-
-        } else {
-
-            $visible = 0;
-
-        }
 
         $data = array('name' => $name, 'url' => $url, 'visible' => $visible);
 

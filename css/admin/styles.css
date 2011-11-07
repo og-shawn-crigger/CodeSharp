@@ -446,9 +446,7 @@ margin : 0 0 10px 0;
 	border : 1px solid darkred;
 	color : darkred;
 }
-#admin-add-article input[type=radio] {
-	margin-bottom : 20px;
-	margin-right : 200px;
+#admin-add-article input[type=checkbox] {
 width : 20px;
 height : 20px;
 }
@@ -546,9 +544,7 @@ height : 20px;
 	border : 1px solid darkred;
 	color : darkred;
 }
-#article-list-item input[type=radio] {
-	margin-bottom : 20px;
-	margin-right : 200px;
+#article-list-item input[type=checkbox] {
 width : 20px;
 height : 20px;
 }
@@ -635,8 +631,7 @@ margin : 0 10px
 	border : 1px solid darkred;
 	color : darkred;
 }
-#add-category input[type=radio] {
-	margin-bottom : 20px;
+#add-category input[type=checkbox] {
 	float : left;
 width : 20px;
 height : 20px;
@@ -706,8 +701,7 @@ margin : 0 10px;
 	border : 1px solid darkred;
 	color : darkred;
 }
-#edit-category input[type=radio] {
-	margin-bottom : 20px;
+#edit-category input[type=checkbox] {
 	float : left;
 width : 20px;
 height : 20px;
@@ -778,8 +772,7 @@ margin : 0 10px;
 	border : 1px solid darkred;
 	color : darkred;
 }
-#admin-add-user input[type=radio] {
-	margin-bottom : 20px;
+#admin-add-user input[type=checkbox] {
 	float : left;
 width : 20px;
 height : 20px;
@@ -843,8 +836,7 @@ margin : 0 10px;
 	border : 1px solid darkred;
 	color : darkred;
 }
-#edit-users input[type=radio] {
-	margin-bottom : 20px;
+#edit-users input[type=checkbox] {
 	float : left;
 width : 20px;
 height : 20px;
@@ -907,7 +899,7 @@ height : 20px;
 	margin-bottom : 20px;
 	display : block;
 }
-#add-categories input[type=radio] {
+#add-categories input[type=checkbox] {
 	margin-bottom : 20px;
 	float : left;
 	width : 20px;
@@ -973,7 +965,7 @@ height : 20px;
 	border : 1px solid darkred;
 	color : darkred;
 }
-#add-menu input[type=radio] {
+#add-menu input[type=checkbox] {
 	margin-bottom : 20px;
 	float : left;
 	width : 20px;
@@ -1102,14 +1094,12 @@ height : 20px;
 	margin-bottom : 20px;
 	display : block;
 }
-#edit-menu input[type=radio] {
-	margin-bottom : 20px;
-margin-right : 10px;
+#edit-menu input[type=checkbox] {
+margin-bottom : 20px;
 	float : left;
 	width : 20px;
 	height : 20px;
 	border : 1px solid #e8e8e8;
-clear : left;
 }
 #edit-menu label[for^=publish] {
 	float : left;

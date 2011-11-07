@@ -10,16 +10,28 @@
 
 <div id="wrapper">
 <header class="clearfix">
-  <h1><?php echo SITENAME; ?> / admin</h1>
+  <h1><?php
+
+echo SITENAME;
+
+?> / admin</h1>
 </header>
 <!-- End header -->
 <div id="content" class="clearfix">
-  <header>  <?php echo top_admin_menu(); 
-  // function to be found in admin_top_menu_helper
-  ?> </header>
-  <section  id="column-one"> <?php echo admin_menu();
- // above is a helper - admin_menu_helper
- ?> </section>
+  <header>  <?php
+
+echo top_admin_menu();
+// function to be found in admin_top_menu_helper
+
+
+?> </header>
+  <section  id="column-one"> <?php
+
+echo admin_menu();
+// above is a helper - admin_menu_helper
+
+
+?> </section>
   <!-- End column one -->
   <section id="column-two">
     <section id="admin-add-article">
@@ -100,15 +112,10 @@ $form .= form_fieldset('<span>Published?</span>');
 
 $form .= form_label('Publish', 'publish');
 
-$form .= form_radio(array('name' => 'publish', 'id' => 'publish', 'value' =>
-    'YES', 'checked' => (isset($_POST['publish']) && $_POST['publish'] == "YES") ?
-    'checked' : ''));
+$form .= form_hidden('publish', '0');
 
-$form .= form_label('Not publish', 'not-publish');
-
-$form .= form_radio(array('name' => 'publish', 'id' => 'not-publish', 'value' =>
-    'NO', 'checked' => (isset($_POST['publish']) && $_POST['publish'] == "NO") ?
-    'checked' : ''));
+$form .= form_checkbox(array('name' => 'publish', 'id' => 'publish', 'checked' =>
+    isset($_POST['publish']) ? $_POST['publish'] : null, 'value' => "1"));
 
 $form .= form_fieldset_close();
 

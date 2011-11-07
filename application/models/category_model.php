@@ -110,16 +110,6 @@ class Category_Model extends CI_Model {
 
     public function update_category($name, $visibility, $id) {
 
-        if ($visibility === "YES") {
-
-            $visibility = 1;
-
-        } else {
-
-            $visibility = 0;
-
-        }
-
         $data = array('name' => $name, 'visible' => $visibility);
 
         $this->db->limit(1);

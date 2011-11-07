@@ -9,27 +9,44 @@
 ?>
 <div id="wrapper" class="admin">
 <header class="clearfix">
-  <h1><?php echo SITENAME; ?> / admin</h1>
+  <h1><?php
+
+echo SITENAME;
+
+?> / admin</h1>
 </header>
 <!-- End header -->
 <div id="content" class="clearfix">
   <header>
-  <?php echo top_admin_menu(); 
-  // function to be found in admin_top_menu_helper
-  ?>
+  <?php
+
+echo top_admin_menu();
+// function to be found in admin_top_menu_helper
+
+
+?>
    </header>
-  <section  id="column-one"> <?php echo admin_menu();
- // above is a helper - admin_menu_helper
- ?> </section>
+  <section  id="column-one"> <?php
+
+echo admin_menu();
+// above is a helper - admin_menu_helper
+
+
+?> </section>
   <!-- End column one -->
   <section id="column-two">
-  <?php if (isset($edit)): ?>
+  <?php
+
+if (isset($edit)):
+
+?>
   <section id="article-list-item">
-    <?php endif; ?>
     <?php
 
+endif;
 
-
+?>
+    <?php
 
 if (isset($_POST['submit'])) {
 
@@ -109,9 +126,14 @@ if (isset($edit)):
 
         $form .= '<span>Current image:</span>';
         
-        $form .= '<img src="' . base_url() . 'images/thumbnail/' . $row->image_id . '" />';
+        if($row->image_id != "") {
+
+        $form .= '<img src="' . base_url() . 'images/thumbnail/' . $row->image_id .
+            '" />';
 
         $form .= form_hidden('orig_name', $row->image_id);
+        
+        }
 
         $form .= form_label('Add image', 'file_upload');
 
@@ -139,15 +161,11 @@ if (isset($edit)):
 
         $form .= form_label('Publish', 'publish');
 
-        $form .= form_radio(array('name' => 'publish', 'id' => 'publish', 'value' =>
-            'YES', 'checked' => $row->visible == 1 || (isset($_POST["publish"]) && $_POST["publish"] ==
-            "YES") ? 'checked' : ''));
+        $form .= form_hidden('publish', '0');
 
-        $form .= form_label('Not publish', 'not-publish');
-
-        $form .= form_radio(array('name' => 'publish', 'id' => 'not-publish', 'value' =>
-            'NO', 'checked' => $row->visible == 0 || (isset($_POST["publish"]) && $_POST["publish"] ==
-            "NO") ? 'checked' : ''));
+        $form .= form_checkbox(array('name' => 'publish', 'id' => 'publish', 'checked' =>
+            isset($_POST["publish"]) ? $_POST["publish"] : $row->visible == 1, 'value' =>
+            "1"));
 
         $form .= form_fieldset_close();
 
@@ -164,8 +182,8 @@ if (isset($edit)):
         echo $form;
 
     }
-	
-	echo '</section>';
+
+    echo '</section>';
 
 ?>
     <?php
@@ -178,19 +196,20 @@ endif;
 if (empty($edit) && isset($nodes_all)) {
 
 
-  echo '<section id="article-list">';
-      echo '<h1>List of added articles. Click on link to edit</h1>';
+    echo '<section id="article-list">';
+    echo '<h1>List of added articles. Click on link to edit</h1>';
     echo '<ul>';
 
     foreach ($nodes_all as $node) {
 
         $list = '<li>';
 
-        $list .= '<a href="' . site_url("admin-edit-content/edit-node") . '/' . $node->id . '">';
+        $list .= '<a href="' . site_url("admin-edit-content/edit-node") . '/' . $node->
+            id . '">';
 
         $list .= $node->title;
-		
-		$list .= '</a>';
+
+        $list .= '</a>';
 
         $list .= '<br />';
 
@@ -219,8 +238,8 @@ if (empty($edit) && isset($nodes_all)) {
     }
 
     echo '</ul>';
-	
-	echo  '</section>';
+
+    echo '</section>';
 
 
 }

@@ -96,16 +96,6 @@ class Admin_Content extends CI_Controller {
 
         }
 
-        if ($this->input->post('publish') === "YES") {
-
-            $visibility = 1;
-
-        } else {
-
-            $visibility = 0;
-
-        }
-
 
         /**
          * There's a problem here because I couldn't integrate the file upload errors into
@@ -138,7 +128,7 @@ class Admin_Content extends CI_Controller {
                     $this->content_model->insert_content($this->input->post('select'), 1,
                         // Need to change user value based on cookie value
                         $target_file, $this->input->post('title'), $this->input->post('body'), $this->
-                        input->post('metaDescription'), $this->input->post('metaKeywords'), $visibility);
+                        input->post('metaDescription'), $this->input->post('metaKeywords'), $this->input->post('publish'));
 
                 }
 
@@ -154,7 +144,7 @@ class Admin_Content extends CI_Controller {
                 $this->content_model->insert_content($this->input->post('select'), 1,
                     // Need to change user value based on cookie value
                     $target_file, $this->input->post('title'), $this->input->post('body'), $this->
-                    input->post('metaDescription'), $this->input->post('metaKeywords'), $visibility);
+                    input->post('metaDescription'), $this->input->post('metaKeywords'), $this->input->post('publish'));
 
             }
 

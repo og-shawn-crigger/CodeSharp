@@ -143,21 +143,11 @@ class Admin_User extends CI_Controller {
 
         } else {
 
-            if ($this->input->post('adminRightsAdd') === "YES") {
-
-                $admin_rights = 1;
-
-            } else {
-
-                $admin_rights = 0;
-
-            }
-
             // form success here
 
 
             if ($this->user_model->insert_user($this->input->post('usernameAdd'), $this->input->post('passwordAdd'), 
-            $this->input->post('emailAdd'), $admin_rights)) {
+            $this->input->post('emailAdd'), $this->input->post('adminRightsAdd'))) {
 
                 $data['success'] = "<p>You have successfully created a new user.</p>";
 

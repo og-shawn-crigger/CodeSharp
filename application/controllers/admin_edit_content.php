@@ -228,7 +228,7 @@ class Admin_Edit_Content extends CI_Controller {
 
         if ($this->content_model->delete_content($this->input->post("delete_this"))) {
 
-            header('Location: ' . base_url() . INDEX . 'admin-edit-content/');
+            header('Location: ' . site_url() . 'admin-edit-content/');
             exit;
 
         }

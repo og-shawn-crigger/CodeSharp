@@ -10,16 +10,28 @@
 
 <div id="wrapper" class="admin">
 <header class="clearfix">
-  <h1><?php echo SITENAME; ?> / admin</h1>
+  <h1><?php
+
+echo SITENAME;
+
+?> / admin</h1>
 </header>
 <!-- End header -->
 <div id="content" class="clearfix">
-  <header> <?php echo top_admin_menu(); 
-  // function to be found in admin_top_menu_helper
-  ?></header>
-  <section id="column-one"> <?php echo admin_menu();
- // above is a helper - admin_menu_helper
- ?> </section>
+  <header> <?php
+
+echo top_admin_menu();
+// function to be found in admin_top_menu_helper
+
+
+?></header>
+  <section id="column-one"> <?php
+
+echo admin_menu();
+// above is a helper - admin_menu_helper
+
+
+?> </section>
   <!-- End column one -->
   <section id="column-two">
     <section id="inner-column-one">
@@ -76,17 +88,13 @@ $form .= form_fieldset_close();
 
 $form .= form_fieldset('<span>Give admin rights to the new user?</span>');
 
-$form .= form_label('Yes', 'admin-yes');
+$form .= form_hidden('adminRightsAdd', '0');
 
-$form .= form_radio(array('name' => 'adminRightsAdd', 'id' => 'admin-yes',
-    'value' => 'YES', 'checked' => (isset($_POST['adminRightsAdd']) && $_POST['adminRightsAdd'] ==
-    "YES") ? 'checked' : ''));
+$form .= form_label('Yes:', 'admin-yes');
 
-$form .= form_label('No', 'admin-no');
-
-$form .= form_radio(array('name' => 'adminRightsAdd', 'id' => 'admin-no',
-    'value' => 'NO', 'checked' => (isset($_POST['adminRightsAdd']) && $_POST['adminRightsAdd'] ==
-    "NO") ? 'checked' : ''));
+$form .= form_checkbox(array('name' => 'adminRightsAdd', 'id' => 'admin-yes',
+    'checked' => isset($_POST['adminRightsAdd']) ? $_POST['adminRightsAdd'] : null,
+    'value' => "1"));
 
 $form .= form_fieldset_close();
 
@@ -193,15 +201,13 @@ foreach ($query as $user) {
 
     $form .= form_label('Admin rights:', 'admin-yes-' . $user->id);
 
-    $form .= form_radio(array('name' => "$admin", 'id' => 'admin-yes-' . $user->id,
-        'value' => 'YES', 'checked' => $user->admin_rights == 1 || (isset($_POST["$admin"]) &&
-        $_POST["$admin"] == "YES") ? 'checked' : ''));
+    $form .= form_hidden($admin, '0');
 
-    $form .= form_label('No admin rights', 'admin-yes-' . $user->id);
+    $form .= form_label('Yes:', 'admin-yes');
 
-    $form .= form_radio(array('name' => "$admin", 'id' => 'admin-no-' . $user->id,
-        'value' => 'NO', 'checked' => $user->admin_rights == 0 || (isset($_POST["$admin"]) &&
-        $_POST["$admin"] == "NO") ? 'checked' : ''));
+    $form .= form_checkbox(array('name' => $admin, 'id' => 'admin-yes-' . $user->id,
+        'checked' => isset($_POST["$admin"]) ? $_POST["$admin"] : $user->admin_rights ==
+        1, 'value' => "1"));
 
     $form .= form_submit("$delete", 'delete');
 

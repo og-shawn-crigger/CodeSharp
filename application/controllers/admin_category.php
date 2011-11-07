@@ -111,19 +111,9 @@ class Admin_Category extends CI_Controller {
 
         } else {
 
-            if ($this->input->post('publishAdd') === "YES") {
-
-                $visibility = 1;
-
-            } else {
-
-                $visibility = 0;
-
-            }
-
             // success here
 
-            $this->category_model->add_category($this->input->post('nameAdd'), $visibility);
+            $this->category_model->add_category($this->input->post('nameAdd'), $this->input->post('publishAdd'));
 
             $this->form_success();
 

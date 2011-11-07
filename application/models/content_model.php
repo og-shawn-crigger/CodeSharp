@@ -98,15 +98,6 @@ class Content_Model extends CI_Model {
         "", $date = "", $body = "", $visibility = "", $meta_description = "", $meta_keywords =
         "", $id = "") {
 
-        if ($visibility === "YES") {
-
-            $visibility = 1;
-
-        } else {
-
-            $visibility = 0;
-
-        }
 
         $data = array('title' => $title, 'category_id' => $select,
             'user_id' => $user_id, 'image_id' => $image_id, 'date' => $date, 'body' => $body,

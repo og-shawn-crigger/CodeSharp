@@ -10,17 +10,29 @@
 
 <div id="wrapper" class="admin">
 <header class="clearfix">
-  <h1><?php echo SITENAME; ?> / admin</h1>
+  <h1><?php
+
+echo SITENAME;
+
+?> / admin</h1>
 </header>
 <!-- End header -->
 <div id="content" class="clearfix">
-  <header>  <?php echo top_admin_menu(); 
-  // function to be found in admin_top_menu_helper
-  ?> </header>
+  <header>  <?php
+
+echo top_admin_menu();
+// function to be found in admin_top_menu_helper
+
+
+?> </header>
   <section id="column-one"> 
- <?php echo admin_menu();
- // above is a helper - admin_menu_helper
- ?>
+ <?php
+
+echo admin_menu();
+// above is a helper - admin_menu_helper
+
+
+?>
   </section>
   <!-- End column one -->
   <section id="column-two">
@@ -75,15 +87,11 @@ $form .= form_input(array('name' => 'urlAdd', 'id' => 'url-add', 'maxlength' =>
 
 $form .= form_label('Publish', 'publish');
 
-$form .= form_radio(array('name' => 'publishAdd', 'id' => 'publish', 'value' =>
-    'YES', 'checked' => (isset($_POST["publishAdd"]) && $_POST["publishAdd"] ==
-    "YES") ? 'checked' : ''));
+$form .= form_hidden('publishAdd', '0');
 
-$form .= form_label('Not publish', 'not-publish');
-
-$form .= form_radio(array('name' => 'publishAdd', 'id' => 'not-publish', 'value' =>
-    'NO', 'checked' => (isset($_POST["publishAdd"]) && $_POST["publishAdd"] == "NO") ?
-    'checked' : ''));
+$form .= form_checkbox(array('name' => 'publishAdd', 'id' => 'publish',
+    'checked' => (isset($_POST["publishAdd"]) && $_POST["publishAdd"] == "1"),
+    'value' => "1"));
 
 $form .= form_submit("submit", "submit");
 
@@ -124,15 +132,11 @@ $form .= form_fieldset('<span>Add categories to the menus?</span>');
 
 $form .= form_label('Yes', 'yes-categories');
 
-$form .= form_radio(array('name' => 'categoriesAdd', 'id' => 'yes-categories',
-    'value' => 'YES', 'checked' => $cat_menu_result->okay == 1 || (isset($_POST['categoriesAdd']) &&
-    $_POST['categoriesAdd'] == "YES") ? 'checked' : ''));
+$form .= form_hidden('categoriesAdd', '0');
 
-$form .= form_label('No', 'no-categories');
-
-$form .= form_radio(array('name' => 'categoriesAdd', 'id' => 'no-categories',
-    'value' => 'NO', 'checked' => $cat_menu_result->okay == 0 || (isset($_POST['categoriesAdd']) &&
-    $_POST['categoriesAdd'] == "NO") ? 'checked' : ''));
+$form .= form_checkbox(array('name' => 'categoriesAdd', 'id' => 'yes-categories', 
+'checked' => isset($_POST["categoriesAdd"]) ? $_POST["categoriesAdd"] : $cat_menu_result->
+    okay == 1, 'value' => "1"));
 
 $form .= form_submit("submitCat", "submit");
 
@@ -160,11 +164,10 @@ if (isset($_POST['submitMenu'])) {
 
 }
 
-
 ?>
         <form id="menu-order" name="menuOrder" method="post" action="<?php
-        
-site_url("admin-menu/change-menu-order#menu-order-result");
+
+echo site_url("admin-menu/change-menu-order#menu-order-result");
 
 ?>">
           <fieldset>
@@ -302,12 +305,13 @@ foreach ($display_menu as $menu_page) {
     $form .= 'method="post" action="';
 
     $form .= site_url("admin-menu/update-menu#menu-block-result-") . $id;
-    
+
     $form .= '">';
 
     $form .= '<fieldset class="fieldset-hidden">';
 
-    $form .= '<legend id="legend' . $id . '"><span>Edit:' . $menu_page->name . '</span></legend>';
+    $form .= '<legend id="legend' . $id . '"><span>Edit:' . $menu_page->name .
+        '</span></legend>';
 
     // Username form field
 
@@ -333,25 +337,14 @@ foreach ($display_menu as $menu_page) {
 
     // Publication settings settings
 
-    $form .= '<input type="radio" name="' . $publish . '" id="publishYes' . $id .
-        '" value="YES" class="admin-top"';
+    $form .= '<label for="publishYes' . $id . '">Publish?</label>';
 
-    $form .= $menu_page->visible == 1 || (isset($_POST[$publish]) && $_POST[$publish] ==
-        "YES") ? ' checked="checked" ' : null;
+    $form .= form_hidden($publish, '0');
 
-    $form .= '/>';
+    $form .= form_checkbox(array('name' => $publish, 'id' => 'publishYes' . $id,
+        'checked' => isset($_POST["$publish"]) ? $_POST["$publish"] : $menu_page->
+        visible == 1, 'value' => "1"));
 
-    $form .= '<label for="publishYes' . $id . '">Make publish</label>';
-
-    $form .= '<input type="radio" name="' . $publish . '" id="publishNo' . $id .
-        '" value="NO" ';
-
-    $form .= $menu_page->visible == 0 || (isset($_POST[$publish]) && $_POST[$publish] ==
-        "NO") ? ' checked="checked" ' : null;
-
-    $form .= '/>';
-
-    $form .= '<label for="publishNo' . $id . '">Don\'t make public</label>';
 
     // Delete button
 
