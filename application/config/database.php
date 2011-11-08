@@ -54,7 +54,11 @@ $db['default']['database'] = 'codesharp';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
+if (file_exists("application/views/admin/install_view.php")) {
+$db['default']['db_debug'] = FALSE;
+} else {
 $db['default']['db_debug'] = TRUE;
+}
 $db['default']['cache_on'] = FALSE;
 $db['default']['cachedir'] = '';
 $db['default']['char_set'] = 'utf8';

@@ -18,11 +18,11 @@ class Admin_Config_Model extends CI_Model {
 
         parent::__construct();
         
-        if (!file_exists("application/views/admin/install_view.php")) {
+      
         
         $this->add_admin();
         
-        }
+
 
     }
 

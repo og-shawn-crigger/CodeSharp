@@ -12,13 +12,7 @@ class Content extends CI_Controller {
 
         parent::__construct();
         
-        if (file_exists("application/views/admin/install_view.php")) {
-
-            redirect(site_url("install"));
-            exit;
-
-        }
-
+    
     }
 
 
