@@ -11,6 +11,13 @@ class Content extends CI_Controller {
     function __constructor() {
 
         parent::__construct();
+        
+        if (file_exists("application/views/admin/install_view.php")) {
+
+            redirect(site_url("install"));
+            exit;
+
+        }
 
     }
 
@@ -28,6 +35,7 @@ class Content extends CI_Controller {
         $data['content'] = "main-page";
 
         $this->load->view("includes/template.php", $data);
+        
 
     }
 
@@ -37,15 +45,7 @@ class Content extends CI_Controller {
         /**
          * Below is the pagination for the index page / articles
          */
-
-        //if (file_exists("application/views/admin/install_view.php")) {
-
-            //redirect(site_url("install"));
-
-        //}
-        
-     
-
+         
         $config['base_url'] = site_url("content/index/");
 
         $config['total_rows'] = $this->content_model->find_content_rows($visible = true);

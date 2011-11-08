@@ -28,7 +28,7 @@ define('ENVIRONMENT', 'development');
 * By default development will show errors but testing and live will hide them.
 */
 
-
+if (!file_exists("application/views/admin/install_view.php")) {
 
 if (defined('ENVIRONMENT')) {
     switch (ENVIRONMENT) {
@@ -44,6 +44,12 @@ if (defined('ENVIRONMENT')) {
         default:
             exit('The application environment is not set correctly.');
     }
+}
+
+} else {
+    
+    error_reporting(0);
+    
 }
 
 /*
