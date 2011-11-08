@@ -203,7 +203,7 @@ $this->encrypt->encode($unique)
 
                 unlink('application/views/admin/insert.sql');
                 unlink('application/views/admin/install_view.php');
-                unlink('application/controllers/login.php');
+                unlink('application/controllers/install.php');
                 redirect('/');
                 exit;
 

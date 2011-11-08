@@ -89,9 +89,9 @@ CREATE TABLE IF NOT EXISTS `user` (
   `username` varchar(30) character set latin1 collate latin1_general_cs NOT NULL,
   `password` text NOT NULL,
   `email` varchar(50) NOT NULL,
-  `member` char(42) NOT NULL,
+  `member` varchar(100) NOT NULL,
   `newpass` tinyint(1) NOT NULL,
-`dbsalt` char(39) NOT NULL,
+`dbsalt` varchar(100) NOT NULL,
   `admin_rights` tinyint(1) default NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `username` (`username`)
