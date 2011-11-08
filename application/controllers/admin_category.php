@@ -97,13 +97,17 @@ class Admin_Category extends CI_Controller {
     public function add_category() {
 
         $data = array();
+        
+        /*
 
         $this->form_validation->set_rules('nameAdd', 'Name',
             'trim|required|max_length[40]');
 
         $this->form_validation->set_rules('publishAdd', 'Publish article', 'required');
+        
+        */
 
-        if ($this->form_validation->run() === false) {
+        if ($this->form_validation->run("addcategory") === false) {
 
             // errors here
 

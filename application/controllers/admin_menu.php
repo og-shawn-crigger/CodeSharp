@@ -215,6 +215,8 @@ class Admin_Menu extends CI_Controller {
     public function menu_add() {
 
         $data = array();
+        
+        /*
 
         $this->form_validation->set_rules('nameAdd', 'Name',
             'trim|required|max_length[40]|callback_duplicate_menu_name');
@@ -223,8 +225,10 @@ class Admin_Menu extends CI_Controller {
             'trim|required|max_length[100]');
 
         $this->form_validation->set_rules('publishAdd', 'publish', 'required');
+        
+        */
 
-        if ($this->form_validation->run()) {
+        if ($this->form_validation->run("addmenu")) {
 
             // successful
 

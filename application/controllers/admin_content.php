@@ -72,6 +72,8 @@ class Admin_Content extends CI_Controller {
     public function admin_add_content() {
 
         $data = array();
+        
+        /*
 
         $this->form_validation->set_rules('title', 'Title',
             'trim|required|max_length[100]');
@@ -81,6 +83,8 @@ class Admin_Content extends CI_Controller {
         $this->form_validation->set_rules('body', 'Content', 'required');
 
         $this->form_validation->set_rules('publish', 'Publish article', 'required');
+        
+        */
 
         if ($this->input->post('metaDescription')) {
 
@@ -103,7 +107,7 @@ class Admin_Content extends CI_Controller {
          * There's too many branches here. Needs attention
          */
 
-        if ($this->form_validation->run() !== false) {
+        if ($this->form_validation->run("addnode") !== false) {
 
             if ($_FILES["file_upload"]['error'] !== 4) {
 
@@ -128,7 +132,8 @@ class Admin_Content extends CI_Controller {
                     $this->content_model->insert_content($this->input->post('select'), 1,
                         // Need to change user value based on cookie value
                         $target_file, $this->input->post('title'), $this->input->post('body'), $this->
-                        input->post('metaDescription'), $this->input->post('metaKeywords'), $this->input->post('publish'));
+                        input->post('metaDescription'), $this->input->post('metaKeywords'), $this->
+                        input->post('publish'));
 
                 }
 
@@ -144,7 +149,8 @@ class Admin_Content extends CI_Controller {
                 $this->content_model->insert_content($this->input->post('select'), 1,
                     // Need to change user value based on cookie value
                     $target_file, $this->input->post('title'), $this->input->post('body'), $this->
-                    input->post('metaDescription'), $this->input->post('metaKeywords'), $this->input->post('publish'));
+                    input->post('metaDescription'), $this->input->post('metaKeywords'), $this->
+                    input->post('publish'));
 
             }
 

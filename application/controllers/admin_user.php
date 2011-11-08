@@ -110,13 +110,14 @@ class Admin_User extends CI_Controller {
 
         }
 
-
     }
 
 
     function add_user() {
 
         $data = array();
+        
+        /*
 
         $this->form_validation->set_rules('usernameAdd', 'username',
             'trim|required|max_length[30]|callback_duplicate_username');
@@ -134,8 +135,10 @@ class Admin_User extends CI_Controller {
             'trim|required|max_length[50]|valid_email|matches[emailAdd]');
 
         $this->form_validation->set_rules('adminRightsAdd', 'admin rights', 'required');
+        
+        */
 
-        if ($this->form_validation->run() === false) {
+        if ($this->form_validation->run("adduser") === false) {
 
             // form problems here
 
@@ -155,9 +158,7 @@ class Admin_User extends CI_Controller {
 
             }
 
-
         }
-
 
         $this->add_theme($data);
 

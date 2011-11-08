@@ -16,7 +16,7 @@ class Login extends CI_Controller {
 
 
     private function add_theme($array) {
-	
+
         $data = $array;
 
         $data['content'] = "admin/login_page";
@@ -55,13 +55,17 @@ class Login extends CI_Controller {
 
         $data = array();
 
+        /*
+
         $this->form_validation->set_rules('username', 'Username',
-            'trim|required|max_length[30]');
+        'trim|required|max_length[30]');
 
         $this->form_validation->set_rules('password', 'Password',
-            'trim|required|max_length[40]');
+        'trim|required|max_length[40]');
+        
+        */
 
-        if ($this->form_validation->run() === false) {
+        if ($this->form_validation->run("login") === false) {
 
             // if problems then log in here
 
@@ -174,32 +178,28 @@ class Login extends CI_Controller {
         redirect("/");
 
     }
-    
- 
-    
-    
-    
-    
 
 
-//http://localhost/CodeSharp/new_password/login/561451/1
+    //http://localhost/CodeSharp/new_password/login/561451/1
 
     public function new_password() {
 
         $data = array();
 
         if (ctype_digit($this->uri->segment(3)) && $this->uri->segment(4) == 1) {
-            
-          $data['new_password'] = $this->user_model->set_new_password($this->uri->segment(3));
+
+            $data['new_password'] = $this->user_model->set_new_password($this->uri->segment
+                (3));
 
         } else {
-            
+
             // display 404 message here
-            
+
             $this->output->set_status_header('404');
-            
-            $data['error_404'] = "<p>There seems to be an issue with you user details. Please contact administration for help.</p>";
-            
+
+            $data['error_404'] =
+                "<p>There seems to be an issue with you user details. Please contact administration for help.</p>";
+
         }
 
         $this->add_theme($data);

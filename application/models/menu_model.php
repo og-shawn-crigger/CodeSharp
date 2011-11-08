@@ -208,13 +208,13 @@ class Menu_Model extends CI_Model {
 
 
     public function menu_url($id = "") {
-        
+
         $this->db->select('url');
-        
+
         $this->db->where('id', $id);
-        
+
         $query = $this->db->get("menu");
-        
+
         return $query->row();
 
     }

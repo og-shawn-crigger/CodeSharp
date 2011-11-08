@@ -143,11 +143,19 @@ class Admin_Edit_Content extends CI_Controller {
         $file_result = null;
 
         if ($this->input->post("submit") == "submit") {
+            
+            /*
 
             $this->form_validation->set_rules('title', 'Title',
                 'trim|required|max_length[100]');
 
             $this->form_validation->set_rules('body', 'Content', 'trim|required');
+            
+            $this->form_validation->set_rules('date', 'date',
+                'trim|required|callback_isValidDateTime');
+            
+            
+            */
 
             if ($this->input->post('metaDescription')) {
 
@@ -155,13 +163,15 @@ class Admin_Edit_Content extends CI_Controller {
                     'trim|max_length[255]');
 
             }
+            
+            if ($this->input->post('metaKeywords')) {
 
-            $this->form_validation->set_rules('date', 'date',
-                'trim|required|callback_isValidDateTime');
+                $this->form_validation->set_rules('metaKeywrods', 'Meta Keywords',
+                    'trim|max_length[255]');
 
-            $meta_keywords = null;
+            }
 
-            $result = $this->form_validation->run();
+            $result = $this->form_validation->run("editnode");
 
             if ($_FILES["file_upload"]['name'] !== "") {
 

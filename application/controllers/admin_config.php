@@ -58,6 +58,8 @@ class Admin_Config extends CI_Controller {
     public function submit_form() {
 
         $data = array();
+        
+        /*
 
         $this->form_validation->set_rules('nameForm', 'website title',
             'trim|required|max_length[100]');
@@ -67,11 +69,12 @@ class Admin_Config extends CI_Controller {
 
         $this->form_validation->set_rules('emailForm', 'email',
             'trim|required|max_length[50]|valid_email');
+            
+            */
 
-        if ($this->form_validation->run() === false) {
+        if ($this->form_validation->run("adminconfig") === false) {
 
             $data['error_success'] = "<p>There are problems with your form submission:</p>";
-
 
         } else {
 

@@ -1,3 +1,5 @@
+CodeSharp is a small CMS based on CodeIgniter.
+
 1. Create the database and include the database details in file application/config/database.php
 
 Change the $config['base_url'] value to your domain name in application/config/config.php
