@@ -38,6 +38,14 @@ class Content extends CI_Controller {
          * Below is the pagination for the index page / articles
          */
 
+        //if (file_exists("application/views/admin/install_view.php")) {
+
+            //redirect(site_url("install"));
+
+        //}
+        
+     
+
         $config['base_url'] = site_url("content/index/");
 
         $config['total_rows'] = $this->content_model->find_content_rows($visible = true);
@@ -173,15 +181,17 @@ class Content extends CI_Controller {
 
             $config['base_url'] = site_url('category/' . $this->uri->segment(2) . "/index/");
 
-            $config['total_rows'] = $this->category_model->find_category_rows($visible = true,$category);
+            $config['total_rows'] = $this->category_model->find_category_rows($visible = true,
+                $category);
 
             $config['per_page'] = 3;
 
             $config['num_links'] = 2;
 
             $config['uri_segment'] = 3;
-            
-            $data['category_details'] = $this->category_model->get_cat_content($category,$config['per_page'],$this->uri->segment(4));
+
+            $data['category_details'] = $this->category_model->get_cat_content($category, $config['per_page'],
+                $this->uri->segment(4));
 
             $this->pagination->initialize($config);
 
