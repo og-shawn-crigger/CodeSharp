@@ -136,8 +136,12 @@ if (isset($_POST['submit'])) {
 
             $query_three = "INSERT INTO `user` (`id`, `created`, `username`, `password`, `email`, 
         `member`, `newpass`, `dbsalt`, `admin_rights`) VALUES
-(1, now(), '" . $_POST['adminUsername'] . "', '" . hash_hmac('sha1', $_POST['adminPassword'],
-                "7thes%*!%-" . $unique) . "', '" . $_POST['adminEmail'] . "', 561451, 1,'" . $unique .
+(1, now(), '" . $_POST['adminUsername'] . "', '" . 
+ $this->encrypt->encode(   hash_hmac('sha1', $_POST['adminPassword'],"7thes%*!%-" . $unique)) 
+. "', '" . $_POST['adminEmail'] . "', '" . $this->encrypt->encode("561451")
+ . "', 1,'" . 
+$this->encrypt->encode($unique)
+.
                 "',1)";
 
             $query_four = "INSERT INTO `admin` (`id`, `name`, `okay`, `value`) VALUES
@@ -199,6 +203,7 @@ if (isset($_POST['submit'])) {
 
                 unlink('application/views/admin/insert.sql');
                 unlink('application/views/admin/install_view.php');
+                unlink('application/controllers/login.php');
                 redirect('/');
                 exit;
 
