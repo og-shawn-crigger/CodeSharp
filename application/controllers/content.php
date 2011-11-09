@@ -11,8 +11,7 @@ class Content extends CI_Controller {
     function __constructor() {
 
         parent::__construct();
-        
-    
+
     }
 
 

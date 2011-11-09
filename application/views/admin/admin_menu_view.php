@@ -106,8 +106,10 @@ echo $form;
       <!-- end add-menu -->
       <hr />
       <section id="add-categories">
-        <h1>Add a new menu item, edit an existing one or reorder the menu as it appears to the public. <br />
-          Also decide whether you would like to include categories in the main public menu</h1>
+        <p>Add a new menu item, edit an existing one or reorder the menu as it appears to the public.</p>
+          <p>Also decide whether you would like to include categories in the main public menu</p>
+          
+          <div id="categories-result">
         <?php
 
 if (isset($_POST['submitCat'])) {
@@ -123,10 +125,10 @@ if (isset($_POST['submitCat'])) {
 
 }
 
-
+echo '</div>';
 $attributes = array('id' => "addCategories", 'name' => "addCategories");
 
-$form = form_open('admin-menu/add-categories-to-menu', $attributes);
+$form = form_open('admin-menu/add-categories-to-menu#categories-result', $attributes);
 
 $form .= form_fieldset('<span>Add categories to the menus?</span>');
 
@@ -152,6 +154,8 @@ echo $form;
       <hr />
       <section id="rearrange-menu">
         <h1>Rearrange the order of the main menu</h1>
+        
+        <div id="menu-order-result">
         <?php
 
 if (isset($_POST['submitMenu'])) {
@@ -165,6 +169,7 @@ if (isset($_POST['submitMenu'])) {
 }
 
 ?>
+</div>
         <form id="menu-order" name="menuOrder" method="post" action="<?php
 
 echo site_url("admin-menu/change-menu-order#menu-order-result");

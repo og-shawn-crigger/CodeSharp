@@ -54,7 +54,18 @@ switch ($page) {
 
 <!-- css here -->
 
+<!-- CSS -->
 
+<link type="text/css" rel="stylesheet" media="all" href="<?php
+
+echo base_url("css/styles.css");
+
+?>" />
+<link type="text/css" rel="stylesheet" media="all" href="<?php
+
+echo base_url("css/admin/fonts.css");
+
+?>" />
 
 <!-- meta description here -->
 <?php

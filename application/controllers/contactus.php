@@ -4,50 +4,66 @@ class ContactUs extends CI_Controller {
 
 
     function __construct() {
+
         parent::__construct();
     }
 
-    function index($data = "") {
+
+    public function theme($array) {
+
+        $data = $array;
+
+        $data['menu'] = $this->menu_model->menu_order("where visible = 1");
 
         $data['content'] = "contact_us";
+
         $this->load->view("includes/template.php", $data);
+
 
     }
 
+
+    function index() {
+
+        $data = array();
+
+        $this->theme($data);
+
+    }
+
+
     function mail() {
 
-        $this->form_validation->set_rules('contactName', 'Name', 'trim|required');
-        $this->form_validation->set_rules('contactNumber', 'Phone',
-            'trim|max_length[100]');
-        $this->form_validation->set_rules('contactEmail', 'Email',
-            'trim|required|max_length[100]|valid_email');
-        $this->form_validation->set_rules('contactDetails', 'Message', 'trim|required');
 
-        // anti spam trap - it should be left empty
-        $this->form_validation->set_rules('zipcode', 'zipcode', 'trim|exact_length[0]');
+        $data = array();
+        
+         /**
+         * validation rule to be found in config -> form_validation.php
+         */
 
-        if ($this->form_validation->run() == false) {
+        if ($this->form_validation->run("contactus") == false) {
 
-            $data['error'] = "Opps, there have been problems with the form:";
-            $data['content'] = "contact_us";
-            $this->load->view("includes/template.php", $data);
+            $data['error_success'] = "<p>Opps, there have been problems with the form:</p>";
             
+            $this->theme($data);
+
             sleep(2);
 
         } else {
-          
-            $data['success'] = "Thanks for getting in touch. We will return your enquiry as soon as possible ";
-            $data['content'] = "contact_us";
-            $this->load->view("includes/template.php", $data);
+
+            $data['error_success'] = "<p>Thanks for getting in touch. We will return your enquiry as soon as possible</p>";
+            
+            $this->theme($data);
+
 
             // Email contacts to admin
             // Need to set universal admin email
 
             $this->email->from($_POST['contactName']);
-            $this->email->to('andy@suburban-glory.com');
+            $this->email->to(EMAIL);
 
             $this->email->subject('Email from ... ');
-            
+
             // Build the email message body up below
             // Find if there is a CodeIngitor-friendly way of building up the message
 
@@ -57,9 +73,9 @@ class ContactUs extends CI_Controller {
             $body .= '<strong>' . 'Email: ' . '</strong>' . "<br />";
             $body .= strip_form($_POST['contactEmail']) . "<br />";
             $body .= '<strong>' . 'Phone: ' . '</strong>' . "<br />";
-            if(isset($_POST['contactPhone'])) {
-            $body .= strip_form($_POST['contactPhone']) . "<br />";
-            $body .= '<strong>' . 'Details: ' . '</strong>' . "<br />";
+            if (isset($_POST['contactPhone'])) {
+                $body .= strip_form($_POST['contactPhone']) . "<br />";
+                $body .= '<strong>' . 'Details: ' . '</strong>' . "<br />";
             }
             $body .= strip_form($_POST['contactDetails']) . "<br />";
             $body .= '<strong>' . 'IP Address: ' . '</strong>' . "<br />";
@@ -71,13 +87,15 @@ class ContactUs extends CI_Controller {
             $this->email->message($body);
 
             $this->email->send();
-            
+
             sleep(2);
 
             //echo $this->email->print_debugger();
 
 
         }
+
+        
 
     }
 

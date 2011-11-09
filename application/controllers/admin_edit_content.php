@@ -144,18 +144,9 @@ class Admin_Edit_Content extends CI_Controller {
 
         if ($this->input->post("submit") == "submit") {
             
-            /*
-
-            $this->form_validation->set_rules('title', 'Title',
-                'trim|required|max_length[100]');
-
-            $this->form_validation->set_rules('body', 'Content', 'trim|required');
-            
-            $this->form_validation->set_rules('date', 'date',
-                'trim|required|callback_isValidDateTime');
-            
-            
-            */
+            /**
+         * validation rule to be found in config -> form_validation.php
+         */
 
             if ($this->input->post('metaDescription')) {
 
@@ -169,6 +160,10 @@ class Admin_Edit_Content extends CI_Controller {
                 $this->form_validation->set_rules('metaKeywrods', 'Meta Keywords',
                     'trim|max_length[255]');
 
+            } else {
+                
+                $meta_keywords = null;
+                
             }
 
             $result = $this->form_validation->run("editnode");

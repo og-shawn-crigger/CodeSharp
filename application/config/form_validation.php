@@ -52,7 +52,7 @@ $config = array(
                                     array(
                                             'field' => 'nameAdd',
                                             'label' => 'Name',
-                                            'rules' => 'trim|required|max_length[40]'
+                                            'rules' => 'trim|required|max_length[40]|callback_check_duplicates'
                                          ),
                                     array(
                                             'field' => 'publishAdd',
@@ -122,7 +122,6 @@ $config = array(
                                             'rules' => 'trim|required|max_length[50]|valid_email|callback_duplicate_email'
                                          ),
                                          
-                                         
                                     array(
                                             'field' => 'emailTwoAdd',
                                             'label' => 'second email',
@@ -136,7 +135,6 @@ $config = array(
                                     
                                     ),
                                     
-                                    
                   'login' => array(
                                     array(
                                             'field' => 'username',
@@ -149,8 +147,35 @@ $config = array(
                                             'rules' => 'trim|required|max_length[40]'
                                          )
                                     ),
-
-                                    
                   
+                   'contactus' => array(
+                                    array(
+                                            'field' => 'contactName',
+                                            'label' => 'name',
+                                            'rules' => 'trim|required'
+                                         ),
+                                    array(
+                                            'field' => 'contactNumber',
+                                            'label' => 'phone',
+                                            'rules' => 'trim|max_length[100]'
+                                         ),
+                                    array(
+                                            'field' => 'contactEmail',
+                                            'label' => 'email',
+                                            'rules' => 'trim|required|max_length[100]|valid_email'
+                                         ),
+                                    array(
+                                            'field' => 'contactDetails',
+                                            'label' => 'message',
+                                            'rules' => 'trim|required'
+                                         ),
+                                    array(
+                                            'field' => 'zipcode',
+                                            'label' => 'zipcode',
+                                            'rules' => 'trim|exact_length[0]'
+                                         )
+                                    
+                                    ),
+                                    
     
                );

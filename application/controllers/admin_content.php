@@ -73,18 +73,9 @@ class Admin_Content extends CI_Controller {
 
         $data = array();
         
-        /*
-
-        $this->form_validation->set_rules('title', 'Title',
-            'trim|required|max_length[100]');
-
-        $this->form_validation->set_rules('select', 'Category', 'required');
-
-        $this->form_validation->set_rules('body', 'Content', 'required');
-
-        $this->form_validation->set_rules('publish', 'Publish article', 'required');
-        
-        */
+         /**
+         * validation rule to be found in config -> form_validation.php
+         */
 
         if ($this->input->post('metaDescription')) {
 

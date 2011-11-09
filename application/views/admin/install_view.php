@@ -28,8 +28,8 @@ if (isset($_POST['submit'])) {
 
     }
 
-    $input = array("databaseName", "server","databaseUsername","databasePassword",
-    "websiteName", "websiteSlogan", "adminEmail", "adminPassword", "adminUsername");
+    $input = array("databaseName", "server", "databaseUsername", "databasePassword",
+        "websiteName", "websiteSlogan", "adminEmail", "adminPassword", "adminUsername");
 
     foreach ($input as $result) {
 
@@ -61,6 +61,7 @@ if (isset($_POST['submit'])) {
                 $error[] = "Opps, the {$result} field is too long. Please shorten it.";
 
             }
+
         }
         return $error;
 
@@ -136,12 +137,9 @@ if (isset($_POST['submit'])) {
 
             $query_three = "INSERT INTO `user` (`id`, `created`, `username`, `password`, `email`, 
         `member`, `newpass`, `dbsalt`, `admin_rights`) VALUES
-(1, now(), '" . $_POST['adminUsername'] . "', '" . 
- $this->encrypt->encode(   hash_hmac('sha1', $_POST['adminPassword'],"7thes%*!%-" . $unique)) 
-. "', '" . $_POST['adminEmail'] . "', '" . $this->encrypt->encode("561451")
- . "', 1,'" . 
-$this->encrypt->encode($unique)
-.
+(1, now(), '" . $_POST['adminUsername'] . "', '" . $this->encrypt->encode(hash_hmac
+                ('sha1', $_POST['adminPassword'], "7thes%*!%-" . $unique)) . "', '" . $_POST['adminEmail'] .
+                "', '" . $this->encrypt->encode("561451") . "', 1,'" . $this->encrypt->encode($unique) .
                 "',1)";
 
             $query_four = "INSERT INTO `admin` (`id`, `name`, `okay`, `value`) VALUES
@@ -156,7 +154,10 @@ $this->encrypt->encode($unique)
 (14, 'error_email', 0, NULL)";
 
             $query_five = "INSERT INTO `menu` (`id`, `menu_id`, `number`, `name`, `url`, `date`, `visible`) VALUES
-(1, 'M', 0, 'Admin Home', '?section=admin-home', now(), 1)";
+(1, 'M', 10, 'Home', '', now(), 1),
+(2, 'M', 3, 'Admin', 'admin', now(),1),
+(5, 'M', 0, 'ContactUs', 'contactus', now(),1);";
+
 
             $query_six = "INSERT INTO `content` (`id`, `category_id`, `user_id`, `image_id`, `date`, `title`, `body`, `meta_description`, `meta_keywords`, `visible`) VALUES
 (1, 1, 1, NULL, now(), 'Nam ultrices ante id urna dapibus mollis', 'nam-ultrices-ante-id-urna-dapibus-mollis', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae rutrum nisi. Aenean facilisis hendrerit posuere. Mauris placerat bibendum justo vitae congue. Mauris nisl nisl, hendrerit quis luctus at, sollicitudin eu sem. Proin eu nunc ut libero scelerisque aliquam cursus vitae erat. Praesent consectetur, ligula vel accumsan blandit, nunc tellus suscipit metus, sit amet aliquam nibh felis nec ligula. Mauris mauris nulla, dictum ac scelerisque et, auctor eu ligula. Curabitur ante tellus, molestie nec ultricies ac, tempus nec enim. Integer tempor diam sit amet felis consequat id scelerisque risus ultrices. In a tortor ac nunc pharetra gravida. Nullam tempus consectetur sem sed fermentum. Nam consectetur massa sed eros commodo molestie. Ut dictum sem id magna aliquet pellentesque. Fusce molestie tincidunt risus eu aliquam. Etiam massa tortor, dictum sit amet tempus auctor, blandit malesuada diam. Morbi non lacus ut sapien aliquam dapibus donec.rnrnQuisque id leo eget metus pretium porta. Donec vitae neque et odio aliquam facilisis semper luctus mauris. Sed commodo accumsan lacus feugiat sollicitudin. In luctus quam turpis. Maecenas lacinia interdum mi vel sagittis. Maecenas sed felis augue. In et enim diam. Curabitur at eros ut velit cursus varius sed eget mi. Maecenas tincidunt vulputate dui, vitae vestibulum odio posuere vitae. Mauris euismod placerat enim, eu fringilla lectus dapibus eu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas ac turpis lectus, sed lacinia dui. Nam eget mauris metus.rnrnPraesent ac lacus sed ipsum scelerisque viverra sed non tellus. Sed dictum ipsum id lacus semper in hendrerit sem facilisis. Maecenas ultricies est sed ligula scelerisque euismod. Proin massa neque, malesuada nec mollis vel, varius non enim. Fusce vitae vestibulum est. Aliquam in urna sapien, eu feugiat augue. Nunc id leo ac odio scelerisque elementum. Etiam vitae libero non magna pretium sodales in vitae erat. Vestibulum eget vestibulum lectus. Maecenas ornare posuere mauris et vehicula. Ut enim magna, ullamcorper nec semper in, rutrum ullamcorper risus. Nunc id elit mauris, in tristique nibh. Quisque tempus elementum rhoncus. In hac habitasse platea dictumst. Vestibulum molestie magna ac elit vehicula tempor. Curabitur consectetur sapien nec nulla facilisis consequat. Sed convallis urna quis erat ultricies interdum vitae elementum nibh.rnrnNam ultrices ante id urna dapibus mollis. Phasellus nec dui ut lectus rutrum porttitor ac vitae risus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin justo odio, bibendum a feugiat et, laoreet ut urna. Proin in eleifend nulla. Morbi neque ante, tincidunt eu condimentum vel, sollicitudin nec sem. Vestibulum luctus enim tellus. Nunc sed urna et magna facilisis dictum. Fusce eleifend ultricies dolor, pellentesque sodales tellus faucibus nec. In hac habitasse platea dictumst. In ligula tortor, luctus quis interdum sed, viverra a sapien. Maecenas eu eleifend libero. Sed lacus odio, viverra in consequat at, iaculis eget lacus. Mauris nec turpis et tortor pretium molestie. Pellentesque ornare velit nec est euismod ut pretium magna porta. Proin at eros in mauris gravida tempor. Donec erat dui, dictum eget auctor eu, posuere quis augue. In vitae augue elementum dolor tincidunt luctus eget ac sapien. Integer vulputate pharetra odio id mollis.',  '', 1),

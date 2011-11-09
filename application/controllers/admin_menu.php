@@ -176,7 +176,7 @@ class Admin_Menu extends CI_Controller {
 
                 if ($this->menu_model->update_menu_order($array) > 0) {
 
-                    $data['success_fail'] = '<p>Yes, the form is fine</p>';
+                    $data['success_fail'] = '<p>You have updated the form</p>';
 
                 }
 
@@ -216,17 +216,9 @@ class Admin_Menu extends CI_Controller {
 
         $data = array();
         
-        /*
-
-        $this->form_validation->set_rules('nameAdd', 'Name',
-            'trim|required|max_length[40]|callback_duplicate_menu_name');
-
-        $this->form_validation->set_rules('urlAdd', 'URL',
-            'trim|required|max_length[100]');
-
-        $this->form_validation->set_rules('publishAdd', 'publish', 'required');
-        
-        */
+        /**
+         * validation rule to be found in config -> form_validation.php
+         */
 
         if ($this->form_validation->run("addmenu")) {
 

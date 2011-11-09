@@ -22,6 +22,82 @@ echo SITENAME;
 
 <section id="column-one">
 
+
+<?php
+
+/**
+ * BELOW IS FOR DISPLAYING THE MENU
+ */
+
+?>
+
+<menu>
+<ul>
+<?php
+
+//var_dump($menu);
+
+
+foreach ($menu as $main_menu) {
+
+    $main_front = '<li>';
+
+    $main_front .= '<a href="';
+
+    if ($main_menu['menu_id'] === "C") {
+
+        $main_front .= site_url('category/' . url_title(strtolower($main_menu['name'])));
+
+    }
+
+    if ($main_menu['menu_id'] === "M") {
+
+        /**
+         * LOOK AT BELOW - REMOVE DIRECT CALL TO DATABASE MODEL
+         */
+
+        $menu_url = $this->menu_model->menu_url($main_menu['id']);
+
+        if ($menu_url->url !== "") {
+
+            $main_front .= site_url($menu_url->url);
+
+
+        } else {
+
+            $main_front .= site_url();
+
+        }
+
+
+    }
+
+    $main_front .= '">';
+
+    $main_front .= $main_menu['name'];
+
+    $main_front .= '</a>';
+
+    $main_front .= '</li>';
+
+    echo $main_front;
+
+}
+
+?>
+
+</ul>
+</menu>
+
+</section>
+<!-- End column one -->
+
+<section id="column-two">
+
+
+
+
+
 <?php
 
 // Only display content list if "content" is in URI
@@ -281,83 +357,7 @@ endif;
 
 ?>
 
-</section>
-<!-- End column one -->
-
-<section id="column-two">
-
-
-<?php
-
-/**
- * BELOW IS FOR DISPLAYING THE MENU
- */
-
-?>
-
-<menu>
-<ul>
-<?php
-
-//var_dump($menu);
-
-
-foreach ($menu as $main_menu) {
-
-    $main_front = '<li>';
-
-    $main_front .= '<a href="';
-
-    if ($main_menu['menu_id'] === "C") {
-
-        $main_front .= site_url('category/' . url_title(strtolower($main_menu['name'])));
-
-    }
-
-    if ($main_menu['menu_id'] === "M") {
-
-        /**
-         * LOOK AT BELOW - REMOVE DIRECT CALL TO DATABASE MODEL
-         */
-
-        $menu_url = $this->menu_model->menu_url($main_menu['id']);
-
-        if ($menu_url->url !== "") {
-
-            $main_front .= site_url($menu_url->url);
-
-
-        } else {
-
-            $main_front .= site_url();
-
-        }
-
-
-    }
-
-    $main_front .= '">';
-
-    $main_front .= $main_menu['name'];
-
-    $main_front .= '</a>';
-
-    $main_front .= '</li>';
-
-    echo $main_front;
-
-}
-
-?>
-
-</ul>
-</menu>
-
 
 </section><!-- End column two -->
-
-<section id="column-three">
-
-</section><!-- End column three -->
 
 </div><!-- End content -->

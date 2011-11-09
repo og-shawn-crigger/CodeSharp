@@ -55,15 +55,9 @@ class Login extends CI_Controller {
 
         $data = array();
 
-        /*
-
-        $this->form_validation->set_rules('username', 'Username',
-        'trim|required|max_length[30]');
-
-        $this->form_validation->set_rules('password', 'Password',
-        'trim|required|max_length[40]');
-        
-        */
+        /**
+         * validation rule to be found in config -> form_validation.php
+         */
 
         if ($this->form_validation->run("login") === false) {
 

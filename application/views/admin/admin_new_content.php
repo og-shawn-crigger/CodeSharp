@@ -100,7 +100,7 @@ if (KEYWORDS === "1") {
 
 $form .= form_fieldset_close();
 
-$form .= form_fieldset('Upload file');
+$form .= form_fieldset('<span>Upload file</span>');
 
 $form .= form_label('Add image', 'file_upload');
 

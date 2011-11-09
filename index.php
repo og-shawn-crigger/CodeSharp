@@ -28,8 +28,6 @@ define('ENVIRONMENT', 'testing');
 * By default development will show errors but testing and live will hide them.
 */
 
-
-
 if (defined('ENVIRONMENT')) {
     switch (ENVIRONMENT) {
         case 'development':
@@ -45,7 +43,6 @@ if (defined('ENVIRONMENT')) {
             exit('The application environment is not set correctly.');
     }
 }
-
 
 /*
 *---------------------------------------------------------------

@@ -59,18 +59,9 @@ class Admin_Config extends CI_Controller {
 
         $data = array();
         
-        /*
-
-        $this->form_validation->set_rules('nameForm', 'website title',
-            'trim|required|max_length[100]');
-
-        $this->form_validation->set_rules('sloganForm', 'slogan',
-            'trim|required|max_length[250]');
-
-        $this->form_validation->set_rules('emailForm', 'email',
-            'trim|required|max_length[50]|valid_email');
-            
-            */
+        /**
+         * validation rule to be found in config -> form_validation.php
+         */
 
         if ($this->form_validation->run("adminconfig") === false) {
 

@@ -101,6 +101,7 @@ foreach ($categories as $category) {
     $publish = 'publish' . $category->id;
     $name = 'name' . $category->id;
 
+
     echo '<div id="category-block-result-' . $category->id .
         '" style="clear: both">';
 
@@ -117,15 +118,15 @@ foreach ($categories as $category) {
     } // end isset
 
 
-    if (isset($finalDelete)) {
-
+    if (isset($_POST[$del_id])) {
+        
         $attributes = array('id' => "delete-category", 'name' => "deleteCategory");
 
         $form = form_open_multipart('admin-category/delete-category', $attributes);
 
         $form .= form_fieldset('<span>Are you sure you want to delete this category?</span>');
 
-        $form .= form_hidden('id', $finalDelete);
+        $form .= form_hidden('id', $category->id);
 
         $form .= form_submit('submit', 'delete');
 

@@ -70,7 +70,7 @@ class Admin_User extends CI_Controller {
         $query = $this->user_model->find_all_users();
 
         foreach ($query as $row) {
-
+        
             if ($row->username == $name) {
 
                 $this->form_validation->set_message('duplicate_username',
@@ -80,7 +80,7 @@ class Admin_User extends CI_Controller {
 
             } else {
 
-                return true;
+                //return true;
 
             }
 
@@ -104,7 +104,7 @@ class Admin_User extends CI_Controller {
 
             } else {
 
-                return true;
+                //return true;
 
             }
 
@@ -117,26 +117,9 @@ class Admin_User extends CI_Controller {
 
         $data = array();
         
-        /*
-
-        $this->form_validation->set_rules('usernameAdd', 'username',
-            'trim|required|max_length[30]|callback_duplicate_username');
-
-        $this->form_validation->set_rules('passwordAdd', 'first password',
-            'trim|required|max_length[40]|min_length[8]');
-
-        $this->form_validation->set_rules('passwordTwoAdd', 'second password',
-            'trim|required|max_length[40]|min_length[8]|matches[passwordAdd]');
-
-        $this->form_validation->set_rules('emailAdd', 'first email',
-            'trim|required|max_length[50]|valid_email|callback_duplicate_email');
-
-        $this->form_validation->set_rules('emailTwoAdd', 'second email',
-            'trim|required|max_length[50]|valid_email|matches[emailAdd]');
-
-        $this->form_validation->set_rules('adminRightsAdd', 'admin rights', 'required');
-        
-        */
+         /**
+         * validation rule to be found in config -> form_validation.php
+         */
 
         if ($this->form_validation->run("adduser") === false) {
 
@@ -195,7 +178,7 @@ class Admin_User extends CI_Controller {
 
         } else {
 
-            return true;
+            //return true;
 
         } // end if error statement
 
@@ -233,7 +216,7 @@ class Admin_User extends CI_Controller {
 
         } else {
 
-            return true;
+            //return true;
 
         } // end if error statement
 

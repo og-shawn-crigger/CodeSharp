@@ -98,14 +98,9 @@ class Admin_Category extends CI_Controller {
 
         $data = array();
         
-        /*
-
-        $this->form_validation->set_rules('nameAdd', 'Name',
-            'trim|required|max_length[40]');
-
-        $this->form_validation->set_rules('publishAdd', 'Publish article', 'required');
-        
-        */
+        /**
+         * validation rule to be found in config -> form_validation.php
+         */
 
         if ($this->form_validation->run("addcategory") === false) {
 
@@ -143,7 +138,7 @@ class Admin_Category extends CI_Controller {
 
     public function check_duplicates($form_input = "", $orig_form = "") {
 
-        if ($orig_form === "") {
+        if ($orig_form == "") {
 
             $result = $this->category_model->get_cats();
 
@@ -155,7 +150,7 @@ class Admin_Category extends CI_Controller {
 
 
         foreach ($result as $row) {
-
+        
             if ($row->name == $form_input) {
 
                 $this->form_validation->set_message('check_duplicates',
