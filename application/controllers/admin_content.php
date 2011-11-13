@@ -72,22 +72,37 @@ class Admin_Content extends CI_Controller {
     public function admin_add_content() {
 
         $data = array();
-        
-         /**
+
+        $data['file_error'] = null;
+
+        /**
          * validation rule to be found in config -> form_validation.php
          */
 
-        if ($this->input->post('metaDescription')) {
+        $this->form_validation->set_rules('title', 'title',
+            'trim|required|max_length[100]');
+
+        $this->form_validation->set_rules('body', 'content', 'required');
+
+        if (isset($_POST['metaDescription'])) {
 
             $this->form_validation->set_rules('metaDescription', 'Meta Description',
-                'trim|max_length[255]');
+                'trim|required|max_length[255]');
 
         }
 
-        if ($this->input->post('metaKeywords')) {
+        if (isset($_POST['metaKeywords'])) {
 
             $this->form_validation->set_rules('metaKeywords', 'Meta Keywords',
-                'trim|max_length[255]');
+                'trim|required|max_length[255]');
+
+        }
+
+        if ($_FILES["file_upload"]['error'] != 4) {
+
+            // If image uploaded then process file to see if there are any errors
+
+            $data['file_error'] = $this->image_model->upload_image();
 
         }
 
@@ -98,44 +113,16 @@ class Admin_Content extends CI_Controller {
          * There's too many branches here. Needs attention
          */
 
-        if ($this->form_validation->run("addnode") !== false) {
+        if ($this->form_validation->run() !== false && $data['file_error'] === null) {
 
-            if ($_FILES["file_upload"]['error'] !== 4) {
-
-                // do file upload validation here
-                // add to the rest of the form validation rule
-
-                $data['file_error'] = $this->image_model->upload_image();
-
-                if (isset($data['file_error'])) {
-
-                    $data['success_fail'] = $this->form_failure();
-
-                } else {
-
-                    $data['success_fail'] = $this->form_success();
-                    // ultimate success here
-
-                    $target_file = $this->image_model->update_image();
-
-                    // Update content table
-
-                    $this->content_model->insert_content($this->input->post('select'), 1,
-                        // Need to change user value based on cookie value
-                        $target_file, $this->input->post('title'), $this->input->post('body'), $this->
-                        input->post('metaDescription'), $this->input->post('metaKeywords'), $this->
-                        input->post('publish'));
-
-                }
-
-            } else {
-
-                $data['success_fail'] = $this->form_success();
-                // ultimate success here
+            /**
+             * Need to branch here.
+             * One branch for database update if image uploaded
+             * And the other branch for database update if image not uploaded
+             */
+            if ($_FILES["file_upload"]['error'] != 4) {
 
                 $target_file = $this->image_model->update_image();
-
-                // Update content table
 
                 $this->content_model->insert_content($this->input->post('select'), 1,
                     // Need to change user value based on cookie value
@@ -143,9 +130,28 @@ class Admin_Content extends CI_Controller {
                     input->post('metaDescription'), $this->input->post('metaKeywords'), $this->
                     input->post('publish'));
 
+                $data['success_fail'] = $this->form_success();
+
+            } else {
+
+                // Here update database with image
+
+                $target_file = null;
+
+                // Here update database with NO image
+                $this->content_model->insert_content($this->input->post('select'), 1,
+                    // Need to change user value based on cookie value
+                    $target_file, $this->input->post('title'), $this->input->post('body'), $this->
+                    input->post('metaDescription'), $this->input->post('metaKeywords'), $this->
+                    input->post('publish'));
+
+                $data['success_fail'] = $this->form_success();
+
             }
 
         } else {
+
+            // if validation errors then show error message
 
             $data['success_fail'] = $this->form_failure();
 

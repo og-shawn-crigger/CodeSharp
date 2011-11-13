@@ -60,7 +60,7 @@ class Image_Model extends CI_Model {
          * Make sure file is an image, path upload is set and the image is not more than the maz size of 1mb
          */
         $config = array('allowed_types' => 'jpg|jpeg|png|gif', 'upload_path' => $this->
-            gallery_path, 'max_size' => 1000);
+            gallery_path, 'max_size' => 1000, 'remove_spaces' => true);
 
         $this->load->library('upload', $config);
 

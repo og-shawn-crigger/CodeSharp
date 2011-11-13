@@ -72,7 +72,7 @@ if (isset($_POST['submit']) && isset($delete_content)) {
 
     $attributesD = array('id' => "delete-node", 'name' => "deleteNode");
 
-    $form = form_open('admin-edi-content/delet-content', $attributesD);
+    $form = form_open('admin-edit-content/delete-content', $attributesD);
 
     $form .= form_fieldset('Are you sure you want to delete this content item? <br />
     It will not be possible to undo this action.');
@@ -138,12 +138,26 @@ if (isset($edit)):
         $form .= form_label('Add image', 'file_upload');
 
         $form .= '<input type="file" name="file_upload" id="file_upload" />';
+        
+        if(DESCRIPTION) {
 
         $form .= form_label('Meta description', 'meta-description');
 
         $form .= form_textarea(array('name' => 'metaDescription', 'id' =>
             'meta-description', 'value' => isset($_POST["metaDescription"]) ? $_POST["metaDescription"] :
             $row->meta_description, 'maxlength' => '255'));
+            
+            }
+            
+        if(KEYWORDS) {
+
+        $form .= form_label('Meta keywords', 'meta-keywords');
+
+        $form .= form_textarea(array('name' => 'metaKeywords', 'id' =>
+            'meta-keywords', 'value' => isset($_POST["metaKeywords"]) ? $_POST["metaKeywords"] :
+            $row->meta_keywords, 'maxlength' => '255'));
+            
+            }
 
         $form .= form_fieldset_close();
 

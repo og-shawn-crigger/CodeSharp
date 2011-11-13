@@ -4,14 +4,14 @@ Currently in Alpha version. You can download a version here: https://github.com/
 
 1. Create the database and include the database details in file application/config/database.php
 
-Change the $config['base_url'] value to your domain name in application/config/config.php
+2. Change the $config['base_url'] value to your domain name in application/config/config.php
 
-Run install file : http://www.example.com/install.php
+3. Run install file : http://www.example.com/index.php/install.php
 
-Enter values requested
+4. Enter values requested
 
 This will install a full version of CodeSharp
 
 Afterwards, change the error level in the main index file to production if coding work is to continue
 
-[At the moment there is a hack method of installing the files. This will change in a forthcoming version]
+[At the moment there is a hack installation method. This will change in a forthcoming version]

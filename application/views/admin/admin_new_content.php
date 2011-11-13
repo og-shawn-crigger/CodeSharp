@@ -67,7 +67,8 @@ $form .= form_fieldset('<span>Add content</span>');
 $form .= form_label('Title', 'title');
 
 $form .= form_input(array('name' => 'title', 'id' => 'title', 'maxlength' =>
-    '100', 'type' => 'text', 'value' => form_prep(set_value('title'))));
+    '100', 'type' => 'text', 'value' => isset($_POST['title'])? $_POST['title']: null ));
+    
 
 $form .= form_label('Please pick a category', 'category');
 
@@ -77,9 +78,9 @@ $form .= form_dropdown('select', $full_cats, '0', 'id="category"');
 $form .= form_label('Add content', 'body');
 
 $form .= form_textarea(array('name' => 'body', 'id' => 'body', 'value' =>
-    form_prep(set_value('body'))));
+    set_value('body')));
 
-if (DESCRIPTION === "1") {
+if (DESCRIPTION) {
 
     $form .= form_label('Meta description', 'meta-description');
 
@@ -89,7 +90,7 @@ if (DESCRIPTION === "1") {
 
 }
 
-if (KEYWORDS === "1") {
+if (KEYWORDS) {
 
     $form .= form_label('Meta keywords', 'meta-keywords');
 
