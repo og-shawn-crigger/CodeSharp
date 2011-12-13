@@ -101,7 +101,8 @@ class Admin_Category extends CI_Controller {
         /**
          * validation rule to be found in config -> form_validation.php
          */
-
+         
+        
         if ($this->form_validation->run("addcategory") === false) {
 
             // errors here

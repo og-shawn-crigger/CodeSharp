@@ -53,7 +53,7 @@ if (isset($_POST['submitAdd'])) {
 
 $attributes = array('id' => "add-user", 'name' => "addUser");
 
-$form = form_open_multipart('admin-user/add-user', $attributes);
+$form = form_open('admin-user/add-user', $attributes);
 
 $form .= form_fieldset('<span>Add user</span>');
 
@@ -166,7 +166,7 @@ foreach ($query as $user) {
     $attributes = array('id' => "admin-add-user-{$user->id}", 'name' =>
         "adminAddUser", 'method' => 'post');
 
-    $form .= form_open_multipart('admin-user/edit-users#user-block-result-' . $user->
+    $form .= form_open('admin-user/edit-users#user-block-result-' . $user->
         id, $attributes);
 
     $form .= form_fieldset('<span>Edit ' . $user->username . '</span>');

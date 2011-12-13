@@ -815,6 +815,14 @@ float : left;
 #edit-users {
 	margin : 0 10px;
 }
+.username {
+background : darkred;
+	color : #fff!important;
+	font-size : 1.6em;
+	margin-bottom : 1.25em;
+	padding : 5px 1px;
+	border-radius : 5px;
+}
 #edit-users h1, #edit-users p, .username {
 	font-size : 1.6em;
 	margin-bottom : 1.25em;

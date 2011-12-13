@@ -75,7 +75,7 @@ $form .= form_checkbox(array('name' => 'publishAdd', 'id' => 'publish',
 
 $form .= form_fieldset_close();
 
-$form .= form_submit('submit', 'submit');
+$form .= form_submit('submitCat','Add');
 
 $form .= form_close();
 
@@ -176,8 +176,6 @@ foreach ($categories as $category) {
     $form .= form_checkbox(array('name' => $publish, 'id' => $publish, 'checked' =>
         isset($_POST[$publish]) ? $_POST[$publish] : $category->visible, 'value' => "1"));
 
-    $form .= form_fieldset_close();
-
     $form .= form_submit($del_id, 'delete');
 
     $form .= form_submit($cat_id, 'submit');
@@ -185,15 +183,21 @@ foreach ($categories as $category) {
     $form .= form_hidden($hide_id, $category->id);
 
     $form .= form_hidden($orig_name, $category->name);
+    
+    $form .= form_fieldset_close();
 
     $form .= form_close();
 
     echo $form;
 
     echo '</div>';
-
-
+    
+    $json[] = array('id' => $category->id, 'name' => $category->name);
+    
 }
+
+// create json file with category id and category name
+create_json('category', $json);
 
 ?>
       </section>

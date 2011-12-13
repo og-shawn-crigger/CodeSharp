@@ -120,12 +120,12 @@ if (isset($_POST['submitCat'])) {
 
     }
 
-
     echo validation_errors();
 
 }
 
 echo '</div>';
+
 $attributes = array('id' => "addCategories", 'name' => "addCategories");
 
 $form = form_open('admin-menu/add-categories-to-menu#categories-result', $attributes);
@@ -390,8 +390,12 @@ foreach ($display_menu as $menu_page) {
     $form .= '</div>';
 
     echo $form;
+    
+    $json[] = array('id' => $id, 'name' => $menu_page->name);
 
 }
+
+create_json('menu', $json);
 
 ?>
       </section>

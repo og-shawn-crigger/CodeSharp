@@ -31,6 +31,14 @@ class Admin_User extends CI_Controller {
                 $this->delete_user();
                 break;
 
+            case 'email-ajax-check':
+                $this->email_ajax_check();
+                break;
+
+            case 'username-ajax-check';
+                $this->username_ajax_check();
+                break;
+
             default:
                 $this->index();
                 break;
@@ -46,7 +54,7 @@ class Admin_User extends CI_Controller {
         $query = $this->user_model->find_all_users();
 
         $data['query'] = $query;
-	
+
         $data['content'] = "admin/admin_user_view";
 
         $this->load->view("admin/includes/template.php", $data);
@@ -62,6 +70,38 @@ class Admin_User extends CI_Controller {
 
     }
 
+    public function email_ajax_check() {
+
+        $query = $this->db->query("SELECT email FROM user");
+
+        foreach ($query->result_array() as $emails) {
+
+            if ($emails['email'] == $_GET['emailAdd']) {
+
+                echo true;
+                break;
+
+            }
+        }
+    }
+
+    public function username_ajax_check() {
+
+        $query = $this->db->query("SELECT username FROM user");
+
+        foreach ($query->result_array() as $emails) {
+
+            if ($emails['username'] == $_GET['usernameAdd']) {
+
+                echo true;
+                break;
+
+            }
+        }
+
+
+    }
+
 
     // When a new user is created make sure that the username is unique
 
@@ -70,17 +110,13 @@ class Admin_User extends CI_Controller {
         $query = $this->user_model->find_all_users();
 
         foreach ($query as $row) {
-        
+
             if ($row->username == $name) {
 
                 $this->form_validation->set_message('duplicate_username',
                     "The %s field already exists in the database. Please chose a new name");
 
                 return false;
-
-            } else {
-
-                //return true;
 
             }
 
@@ -102,10 +138,6 @@ class Admin_User extends CI_Controller {
 
                 return false;
 
-            } else {
-
-                //return true;
-
             }
 
         }
@@ -116,8 +148,8 @@ class Admin_User extends CI_Controller {
     function add_user() {
 
         $data = array();
-        
-         /**
+
+        /**
          * validation rule to be found in config -> form_validation.php
          */
 
@@ -132,8 +164,8 @@ class Admin_User extends CI_Controller {
             // form success here
 
 
-            if ($this->user_model->insert_user($this->input->post('usernameAdd'), $this->input->post('passwordAdd'), 
-            $this->input->post('emailAdd'), $this->input->post('adminRightsAdd'))) {
+            if ($this->user_model->insert_user($this->input->post('usernameAdd'), $this->
+                input->post('passwordAdd'), $this->input->post('emailAdd'), $this->input->post('adminRightsAdd'))) {
 
                 $data['success'] = "<p>You have successfully created a new user.</p>";
 
@@ -176,10 +208,6 @@ class Admin_User extends CI_Controller {
 
             return false;
 
-        } else {
-
-            //return true;
-
         } // end if error statement
 
     }
@@ -213,10 +241,6 @@ class Admin_User extends CI_Controller {
                 "The %s field already exists in the database. Please chose a new name");
 
             return false;
-
-        } else {
-
-            //return true;
 
         } // end if error statement
 

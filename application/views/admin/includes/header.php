@@ -1,7 +1,5 @@
 <?php
-
 ob_start();
-
 ?>
 <!DOCTYPE html>
 <!--[if IE]><![endif]-->
@@ -97,7 +95,6 @@ echo base_url("css/admin/markitup/sets/textile/style.css");
 
 ?>" />
 
-
 <!-- JavaScript -->
 
 <script src="<?php
@@ -111,7 +108,6 @@ echo base_url("javascript/admin/jquery-1.7.min.js");
 echo base_url("javascript/admin/main-file.js");
 
 ?>"></script>
-
 
 <script src="<?php
 
@@ -127,243 +123,433 @@ echo base_url("css/admin/markitup/sets/textile/set.js");
 <script>
 /* <![CDATA[ */
 
-var CS = window.CS || {};
 
-// submission of admin_new_content.php
-// Needs further work on the File API
 
-CS.AddNode = (function () {
+CS.ReadJson = (function () {
 
     // private attributes if any here
+    var number, catPublish, i, textZone, textZoneValue, form, inputCollection, key;
     // private methods if any here
-    
     // public attribute and methods below
     return {
 
         //public attributes
-        formText: null,
-        titleField: null,
-        catField: null,
-        bodyField: null,
-        descField: null,
-        keyField: null,
-        publishField: null,
-        fileField: null,
+        objX: null,
+        key: null,
+        jsonData: null,
+        catName: null,
+        menuName: null,
+        menuURL: null,
         error: null,
-        i: null,
-        ext: null,
-        image: null,
-        len: null,
-        imageError: null,
-        publish: null,
-        form: null,
-        total: null,
-
+        id: null,
         //public methods
-        handleSubmit: function (e) {
+        category: function (category, url) {
+
+            CS.Json.getJson(url + "json/" + category + ".json", function (result) {
+
+                // category edit submission here
+                /**
+                 * THIS SUDDENTLY JUMPS TO PROCEDURAL PROGRAMMING. THIS IS BECAUSE OF AN ISSUE IN THE PHP CODE THAT NEEDS ADDRESSING
+                 */
+
+                for (key in result) {
+                    // loop through JSON object
+                    if (result.hasOwnProperty(key)) {
+
+                        form = document.forms['adminAddCategory' + result[key].id];
+
+                        //use jQuery animation to hide the category forms
+                        $('#category-block-' + result[key].id + ' fieldset').hide();
+                        $('.category-title').css('cursor', 'pointer');
+                        $('#category-block-' + result[key].id).click(function () {
+                            $(this).find("fieldset").show(1000);
+                            $('.category-title').css('cursor', 'default');
+                        });
+
+                        textZone = form.elements['name' + result[key].id];
+
+/*
+                     Change values of form text inline with changing the value of the name input element
+                     */
+                        textZone.onkeyup = function () {
+
+                            textZoneValue = this.value.trim();
+
+                            // changes form values - need to check in IE, lol
+                            this.previousSibling.innerHTML = "Name: " + textZoneValue;
+                            this.previousSibling.previousSibling.previousSibling.innerHTML = "<span>Edit: " + textZoneValue + "</span>";
+                            this.parentNode.parentNode.previousSibling.innerHTML = textZoneValue;
+
+                        }
+
+                        document.forms['adminAddCategory' + result[key].id].onsubmit = function () {
+
+                            CS.ReadJson.error = [];
+
+                            for (i = 0; i < this.elements.length; i += 1) {
+
+                                if (this.elements[i].type === "text") {
+
+                                    // find the number  in the name value field
+                                    number = this.elements[i].name.match(/\d/g);
+                                    number = number.join("");
+
+                                } // end if statement
+                            } // end for loop
+                            CS.ReadJson.catName = this.elements['name' + number].value.trim();
+
+                            // loop through the publish fields
+                            // assign a value whether the article is to be published or not
+                            for (i = 0; i < this.elements['publish' + number].length; i += 1) {
+
+                                if (this.elements['publish' + number][i].checked == true && this.elements['publish' + number][i].value === "1") {
+                                    // determines whether the item should be published
+                                    catPublish = "1";
+                                } else {
+                                    catPublish = "0";
+                                } // end if
+                            } // end for loop
+                            CS.Validation.Max(CS.ReadJson.catName, CS.ReadJson.error, 40, "Opps, the title field field is too long");
+
+                            CS.Validation.Min(CS.ReadJson.catName, CS.ReadJson.error, "Please make sure you don't leave the title field empty");
+
+                            if (CS.ReadJson.error.length === 0) {
+                                //process form
+                                number = this.id.match(/\d/g);
+                                number = number.join("");
+                                $('#category-block-' + number + ' fieldset').hide();
+                                return true;
+
+                            } else {
+                                // If there are errors in the form then run alert message
+                                alert(CS.ReadJson.error);
+                                //stop form from being processed
+                            }
+
+                            return false;
+
+                        } // end onsubmit
+                    } // end if
+                } // end for
+            });
+        },
+
+        menu: function (category, url) {
+            
+            // menu edit submission here
+            CS.Json.getJson(url + "json/" + "menu" + ".json", function (result) {
+
+                for (key in result) {
+                    // loop through JSON object
+                    if (result.hasOwnProperty(key)) {
+
+                        form = document.forms['adminAddMenu' + result[key].id];
+
+                        // Hide fieldsets belonging to user entry forms - this can be opened on clicking .username
+                        // This enables a number of entries to be show
+                        $('#menu-block-result' + result[key].id + ' fieldset.fieldset-hidden').hide();
+                        $('.menuname').css('cursor', 'pointer');
+                        // on clicking title the fieldset is shown
+                        $('#menu-block-result' + result[key].id).click(function () {
+                            $(this).find("fieldset.fieldset-hidden").show(1000);
+                            $('.menuname').css('cursor', 'default');
+                        });
+
+                        document.forms['adminAddMenu' + result[key].id].onsubmit = function () {
+
+                            CS.ReadJson.error = [];
+
+                            for (i = 0; i < this.elements.length; i += 1) {
+
+                                if (this.elements[i].type === "text") {
+
+                                    // find the number  in the name value field
+                                    number = this.elements[i].name.match(/\d/g);
+                                    number = number.join("");
+
+                                } // end if statement
+                            } // end for loop
+                            CS.ReadJson.menuName = this.elements['menuName' + number].value.trim();
+
+                            CS.ReadJson.menuURL = this.elements['menuUrl' + number].value.trim();
+
+                            CS.Validation.Max(CS.ReadJson.menuName, CS.ReadJson.error, 40, "Opps, the title field field is too long. 40 characters maximum");
+
+                            CS.Validation.Max(CS.ReadJson.menuURL, CS.ReadJson.error, 40, "Opps, the url field field is too long. 40 characters maximum");
+
+                            CS.Validation.Min(CS.ReadJson.menuName, CS.ReadJson.error, "Please make sure that the menu name field is not left empty");
+                            
+                              // loop through the publish fields
+                            // assign a value whether the article is to be published or not
+                            for (i = 0; i < this.elements['menuPublish' + number].length; i += 1) {
+
+                                if (this.elements['menuPublish' + number][i].checked == true && this.elements['menuPublish' + number][i].value === "1") {
+                                    // determines whether the item should be published
+                                    catPublish = "1";
+                                } else {
+                                    catPublish = "0";
+                                } // end if
+                            } // end for loop
+
+                            if (CS.ReadJson.error.length === 0) {
+                                //process form
+                                number = this.id.match(/\d/g);
+                                number = number.join("");
+                                $('#menu-block-result' + number + ' fieldset.fieldset-hidden').hide();
+                                return true;
+
+                            } else {
+                                // If there are errors in the form then run alert message
+                                alert(CS.ReadJson.error);
+                                return false;
+                                //stop form from being processed
+                            } // end if statement
+                        }; // end onsubmit
+                    } // end if hasownproperty
+                } // end key in result
+            });
+
+        },
+        // end menu
+        init: function (formName, category, url) {
+
+            if (document.getElementById("edit-menu") && formName == "edit-menu") {
+                CS.ReadJson.menu(category, url);
+            }
+
+            if (document.getElementById("edit-category") && formName == "edit-category") {
+                CS.ReadJson.category(category, url);
+            }
+
+        } // end init()
+    }; // end return
+})(); // end
+
+
+
+CS.AddUser = (function () {
+    // private attributes if any here
+    var i, publish;
+    // private methods if any here
+    
+    function checkdup_email(callback) {
         
-            // set error attribute as an array
-            CS.AddNode.error = [];
-            CS.AddNode.form = document.forms.adminAddContent;
+         //start the ajax to check for duplicate emails or usernames
+                $.ajax({
+                    //this is the php file that processes the data and send mail
+                    url: "<?php print site_url(); ?>" + "admin-user/email-ajax-check",
+                    //GET method is used
+                    type: "GET",
+                    //pass the data
+                    data: "emailAdd=" + CS.AddUser.emailAdd,
+                    dataType: "text",
+                    async: false,
+                    // data type
+                    // dataType: "text",
+                    //Do not cache the page
+                    cache: false,
+                    //success
+                    success: function (html) {
+                       
+                            callback(html);
+                            
+                    } // end success function
+                }); // ajax requies
+                
+        
+    }
+    
+     function checkdup_username(callback) {
+        
+         //start the ajax to check for duplicate emails or usernames
+                $.ajax({
+                    //this is the php file that processes the data and send mail
+                    url: "<?php print site_url(); ?>" + "admin-user/username-ajax-check",
+                    //GET method is used
+                    type: "GET",
+                    //pass the data
+                    data: "usernameAdd=" + CS.AddUser.usernameAdd,
+                    dataType: "text",
+                    async: false,
+                    // data type
+                    // dataType: "text",
+                    //Do not cache the page
+                    cache: false,
+                    //success
+                    success: function (html) {
+                       
+                            callback(html);
+                            
+                    } // end success function
+                }); // ajax requies
+                
+        
+    }
+
+
+
+
+    // public attribute and methods below
+    return {
+
+        //public attributes
+        usernameAdd: null,
+        passwordAdd: null,
+        passwordTwoAdd: null,
+        emailAdd:  null,
+        emailTwoAdd: null,
+        adminRightsAdd: null,
+        error: null,
+        message: null,
+
+        handleSubmit: function () {
+
+            CS.AddUser.error = [];
+
             // declare form values
-            CS.AddNode.fileField = CS.AddNode.form.file_upload.value;
-            CS.AddNode.titleField = trim(CS.AddNode.form.title.value);
-            CS.AddNode.catField = trim(CS.AddNode.form.select.value);
-            CS.AddNode.bodyField = trim(CS.AddNode.form.body.value);
-            CS.AddNode.publishField = CS.AddNode.form.publish;
-            if (CS.AddNode.form.metaDescription) {
-                CS.AddNode.descField = trim(CS.AddNode.form.metaDescription.value);
+            CS.AddUser.usernameAdd = this.usernameAdd.value.trim();
+            CS.AddUser.passwordAdd = this.passwordAdd.value.trim();
+            CS.AddUser.passwordTwoAdd = this.passwordTwoAdd.value.trim();
+            CS.AddUser.emailAdd = this.emailAdd.value.trim();
+            CS.AddUser.emailTwoAdd = this.emailTwoAdd.value.trim();
+            
+            CS.AddUser.adminRightsAdd = this.adminRightsAdd;
+
+            CS.Validation.Max(CS.AddUser.usernameAdd, CS.AddUser.error, 30, "Opps, the username field field is too long. A maximum of 30 characters only");
+            CS.Validation.Max(CS.AddUser.passwordAdd, CS.AddUser.error, 40, "Opps, the passwordd field field is too long. A maximum of 40 characters only");
+            CS.Validation.Max(CS.AddUser.emailAdd, CS.AddUser.error, 50, "Opps, the name url field is too long. A maximum of 50 characters only");
+            CS.Validation.Min(this.elements, CS.AddUser.error, "Please make sure you don't leave any fields empty");
+            
+            if( (CS.AddUser.passwordAdd && CS.AddUser.passwordTwoAdd) || (CS.AddUser.emailAdd && CS.AddUser.emailTwoAdd)) {
+                
+                if(CS.AddUser.passwordAdd !== CS.AddUser.passwordTwoAdd) {
+                    
+                    CS.AddUser.error.push("\nPlease make sure that the passwords are exactly the same");
+                    
+                }
+                
+                if(CS.AddUser.emailAdd !== CS.AddUser.emailTwoAdd) {
+                    
+                    CS.AddUser.error.push("\nPlease make sure that the email addresses are exactly the same");
+                    
+                }
+                
+                CS.Validation.Email(CS.AddUser.emailAdd, CS.AddUser.error);
+                
             }
-            if (CS.AddNode.form.metaKeywords) {
-                CS.AddNode.keyField = trim(CS.AddNode.form.metaKeywords.value);
-            }
-            CS.AddNode.i = 0;
-            var elems = CS.AddNode.form.elements;
-            //loop through form elements to make sure text and textarea are not empty
-            for (CS.AddNode.len = elems.length; CS.AddNode.i < CS.AddNode.len; CS.AddNode.i += 1) {
-                if (elems[CS.AddNode.i].type === "text" || elems[CS.AddNode.i].type === "textarea") {
-                    if (elems[CS.AddNode.i].value.length < 1) {
-                        CS.AddNode.error.push("\nPlease make sure that no fields are left empty");
-                        break;
-                    } // if value < 1
-                } // end if text or textarea
-            } // end for statemetn
-            CS.AddNode.i = 0;
-            // loop through element fields values to make sure that they are not too long
-            for (CS.AddNode.len = elems.length; CS.AddNode.i < CS.AddNode.len; CS.AddNode.i += 1) {
-                if (elems[CS.AddNode.i].name === "title") {
-                    if (elems[CS.AddNode.i].value.length >= 100) {
-                        CS.AddNode.error.push("\nThe title field is too long please shorten it");
-                    } // end if length > 10
-                } // end if name === title
-                if (elems[CS.AddNode.i].name === "metaKeywords") {
-                    if (elems[CS.AddNode.i].value.length >= 255) {
-                        CS.AddNode.error.push("\nThe meta keyfield is too long please shorten it");
-                    } // end if length > 255
-                } // end if name === metaKeywords
-                if (elems[CS.AddNode.i].name === "metaDescription") {
-                    if (elems[CS.AddNode.i].value.length >= 255) {
-                        CS.AddNode.error.push("\nThe meta description is too long please shorten it");
-                    } // end if length > 255
-                } // end if name === metaDescription
-            }
+
             // assign a value whether the article is to be published or not
-            for (CS.AddNode.i = 0; CS.AddNode.i < CS.AddNode.publishField.length; CS.AddNode.i += 1) {
-                if (CS.AddNode.publishField[CS.AddNode.i].checked == true && CS.AddNode.publishField[CS.AddNode.i].value === "1") {
+            for (i = 0; i < CS.AddUser.adminRightsAdd.length; i += 1) {
+                if (CS.AddUser.adminRightsAdd[i].checked == true && CS.AddUser.adminRightsAdd[i].value === "1") {
                     // determines whether the item should be published
-                    CS.AddNode.publish = "1"
+                    publish = "1";
                 } else {
-                    CS.AddNode.publish = "0"
+                    publish = "0";
                 } // end if
             } // end for loop
-            // the valueos of all the file fields
-            // Below checks to make sure that uploaded file is an image
-            CS.AddNode.image = [".jpeg", ".jpg", ".png", ".gif"];
-            CS.AddNode.i = 0;
-            // find extension of file
-            CS.AddNode.ext = CS.AddNode.fileField.slice(CS.AddNode.fileField.indexOf(".")).toLowerCase();
-            // loop through file extentiong above and then see if it fits what the user has updated
-            for (CS.AddNode.len = CS.AddNode.image.length; CS.AddNode.i < CS.AddNode.len; CS.AddNode.i += 1) {
-                if (CS.AddNode.ext === CS.AddNode.image[CS.AddNode.i]) {
-                    CS.AddNode.imageError = null;
-                    break;
-                } else {
-                    if (CS.AddNode.fileField !== "") {
-                        CS.AddNode.imageError = 1;
+            
+           checkdup_email(function (result) {
+            
+            if(result == true) {
+                
+                CS.AddUser.error.push("\nSorry, this email address has already been used by another user. Please use a different email addresss.");
+                
+            }
+            
+            });
+            
+            checkdup_username(function (result) {
+            
+            if(result == true) {
+                
+                CS.AddUser.error.push("\nSorry, the username has already been used by another user. Please pick another one.");
+                
+            }
+            
+            });
+            
+            //process form
+            
+            /*
+            
+            objX = new XMLHttpRequest();
+            
+            var data = "emailAdd=" + CS.AddUser.emailAdd;
+            
+            var url = "<?php print site_url(); ?>" + "admin-user/email-ajax-check";
+         
+            objX.open('GET', url, true);
+            objX.setRequestHeader('User-Agent', 'XMLHTTP/1.0');
+            objX.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            objX.onreadystatechange = function () {
+
+                if (objX.readyState !== 4) {
+
+                    if (objX.status !== 200 && objX.status !== 304) {
+                        alert('HTTP error ' + objX.status);
                     }
-                } // else
-            } // end for loop
-            // if the file is not an image then produce an error message and attached it to the error array
-            if (CS.AddNode.imageError === 1) {
-                CS.AddNode.error.push("\nPlease make sure you only upload an image");
-            }
-            // Add the form input values to the total array for use in form processing below
-            CS.AddNode.total = [
-            CS.AddNode.fileField, CS.AddNode.titleField, CS.AddNode.catField, CS.AddNode.bodyField, CS.AddNode.publish, CS.AddNode.keyField, CS.AddNode.descField];
-            // add error messag end input values in the total array for use in validData
-            // check whether HTML5 fileAPI is working on the browser
-            if (window.File && window.FileReader && window.FileList && window.Blob) {
-                // if yes go to fileAPI function
-                CS.AddNode.fileAPI(CS.AddNode.error, CS.AddNode.total);
-            } else {
-                // if not go straight to validData function
-                CS.AddNode.validData(CS.AddNode.error, CS.AddNode.total);
-            }
-            return false;
-            
+                }
+            };
 
+            //objX.send(data);
+            
+            alert(objX.responseText); 
+            
+            */
+
+            
+            CS.AddUser.validData(CS.AddUser.error);
+            
+            return false;
         },
 
-        fileAPI: function (error, formArray) {
-            
-            if (document.getElementById("file_upload").files[0]
-            //add below when all the system is working well
-            //&& error.length !== 0
-            ) {
-                if (document.getElementById("file_upload").files[0].size > 1024000) {
-                    error.push("\nSorry, the image you uploaded is too large");
-                } // end if image size
-            } // end of file_upload has file
-            CS.AddNode.validData(error, formArray)
-            return false;
-            
-        },
+        validData: function (error) {
 
-        validData: function (error, formArray) {
-            // for the legacy browsers just run the php form if no errors are produced
             if (error.length === 0) {
-            return CS.AddNode.Form.submit();
+                
+              
+
             } else {
                 // If there are errors in the form then run alert message
                 alert(error);
-                return false;
+                //stop form from being processed
             }
-
-        },
-
-        sendData: function (formArray) {
-
-          
-
-
-
-            //alert(formArray[0]);
-/*
-             THIS IS THE AJAX COMMAND
-        
-             */
-
-/*
-
-            // When form inputs are correct send them to the php form for processing
-            var $data, $objX;
-
-            $objX = new XMLHttpRequest();
-
-            // to stop IE caching the request
-            $random = Math.random();
-
-            $data = 'category_id=' + catField + '&user_id=' + "1" + '&image_id=' + 'yeah' + '&date=' + "now()" + '&title=' + titleField + '&body=' + bodyField + '$meta_description=' + descField + '$meta_keywords=' + keyField + '$ajax=' + true + '&r=' + $random;
-
-            // alert($data);
-            $objX.open('POST', site_url('admin-content/admin-add-content'), true);
-
-            $objX.setRequestHeader('User-Agent', 'XMLHTTP/1.0');
-
-            $objX.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-            $objX.onreadystatechange = function () {
-
-                if ($objX.readyState !== 4) {
-
-                    if ($objX.status !== 200 && $objX.status !== 304) {
-                        alert('HTTP error ' + $objX.status);
-
-                    }
-
-                }
-
-            };
-            
-            
-            
-*/
-
-
-            //alert($objX.send($data));
-/*
-                 END OF JAVASCRIPT COMMEND
-                 */
-
-
+            return false;
         },
 
         init: function () {
 
-            if (document.forms.adminAddContent) {
+            if (document.forms.addUser) {
+            
+                document.forms.addUser.onsubmit = CS.AddUser.handleSubmit;
 
-                CS.AddNode.Form = document.forms.adminAddContent;
-                // first step sets value for form name
-                CS.AddNode.Form.onsubmit = CS.AddNode.handleSubmit;
                 // on submit run handeSubmit method
             } // end undefined
         } // end init()
     }; // end return
-})(); // end CS.AddNode
+})(); // end CS.EditNode
 
 
 function init() {
-
+    
+    CS.EditNode.init();
     CS.AddNode.init();
+    CS.AddCategory.init('<?php print site_url(); ?>');
+    CS.AddMenu.init('<?php print base_url(); ?>', '<?php print site_url(); ?>');
+    // Read and use category.json file
+    CS.ReadJson.init("edit-category", "category", '<?php print base_url(); ?>');
+    CS.ReadJson.init("edit-menu", "menu", '<?php print base_url(); ?>');
+    CS.MenuOrder.init();
+    CS.AddUser.init();
 
 } // end function init
 
 
 $(document).ready(function () {
-
+    
     // for markItUp editor. Don't touch
     $("#body").markItUp(mySettings);
-
+    
     init();
 
 }); // End document ready
