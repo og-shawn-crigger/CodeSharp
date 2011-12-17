@@ -164,7 +164,7 @@ foreach ($query as $user) {
     $form .= '<div class="username">' . $user->username . '</div>';
 
     $attributes = array('id' => "admin-add-user-{$user->id}", 'name' =>
-        "adminAddUser", 'method' => 'post');
+        "adminAddUser{$user->id}", 'method' => 'post');
 
     $form .= form_open('admin-user/edit-users#user-block-result-' . $user->
         id, $attributes);
@@ -226,9 +226,11 @@ foreach ($query as $user) {
     $form .= '</div>';
 
     echo $form;
+    
+    $json[] = array('id' => $user->id);
 
 }
-
+create_json('user', $json);
 ?>
       </section>
       <!-- End edit users -->

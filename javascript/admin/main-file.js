@@ -422,14 +422,12 @@ CS.Json = (function () {
             } //CS.Json.objX 
         },
         // end getJson
-        sendJson: function (data, url, method) {
-            
-            formMethod = method || 'POST';
-
+        sendJson: function (data, url) {
+        
             //process form
             objX = new XMLHttpRequest();
 
-            objX.open(formMethod, url, true);
+            objX.open('POST', url, true);
             objX.setRequestHeader('User-Agent', 'XMLHTTP/1.0');
             objX.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             objX.onreadystatechange = function () {
@@ -939,3 +937,173 @@ CS.MenuOrder = (function () {
         } // end init()
     }; // end return
 })(); // end CS.menuOrder
+
+CS.AddUser = (function () {
+    // private attributes if any here
+    var i, publish, data;
+    // private methods if any here
+    //process form
+
+    function checkdup_email(callback) {
+
+        //start the ajax to check for duplicate emails or usernames
+        $.ajax({
+            //this is the php file that processes the data and send mail
+            url: CS.AddUser.createJ + "admin-user/email-ajax-check",
+            //GET method is used
+            type: "GET",
+            //pass the data
+            data: "emailAdd=" + CS.AddUser.emailAdd,
+            dataType: "text",
+            async: false,
+            // data type
+            // dataType: "text",
+            //Do not cache the page
+            cache: false,
+            //success
+            success: function (html) {
+
+                callback(html);
+
+            } // end success function
+        }); // ajax requies
+    }
+
+    function checkdup_username(callback) {
+
+        //start the ajax to check for duplicate emails or usernames
+        $.ajax({
+            //this is the php file that processes the data and send mail
+            url: CS.AddUser.createJ + "admin-user/username-ajax-check",
+            //GET method is used
+            type: "GET",
+            //pass the data
+            data: "usernameAdd=" + CS.AddUser.usernameAdd,
+            dataType: "text",
+            async: false,
+            // data type
+            // dataType: "text",
+            //Do not cache the page
+            cache: false,
+            //success
+            success: function (html) {
+
+                callback(html);
+
+            } // end success function
+        }); // ajax requies
+    }
+
+    // public attribute and methods below
+    return {
+
+        //public attributes
+        usernameAdd: null,
+        passwordAdd: null,
+        passwordTwoAdd: null,
+        emailAdd: null,
+        emailTwoAdd: null,
+        adminRightsAdd: null,
+        error: null,
+        message: null,
+        createJ: null,
+
+        handleSubmit: function () {
+
+            CS.AddUser.error = [];
+
+            // declare form values
+            CS.AddUser.usernameAdd = this.usernameAdd.value.trim();
+            CS.AddUser.passwordAdd = this.passwordAdd.value.trim();
+            CS.AddUser.passwordTwoAdd = this.passwordTwoAdd.value.trim();
+            CS.AddUser.emailAdd = this.emailAdd.value.trim();
+            CS.AddUser.emailTwoAdd = this.emailTwoAdd.value.trim();
+
+            CS.AddUser.adminRightsAdd = this.adminRightsAdd;
+
+            CS.Validation.Max(CS.AddUser.usernameAdd, CS.AddUser.error, 30, "Opps, the username field field is too long. A maximum of 30 characters only");
+            CS.Validation.Max(CS.AddUser.passwordAdd, CS.AddUser.error, 40, "Opps, the passwordd field field is too long. A maximum of 40 characters only");
+            CS.Validation.Max(CS.AddUser.emailAdd, CS.AddUser.error, 50, "Opps, the name url field is too long. A maximum of 50 characters only");
+            CS.Validation.Min(this.elements, CS.AddUser.error, "Please make sure you don't leave any fields empty");
+
+            if (CS.AddUser.passwordAdd && CS.AddUser.passwordTwoAdd) {
+
+                if (CS.AddUser.passwordAdd !== CS.AddUser.passwordTwoAdd) {
+
+                    CS.AddUser.error.push("\nPlease make sure that the passwords are exactly the same");
+                }
+            }
+
+            if (CS.AddUser.emailAdd && CS.AddUser.emailTwoAdd) {
+
+                if (CS.AddUser.emailAdd !== CS.AddUser.emailTwoAdd) {
+
+                    CS.AddUser.error.push("\nPlease make sure that the email addresses are exactly the same");
+                } else {
+
+                    CS.Validation.Email(CS.AddUser.emailAdd, CS.AddUser.error);
+                }
+            }
+
+            // assign a value whether the article is to be published or not
+            for (i = 0; i < CS.AddUser.adminRightsAdd.length; i += 1) {
+                if (CS.AddUser.adminRightsAdd[i].checked == true && CS.AddUser.adminRightsAdd[i].value === "1") {
+                    // determines whether the item should be published
+                    publish = "1";
+                } else {
+                    publish = "0";
+                } // end if
+            } // end for loop
+            
+            checkdup_email(function (result) {
+
+                if (result == true) {
+
+                    CS.AddUser.error.push("\nSorry, this email address has already been used by another user. Please use a different email addresss.");
+                }
+            });
+
+            checkdup_username(function (result) {
+
+                if (result == true) {
+
+                    CS.AddUser.error.push("\nSorry, the username has already been used by another user. Please pick another one.");
+                }
+            });
+
+            CS.AddUser.validData(CS.AddUser.error);
+
+            return false;
+        },
+
+        validData: function (error) {
+
+            if (error.length === 0) {
+
+                data = 'usernameAdd=' + encodeURIComponent(CS.AddUser.usernameAdd) + '&passwordAdd=' + encodeURIComponent(CS.AddUser.passwordAdd) + '&passwordTwoAdd=' + encodeURIComponent(CS.AddUser.passwordTwoAdd) + '&emailAdd=' + encodeURIComponent(CS.AddUser.emailAdd) + '&emailTwoAdd=' + encodeURIComponent(CS.AddUser.emailTwoAdd) + '&adminRightsAdd=' + publish + '&r=' + Math.random();
+
+                CS.Json.sendJson(data, CS.AddUser.createJ + 'admin-user/add-user');
+
+                alert("New user created");
+
+            } else {
+                // If there are errors in the form then run alert message
+                alert(error);
+                //stop form from being processed
+            }
+            return false;
+        },
+
+        init: function (url) {
+
+            if (document.forms.addUser) {
+
+                CS.AddUser.createJ = url;
+
+                document.forms.addUser.onsubmit = CS.AddUser.handleSubmit;
+
+                // on submit run handeSubmit method
+            } // end undefined
+        } // end init()
+    }; // end return
+})(); // end CS.EditNode
