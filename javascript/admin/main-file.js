@@ -905,7 +905,6 @@ CS.MenuOrder = (function () {
                 if (this.elements[i].type === "text") {
 
                     if (!this.elements[i].value.length || this.elements[i].value.length > 2 || isNaN(parseFloat(this.elements[i].value))) {
-
                         CS.MenuOrder.error.push("\nPlease make sure that it is only a one or two digit number");
                         break;
                     }
@@ -1029,7 +1028,6 @@ CS.AddUser = (function () {
             if (CS.AddUser.passwordAdd && CS.AddUser.passwordTwoAdd) {
 
                 if (CS.AddUser.passwordAdd !== CS.AddUser.passwordTwoAdd) {
-
                     CS.AddUser.error.push("\nPlease make sure that the passwords are exactly the same");
                 }
             }
@@ -1037,10 +1035,8 @@ CS.AddUser = (function () {
             if (CS.AddUser.emailAdd && CS.AddUser.emailTwoAdd) {
 
                 if (CS.AddUser.emailAdd !== CS.AddUser.emailTwoAdd) {
-
                     CS.AddUser.error.push("\nPlease make sure that the email addresses are exactly the same");
                 } else {
-
                     CS.Validation.Email(CS.AddUser.emailAdd, CS.AddUser.error);
                 }
             }
@@ -1058,7 +1054,6 @@ CS.AddUser = (function () {
             checkdup_email(function (result) {
 
                 if (result == true) {
-
                     CS.AddUser.error.push("\nSorry, this email address has already been used by another user. Please use a different email addresss.");
                 }
             });
@@ -1066,7 +1061,6 @@ CS.AddUser = (function () {
             checkdup_username(function (result) {
 
                 if (result == true) {
-
                     CS.AddUser.error.push("\nSorry, the username has already been used by another user. Please pick another one.");
                 }
             });
@@ -1083,7 +1077,6 @@ CS.AddUser = (function () {
                 data = 'usernameAdd=' + encodeURIComponent(CS.AddUser.usernameAdd) + '&passwordAdd=' + encodeURIComponent(CS.AddUser.passwordAdd) + '&passwordTwoAdd=' + encodeURIComponent(CS.AddUser.passwordTwoAdd) + '&emailAdd=' + encodeURIComponent(CS.AddUser.emailAdd) + '&emailTwoAdd=' + encodeURIComponent(CS.AddUser.emailTwoAdd) + '&adminRightsAdd=' + publish + '&r=' + Math.random();
 
                 CS.Json.sendJson(data, CS.AddUser.createJ + 'admin-user/add-user');
-
                 alert("New user created");
 
             } else {
@@ -1099,7 +1092,6 @@ CS.AddUser = (function () {
             if (document.forms.addUser) {
 
                 CS.AddUser.createJ = url;
-
                 document.forms.addUser.onsubmit = CS.AddUser.handleSubmit;
 
                 // on submit run handeSubmit method
