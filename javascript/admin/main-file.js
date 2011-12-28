@@ -1066,7 +1066,6 @@ CS.AddUser = (function () {
                 data = 'usernameAdd=' + encodeURIComponent(CS.AddUser.usernameAdd) + '&passwordAdd=' + encodeURIComponent(CS.AddUser.passwordAdd) + '&passwordTwoAdd=' + encodeURIComponent(CS.AddUser.passwordTwoAdd) + '&emailAdd=' + encodeURIComponent(CS.AddUser.emailAdd) + '&emailTwoAdd=' + encodeURIComponent(CS.AddUser.emailTwoAdd) + '&adminRightsAdd=' + publish + '&r=' + Math.random();
 
                 CS.Json.sendJson(data, CS.AddUser.createJ + 'admin-user/add-user');
-
                 alert("New user created");
 
             } else {
@@ -1082,7 +1081,6 @@ CS.AddUser = (function () {
             if (document.forms.addUser) {
 
                 CS.AddUser.createJ = url;
-
                 document.forms.addUser.onsubmit = CS.AddUser.handleSubmit;
 
                 // on submit run handeSubmit method
