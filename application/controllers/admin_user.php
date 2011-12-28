@@ -72,31 +72,71 @@ class Admin_User extends CI_Controller {
 
     public function email_ajax_check() {
 
-        $query = $this->db->query("SELECT email FROM user");
+        if (!isset($_GET['currentEmail'])) {
 
-        foreach ($query->result_array() as $emails) {
+            $query = $this->db->query("SELECT email FROM user");
 
-            if ($emails['email'] == $_GET['emailAdd']) {
+            foreach ($query->result_array() as $emails) {
 
-                echo true;
-                break;
+                if ($emails['email'] == $_GET['emailAdd']) {
 
-            }
-        }
-    }
+                    echo true;
+                    break;
+
+                } // end if
+            } // end foreach
+
+        } else {
+
+            $query = $this->db->query("SELECT email FROM user WHERE email <> '{$_GET['currentEmail']}'");
+
+            foreach ($query->result_array() as $emails) {
+
+                if ($emails['email'] == $_GET['emailAdd']) {
+
+                    echo true;
+                    break;
+
+                } // end if
+            } // end foreach
+
+
+        } //end if !isset($_GET['currentEmail']
+
+
+    } // end email_ajax_check
 
     public function username_ajax_check() {
 
-        $query = $this->db->query("SELECT username FROM user");
+        if (!isset($_GET['currentUsername'])) {
 
-        foreach ($query->result_array() as $emails) {
+            $query = $this->db->query("SELECT username FROM user");
 
-            if ($emails['username'] == $_GET['usernameAdd']) {
+            foreach ($query->result_array() as $emails) {
 
-                echo true;
-                break;
+                if ($emails['username'] == $_GET['usernameAdd']) {
 
+                    echo true;
+                    break;
+
+                }
             }
+
+        } else {
+
+            $query = $this->db->query("SELECT username FROM user WHERE username <> '{$_GET['currentUsername']}'");
+
+            foreach ($query->result_array() as $emails) {
+
+                if ($emails['username'] == $_GET['usernameAdd']) {
+
+                    echo true;
+                    break;
+
+                }
+            }
+
+
         }
 
 

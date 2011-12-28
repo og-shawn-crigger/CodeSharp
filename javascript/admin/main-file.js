@@ -8,7 +8,7 @@ if (!String.prototype.trim) {
 
 // function taken from phpjs.org
 // This is messy. Look at using a prototype approach as used for the trim above
-
+// mysql datetime regex: /^([0-9]{2,4})-([0-1][0-9])-([0-3][0-9]) (?:([0-2][0-9]):([0-5][0-9]):([0-5][0-9]))?$/
 
 function date(format, timestamp) {
     // http://kevin.vanzonneveld.net
@@ -285,6 +285,160 @@ var fileAPI = {
     }
 };
 
+// top page object class
+// branching for window.pageYOffset / document.documentElement.scrollTop
+var TopMeasure = (function () {
+
+    var $ie = {
+        test: function () {
+            return document.documentElement.scrollTop;
+        }
+    };
+
+    var $nonIE = {
+        test: function () {
+            return window.pageYOffset;
+        }
+    };
+
+
+    if ($nonIE.test() != undefined) {
+        return $nonIE;
+    } else {
+        return $ie;
+    }
+
+})();
+
+// function for setting opacity for both IE and non IE
+
+function setOpacity(obj, value) {
+    obj.style.opacity = value / 10;
+    obj.style.filter = 'alpha(opacity=' + value * 10 + ')';
+}
+
+// elegant alert script below (https://github.com/TCotton/Elegant-Alert)
+var NewAlert = {
+    // this class is to replace the standard javascript alert box
+    // declare attributes at the top
+    nodeAlert: null,
+    stepCount: 0,
+    time: 100,
+    fade: null,
+    data: null,
+    run: null,
+
+    alertCheck: function () {
+
+        var bodyChildren, len, x, first, newData;
+        bodyChildren = document.body.childNodes;
+
+        x = 0;
+
+        for (len = bodyChildren.length; x < len; x += 1) {
+
+            // Checks to make sure that the alert is not run twice until after
+            // it has finished
+            if (bodyChildren[x].nodeType === 1 && bodyChildren[x].className === "elegant-alertxyz") {
+                // loops through entire body nodes to make sure class 'elegant-alertxyz' is not already present
+                NewAlert.run = 1;
+                break;
+            }
+        } // end for loop
+        // if animation is not already running then run method alertWrap
+        if (NewAlert.run !== 1) {
+            NewAlert.alertWrap();
+        }
+    },
+
+    // Create error HTML with alertWrap
+    alertWrap: function (value) {
+
+        // create element with class name alert
+        // add value of attribute and append to the body
+        NewAlert.nodeAlert = document.createElement("div");
+        NewAlert.nodeAlert.className = "elegant-alertxyz";
+        NewAlert.nodeAlert.innerHTML = NewAlert.data;
+        document.body.appendChild(NewAlert.nodeAlert);
+        NewAlert.nodeAlert.style.top = TopMeasure.test() + "px";
+        NewAlert.alertFade();
+    },
+
+    // use alertFade to create the fade out opacity effect
+    alertFade: function (value2) {
+
+        // alertWrap method;
+        setOpacity(NewAlert.nodeAlert, 10);
+
+        NewAlert.fade = setInterval(function () {
+
+            // Set opacity for non-IE browsers
+            NewAlert.nodeAlert.style.opacity = parseFloat(NewAlert.nodeAlert.style.opacity) - parseFloat(0.01);
+            //Set opacity for IE browsers
+            NewAlert.nodeAlert.style.filter = "alpha(opacity=" + (NewAlert.time - NewAlert.stepCount) + ")";
+            NewAlert.stepCount += 1;
+
+            if (NewAlert.stepCount >= NewAlert.time) {
+
+                clearInterval(NewAlert.fade);
+                // destroy node after it has finished fading into nothing
+                document.body.removeChild(NewAlert.nodeAlert);
+                // stepCount attribute needs to be reset back to 0
+                NewAlert.stepCount = 0;
+                // reset back to null
+                NewAlert.run = null;
+            }
+        }, NewAlert.time);
+    },
+
+    init: function (data) {
+
+        // Place data into data attribute
+        if (data.constructor === Array) {
+
+            x = 0;
+            newData = [];
+            for (len = data.length; x < len; x += 1) {
+                newData.push("<br />" + data[x])
+            }
+            NewAlert.data = String(newData);
+
+        } else {
+
+            NewAlert.data = data;
+        }
+
+        // Run alertCheck method
+        NewAlert.alertCheck();
+
+    }
+};
+
+// function for reseting form values to zero after successful form submission
+function reset_value(form) {
+
+    var i, len;
+    i = 0;
+
+    //loop through form elements to make sure text and textarea are not empty
+    for (len = form.length; i < len; i += 1) {
+        if (form[i].type === "text" || form[i].type === "textarea") {
+            form[i].value = "";
+        } // end if text or textarea
+    }
+}
+
+function addEvent(el, type, fn) {
+
+    if (window.addEventListener) {
+        el.addEventListener(type, fn, false);
+    } else if (window.attachEvent) {
+        el.attachEvent('on' + type, fn);
+    } else {
+        el['on' + type] = fn;
+    }
+}
+
 // declare the global namespace
 var CS = window.CS || {};
 
@@ -342,7 +496,7 @@ CS.Validation = {
     Email: function (email, obj) {
 
         var re = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
-        
+
         if (!re.test(email)) {
             obj.push("\n" + "Please make sure you supply a valid email address");
         }
@@ -423,7 +577,7 @@ CS.Json = (function () {
         },
         // end getJson
         sendJson: function (data, url) {
-        
+
             //process form
             objX = new XMLHttpRequest();
 
@@ -552,7 +706,7 @@ CS.EditNode = (function () {
                 CS.EditNode.Form.submit();
             } else {
                 // If there are errors in the form then run alert message
-                alert(error);
+                NewAlert.init(error);
                 //stop form from being processed
                 return false;
             }
@@ -671,7 +825,7 @@ CS.AddNode = (function () {
                 return this.submit();
             } else {
                 // If there are errors in the form then run alert message
-                alert(error);
+                NewAlert.init(error);
                 //stop form from being processed
                 return false;
             }
@@ -688,7 +842,6 @@ CS.AddNode = (function () {
         } // end init()
     }; // end return
 })(); // end CS.AddNode
-
 
 /*
  JavaScript form submission for admin_category - adding a new category
@@ -751,11 +904,12 @@ CS.AddCategory = (function () {
                 data = 'nameAdd=' + encodeURIComponent(CS.AddCategory.titleField) + '&publishAdd=' + publish + '&r=' + Math.random();
                 CS.Json.sendJson(data, CS.AddCategory.cJson + 'admin-category/add-category');
 
-                alert("form submitted");
+                NewAlert.init("form submitted");
+                reset_value(this.elements);
 
             } else {
                 // If there are errors in the form then run alert message
-                alert(error);
+                NewAlert.init(error);
                 //stop form from being processed
                 return false;
             }
@@ -773,7 +927,6 @@ CS.AddCategory = (function () {
         } // end init()
     }; // end return
 })(); // end CS.EditNode
-
 
 CS.AddMenu = (function () {
     // private attributes if any here
@@ -812,10 +965,13 @@ CS.AddMenu = (function () {
         form: null,
         getJ: null,
         createJ: null,
+        elements: null,
 
         handleSubmit: function () {
 
             CS.AddMenu.error = [];
+
+            CS.AddMenu.elements = this.elements;
 
             // declare form values
             CS.AddMenu.nameAdd = this.nameAdd.value.trim();
@@ -855,10 +1011,14 @@ CS.AddMenu = (function () {
             if (error.length === 0) {
                 data = 'nameAdd=' + encodeURIComponent(CS.AddMenu.nameAdd) + '&urlAdd=' + encodeURIComponent(CS.AddMenu.urlAdd) + '&publishAdd=' + publish + '&r=' + Math.random();
                 CS.Json.sendJson(data, CS.AddMenu.createJ + 'admin-menu/menu-add');
-                alert("new menu item created");
+                NewAlert.init("New menu item created");
+
+                reset_value(this.elements);
+
+
             } else {
                 // If there are errors in the form then run alert message
-                alert(error);
+                NewAlert.init(error);
                 //stop form from being processed
             }
             return false;
@@ -878,8 +1038,8 @@ CS.AddMenu = (function () {
         } // end init()
     }; // end return
 })(); // end CS.EditNode
-
 // form submission for menu order
+
 CS.MenuOrder = (function () {
     // private attributes if any here
     var i;
@@ -911,7 +1071,7 @@ CS.MenuOrder = (function () {
                 return this.submit();
             } else {
                 // If there are errors in the form then run alert message
-                alert(error);
+                NewAlert.init(error);
                 return false;
                 //stop form from being processed
             }
@@ -1039,7 +1199,6 @@ CS.AddUser = (function () {
                     publish = "0";
                 } // end if
             } // end for loop
-            
             checkdup_email(function (result) {
 
                 if (result == true) {
@@ -1066,11 +1225,12 @@ CS.AddUser = (function () {
                 data = 'usernameAdd=' + encodeURIComponent(CS.AddUser.usernameAdd) + '&passwordAdd=' + encodeURIComponent(CS.AddUser.passwordAdd) + '&passwordTwoAdd=' + encodeURIComponent(CS.AddUser.passwordTwoAdd) + '&emailAdd=' + encodeURIComponent(CS.AddUser.emailAdd) + '&emailTwoAdd=' + encodeURIComponent(CS.AddUser.emailTwoAdd) + '&adminRightsAdd=' + publish + '&r=' + Math.random();
 
                 CS.Json.sendJson(data, CS.AddUser.createJ + 'admin-user/add-user');
-                alert("New user created");
+                NewAlert.init("New user created");
+                reset_value(this.elements);
 
             } else {
                 // If there are errors in the form then run alert message
-                alert(error);
+                NewAlert.init(error);
                 //stop form from being processed
             }
             return false;
@@ -1088,3 +1248,384 @@ CS.AddUser = (function () {
         } // end init()
     }; // end return
 })(); // end CS.EditNode
+
+CS.EditItem = (function () {
+
+    // private attributes if any here
+    var number, catPublish, i, textZone, textZoneValue, form, inputCollection, key, publish;
+    // private methods if any here
+
+    function checkdup_email(callback) {
+
+        //start the ajax to check for duplicate emails or usernames
+        $.ajax({
+            //this is the php file that processes the data and send mail
+            url: CS.AddUser.createJ + "admin-user/email-ajax-check",
+            //GET method is used
+            type: "GET",
+            //pass the data
+            data: "emailAdd=" + encodeURIComponent(CS.EditItem.emailEditOne) + "&currentEmail=" + encodeURIComponent(CS.EditItem.currentEmail),
+            dataType: "text",
+            async: false,
+            // data type
+            // dataType: "text",
+            //Do not cache the page
+            cache: false,
+            //success
+            success: function (html) {
+
+                callback(html);
+
+            } // end success function
+        }); // ajax requies
+    }
+
+    function checkdup_username(callback) {
+
+        //start the ajax to check for duplicate emails or usernames
+        $.ajax({
+            //this is the php file that processes the data and send mail
+            url: CS.AddUser.createJ + "admin-user/username-ajax-check",
+            //GET method is used
+            type: "GET",
+            //pass the data
+            data: "usernameAdd=" + encodeURIComponent(CS.EditItem.usernameOne) + "&currentUsername=" + encodeURIComponent(CS.EditItem.currentUsername),
+            dataType: "text",
+            async: false,
+            // data type
+            // dataType: "text",
+            //Do not cache the page
+            cache: false,
+            //success
+            success: function (html) {
+
+                callback(html);
+
+            } // end success function
+        }); // ajax requies
+    }
+
+    // public attribute and methods below
+    return {
+
+        //public attributes
+        objX: null,
+        key: null,
+        jsonData: null,
+        catName: null,
+        menuName: null,
+        menuURL: null,
+        usernameOne: null,
+        emailEditOne: null,
+        emailEditTwo: null,
+        passwordOne: null,
+        passwordTwo: null,
+        adminRights: null,
+        currentEmail: null,
+        currentUsername: null,
+        error: null,
+        id: null,
+        //public methods
+        category: function (category, url) {
+
+            CS.Json.getJson(url + "json/" + category + ".json", function (result) {
+
+                // category edit submission here
+                /**
+                 * THIS SUDDENTLY JUMPS TO PROCEDURAL PROGRAMMING. THIS IS BECAUSE OF AN ISSUE IN THE PHP CODE THAT NEEDS ADDRESSING
+                 */
+
+                for (key in result) {
+                    // loop through JSON object
+                    if (result.hasOwnProperty(key)) {
+
+                        form = document.forms['adminAddCategory' + result[key].id];
+
+                        //use jQuery animation to hide the category forms
+                        $('#category-block-' + result[key].id + ' fieldset').hide();
+                        $('.category-title').css('cursor', 'pointer');
+                        $('#category-block-' + result[key].id).click(function () {
+                            $(this).find("fieldset").show(1000);
+                            $('.category-title').css('cursor', 'default');
+                        });
+
+                        textZone = form.elements['name' + result[key].id];
+
+/*
+                     Change values of form text inline with changing the value of the name input element
+                     */
+                        textZone.onkeyup = function () {
+
+                            textZoneValue = this.value.trim();
+
+                            // changes form values - need to check in IE, lol
+                            this.previousSibling.innerHTML = "Name: " + textZoneValue;
+                            this.previousSibling.previousSibling.previousSibling.innerHTML = "<span>Edit: " + textZoneValue + "</span>";
+                            this.parentNode.parentNode.previousSibling.innerHTML = textZoneValue;
+
+                        }
+
+                        document.forms['adminAddCategory' + result[key].id].onsubmit = function (evt) {
+
+                            CS.EditItem.error = [];
+
+                            for (i = 0; i < this.elements.length; i += 1) {
+
+                                if (this.elements[i].type === "text") {
+
+                                    // find the number  in the name value field
+                                    number = this.elements[i].name.match(/\d/g);
+                                    number = number.join("");
+
+                                } // end if statement
+                            } // end for loop
+                            CS.EditItem.catName = this.elements['name' + number].value.trim();
+
+                            // loop through the publish fields
+                            // assign a value whether the article is to be published or not
+                            for (i = 0; i < this.elements['publish' + number].length; i += 1) {
+
+                                if (this.elements['publish' + number][i].checked == true && this.elements['publish' + number][i].value === "1") {
+                                    // determines whether the item should be published
+                                    catPublish = "1";
+                                } else {
+                                    catPublish = "0";
+                                } // end if
+                            } // end for loop
+                            CS.Validation.Max(CS.EditItem.catName, CS.EditItem.error, 40, "Opps, the title field field is too long");
+
+                            CS.Validation.Min(CS.EditItem.catName, CS.EditItem.error, "Please make sure you don't leave the title field empty");
+
+                            if (CS.EditItem.error.length === 0) {
+                                //process form
+                                //number = this.id.match(/\d/g);
+                                //number = number.join("");
+                                $('#category-block-' + number).find("fieldset").hide();
+                                return true;
+
+                            } else {
+                                // If there are errors in the form then run alert message
+                                NewAlert.init(CS.EditItem.error);
+                                return false;
+                                //stop form from being processed
+                            }
+
+                        } // end onsubmit
+                    } // end if
+                } // end for
+            });
+        },
+
+        menu: function (category, url) {
+
+            // menu edit submission here
+            CS.Json.getJson(url + "json/" + category + ".json", function (result) {
+
+                for (key in result) {
+                    // loop through JSON object
+                    if (result.hasOwnProperty(key)) {
+
+                        form = document.forms['adminAddMenu' + result[key].id];
+
+                        // Hide fieldsets belonging to user entry forms - this can be opened on clicking .username
+                        // This enables a number of entries to be show
+                        $('#menu-block-result' + result[key].id + ' fieldset.fieldset-hidden').hide();
+                        $('.menuname').css('cursor', 'pointer');
+                        // on clicking title the fieldset is shown
+                        $('#menu-block-result' + result[key].id).click(function () {
+                            $(this).find("fieldset.fieldset-hidden").show(1000);
+                            $('.menuname').css('cursor', 'default');
+                        });
+
+                        document.forms['adminAddMenu' + result[key].id].onsubmit = function () {
+
+                            CS.EditItem.error = [];
+
+                            for (i = 0; i < this.elements.length; i += 1) {
+
+                                if (this.elements[i].type === "text") {
+
+                                    // find the number  in the name value field
+                                    number = this.elements[i].name.match(/\d/g);
+                                    number = number.join("");
+
+                                } // end if statement
+                            } // end for loop
+                            CS.EditItem.menuName = this.elements['menuName' + number].value.trim();
+                            CS.EditItem.menuURL = this.elements['menuUrl' + number].value.trim();
+                            CS.Validation.Max(CS.EditItem.menuName, CS.EditItem.error, 40, "Opps, the title field field is too long. 40 characters maximum");
+                            CS.Validation.Max(CS.EditItem.menuURL, CS.EditItem.error, 100, "Opps, the url field field is too long. 100 characters maximum");
+                            CS.Validation.Min(CS.EditItem.menuName, CS.EditItem.error, "Please make sure that the menu name field is not left empty");
+
+                            // loop through the publish fields
+                            // assign a value whether the article is to be published or not
+                            for (i = 0; i < this.elements['menuPublish' + number].length; i += 1) {
+
+                                if (this.elements['menuPublish' + number][i].checked == true && this.elements['menuPublish' + number][i].value === "1") {
+                                    // determines whether the item should be published
+                                    catPublish = "1";
+                                } else {
+                                    catPublish = "0";
+                                } // end if
+                            } // end for loop
+                            if (CS.EditItem.error.length === 0) {
+                                //process form
+                                //number = this.id.match(/\d/g);
+                                //number = number.join("");
+                                $('#menu-block-result' + number).find("fieldset.fieldset-hidden").hide();
+                                return true;
+
+                            } else {
+                                // If there are errors in the form then run alert message
+                                NewAlert.init(CS.EditItem.error);
+                                return false;
+                                //stop form from being processed
+                            } // end if statement
+                        }; // end onsubmit
+                    } // end if hasownproperty
+                } // end key in result
+            });
+
+        },
+        // end menu
+        user: function (category, url) {
+
+            CS.Json.getJson(url + "json/" + category + ".json", function (result) {
+
+                for (key in result) {
+                    // loop through JSON object
+                    if (result.hasOwnProperty(key)) {
+
+                        $('#user-block-' + result[key].id).find('fieldset').hide();
+                        $('.username').css('cursor', 'pointer');
+
+                        // on clicking title the fieldset is shown
+                        $('#user-block-' + result[key].id).click(function () {
+
+                            $(this).find("fieldset").show(1000);
+                            $('.username').css('cursor', 'default');
+
+                        });
+
+                        form = document.forms['adminAddUser' + result[key].id].elements['usernameOne' + result[key].id];
+/*
+                     Change values of form text inline with changing the value of the name input element
+                     */
+                        form.onkeyup = function () {
+
+                            textZoneValue = this.value.trim();
+                            // changes form values - need to check in IE, lol
+                            this.previousSibling.innerHTML = "Edit: " + textZoneValue;
+                            this.previousSibling.previousSibling.previousSibling.innerHTML = "<span>Edit: " + textZoneValue + "</span>";
+                            this.parentNode.parentNode.previousSibling.innerHTML = textZoneValue;
+                        }
+
+
+                        document.forms['adminAddUser' + result[key].id].onsubmit = function (e) {
+
+                            CS.EditItem.error = [];
+
+                            for (i = 0; i < this.elements.length; i += 1) {
+
+                                if (this.elements[i].type === "text") {
+                                    // find the number  in the name value field
+                                    number = this.elements[i].name.match(/\d/g);
+                                    number = number.join("");
+
+                                } // end if statement
+                            } // end for loop
+                            CS.EditItem.usernameOne = this.elements['usernameOne' + number].value.trim();
+                            CS.EditItem.emailEditOne = this.elements['emailEditOne' + number].value.trim();
+                            CS.EditItem.emailEditTwo = this.elements['emailEditTwo' + number].value.trim();
+                            CS.EditItem.passwordOne = this.elements['passwordOne' + number].value.trim();
+                            CS.EditItem.passwordTwo = this.elements['passwordTwo' + number].value.trim();
+                            CS.EditItem.currentEmail = this.elements['hiddenemail' + number].value;
+                            CS.EditItem.currentUsername = this.elements['hidden00' + number].value;
+                            CS.EditItem.adminRights = this.elements['adminRights' + number];
+
+                            // assign a value whether the article is to be published or not
+                            for (i = 0; i < CS.EditItem.adminRights.length; i += 1) {
+                                if (CS.EditItem.adminRights[i].checked == true && CS.EditItem.adminRights[i].value === "1") {
+                                    // determines whether the item should be published
+                                    publish = "1";
+                                } else {
+                                    publish = "0";
+                                } // end if
+                            } // end for loop
+                            CS.Validation.Min(CS.EditItem.usernameOne, CS.EditItem.error, "Please make sure that you don't leave the username blank");
+                            CS.Validation.Min(CS.EditItem.emailEditOne, CS.EditItem.error, "Please make sure that you don't leave the email fields blank");
+                            CS.Validation.Min(CS.EditItem.emailEditTwo, CS.EditItem.error, "Please make sure that you don't leave the email fields blank");
+                            CS.Validation.Max(CS.EditItem.usernameOne, CS.EditItem.error, 30, "Opps, the username field is too long. 30 characters maximum");
+                            CS.Validation.Max(CS.EditItem.emailEditOne, CS.EditItem.error, 50, "Opps, the email field is too long. 50 characters maximum");
+                            CS.Validation.Max(CS.EditItem.passwordOne, CS.EditItem.error, 40, "Opps, the email field is too long. 40 characters maximum");
+
+                            if (CS.EditItem.passwordOne && CS.EditItem.passwordTwo) {
+
+                                if (CS.EditItem.passwordOne !== CS.EditItem.passwordTwo) {
+                                    CS.EditItem.error.push("\nPlease make sure that the passwords are exactly the same");
+
+                                }
+                            } // end if passwords do not match
+                            if (CS.EditItem.emailEditOne && CS.EditItem.emailEditTwo) {
+
+                                if (CS.EditItem.emailEditOne !== CS.EditItem.emailEditTwo) {
+                                    CS.EditItem.error.push("\nPlease make sure that the emails are exactly the same");
+
+                                } else {
+
+                                    checkdup_email(function (result) {
+                                        if (result == true) {
+                                            CS.EditItem.error.push("\nSorry, this email address has already been used by another user. Please use a different email addresss.");
+                                        }
+                                    });
+                                }
+                            } // end if emails do not match
+
+                            if (CS.EditItem.usernameOne) {
+
+                                checkdup_username(function (result) {
+                                    if (result == true) {
+                                        CS.EditItem.error.push("\nSorry, this username has already been used by another user. Please use a different email addresss.");
+                                    }
+                                });
+                            } // end if CS.EditItem is positive
+                            if (CS.EditItem.error.length === 0) {
+                                //process form
+                                //number = this.id.match(/\d/g);
+                                //number = number.join("");
+                                $('#user-block-' + number).find("fieldset").hide();
+
+                                return true;
+
+                            } else {
+                                // If there are errors in the form then run alert message
+                                NewAlert.init(CS.EditItem.error);
+                                return false;
+                                //stop form from being processed
+                            } // end if statement
+
+
+                        } // end document.forms onsubmit
+                    } // end if result.hasOwnProperty(key)
+                } // end for loop
+            }); // end json cal
+
+        },
+        // end user
+        init: function (formName, category, url) {
+
+            if (document.getElementById("edit-menu") && formName == "edit-menu") {
+                CS.EditItem.menu(category, url);
+            }
+
+            if (document.getElementById("edit-category") && formName == "edit-category") {
+                CS.EditItem.category(category, url);
+            }
+
+            if (document.getElementById("edit-users") && formName == "edit-users") {
+                CS.EditItem.user(category, url);
+            }
+
+        } // end init()
+    }; // end return
+})(); // end
