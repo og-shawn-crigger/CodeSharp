@@ -840,16 +840,11 @@ CS.AddMenu = (function () {
                 numStr = "1";
 
                 if (result.toString().indexOf(numStr) != -1) {
-
                     CS.AddMenu.error.push("\nPlease make sure that the name field is unique");
                     CS.AddMenu.validData(CS.AddMenu.error);
-
                 } else {
-
                     CS.AddMenu.validData(CS.AddMenu.error);
-
                 }
-
             });
 
             return false;
@@ -858,11 +853,9 @@ CS.AddMenu = (function () {
         validData: function (error) {
 
             if (error.length === 0) {
-
                 data = 'nameAdd=' + encodeURIComponent(CS.AddMenu.nameAdd) + '&urlAdd=' + encodeURIComponent(CS.AddMenu.urlAdd) + '&publishAdd=' + publish + '&r=' + Math.random();
                 CS.Json.sendJson(data, CS.AddMenu.createJ + 'admin-menu/menu-add');
                 alert("new menu item created");
-
             } else {
                 // If there are errors in the form then run alert message
                 alert(error);
@@ -901,11 +894,8 @@ CS.MenuOrder = (function () {
             CS.MenuOrder.error = [];
 
             for (i = 0; i < this.elements.length; i += 1) {
-
                 if (this.elements[i].type === "text") {
-
                     if (!this.elements[i].value.length || this.elements[i].value.length > 2 || isNaN(parseFloat(this.elements[i].value))) {
-
                         CS.MenuOrder.error.push("\nPlease make sure that it is only a one or two digit number");
                         break;
                     }
@@ -1027,20 +1017,15 @@ CS.AddUser = (function () {
             CS.Validation.Min(this.elements, CS.AddUser.error, "Please make sure you don't leave any fields empty");
 
             if (CS.AddUser.passwordAdd && CS.AddUser.passwordTwoAdd) {
-
                 if (CS.AddUser.passwordAdd !== CS.AddUser.passwordTwoAdd) {
-
                     CS.AddUser.error.push("\nPlease make sure that the passwords are exactly the same");
                 }
             }
 
             if (CS.AddUser.emailAdd && CS.AddUser.emailTwoAdd) {
-
                 if (CS.AddUser.emailAdd !== CS.AddUser.emailTwoAdd) {
-
                     CS.AddUser.error.push("\nPlease make sure that the email addresses are exactly the same");
                 } else {
-
                     CS.Validation.Email(CS.AddUser.emailAdd, CS.AddUser.error);
                 }
             }
@@ -1058,7 +1043,6 @@ CS.AddUser = (function () {
             checkdup_email(function (result) {
 
                 if (result == true) {
-
                     CS.AddUser.error.push("\nSorry, this email address has already been used by another user. Please use a different email addresss.");
                 }
             });
@@ -1066,7 +1050,6 @@ CS.AddUser = (function () {
             checkdup_username(function (result) {
 
                 if (result == true) {
-
                     CS.AddUser.error.push("\nSorry, the username has already been used by another user. Please pick another one.");
                 }
             });
