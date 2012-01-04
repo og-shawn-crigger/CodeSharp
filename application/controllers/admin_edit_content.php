@@ -1,8 +1,28 @@
 <?php
 
 /**
- * @author Andy Walpole
- * @date 4/10/2011
+ * CodeSharp
+ *
+ * A CMS based on CodeIgniter
+ *
+ * @package		CodeSharp
+ * @author		Andy Walpole (unless stated to the contrary)
+ * @copyright	Andy Walpole (unless stated to the contrary)
+ * @license		http://codeigniter.com/user_guide/license.html
+ * @link		https://github.com/TCotton/CodeSharp
+ * @since		Version 1.0
+ * @filesource
+ */
+
+// ------------------------------------------------------------------------
+
+/**
+ * Admin_Edit_Content
+ *
+ * @package		CodeSharp
+ * @subpackage	Application
+ * @category	Controllers
+ * @author		Andy Walpole
  * 
  */
 
@@ -38,6 +58,18 @@ class Admin_Edit_Content extends CI_Controller {
         }
 
     }
+    
+    // --------------------------------------------------------------------
+
+    /**
+     * add_theme function
+     * Adds category menu and template to all pages
+     * Also adds list of all users for every page
+     *
+     * @access	private
+     * @param	string
+     * @return	string
+     */
 
 
     // universal to all functions
@@ -109,6 +141,17 @@ class Admin_Edit_Content extends CI_Controller {
 
 
     }
+    
+        // --------------------------------------------------------------------
+
+    /**
+     * isValidDateTime function
+     * Checks to make sure all dates entered on the edit node form conform to MySQL datatime format
+     *
+     * @access	private
+     * @param	string
+     * @return	string
+     */
 
 
     public function isValidDateTime($datetime) {
@@ -133,7 +176,17 @@ class Admin_Edit_Content extends CI_Controller {
         }
 
     } // End form_validation_isValidDateTime() method
+    
+    // --------------------------------------------------------------------
 
+    /**
+     * submit function
+     * Submission for the edit node page
+     *
+     * @access	public
+     * @param	array
+     * @return	string
+     */
 
     // see routies.php -> $route['admin_edit_content/edit_node/:num/submit'] = "admin_edit_content/submit";
     public function submit() {
@@ -225,16 +278,28 @@ class Admin_Edit_Content extends CI_Controller {
 
         $this->add_theme($data);
     }
+    
+     // --------------------------------------------------------------------
 
+    /**
+     * delete_content
+     * Deletes node
+     *
+     * @access	public
+     * @param	string
+     * @return	string
+     */
 
     public function delete_content() {
 
         $data = array();
 
         if ($this->content_model->delete_content($this->input->post("delete_this"))) {
-
+            
+            ob_start();
             header('Location: ' . site_url() . 'admin-edit-content/');
             exit;
+            ob_end_clean();
 
         }
 

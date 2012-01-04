@@ -1,5 +1,31 @@
 <?php
 
+/**
+ * CodeSharp
+ *
+ * A CMS based on CodeIgniter
+ *
+ * @package		CodeSharp
+ * @author		Andy Walpole (unless stated to the contrary)
+ * @copyright	Andy Walpole (unless stated to the contrary)
+ * @license		http://codeigniter.com/user_guide/license.html
+ * @link		https://github.com/TCotton/CodeSharp
+ * @since		Version 1.0
+ * @filesource
+ */
+
+// ------------------------------------------------------------------------
+
+/**
+ * ContactUs
+ *
+ * @package		CodeSharp
+ * @subpackage	Application
+ * @category	Controllers
+ * @author		Andy Walpole
+ * 
+ */
+
 class ContactUs extends CI_Controller {
 
 
@@ -7,9 +33,20 @@ class ContactUs extends CI_Controller {
 
         parent::__construct();
     }
+    
+    // --------------------------------------------------------------------
+
+    /**
+     * add_theme function
+     * Adds user details and template to all pages
+     *
+     * @access	private
+     * @param	string
+     * @return	string
+     */
 
 
-    public function theme($array) {
+    private function theme($array) {
 
         $data = $array;
 
@@ -30,9 +67,20 @@ class ContactUs extends CI_Controller {
         $this->theme($data);
 
     }
+    
+        // --------------------------------------------------------------------
+
+    /**
+     * mail function
+     * Validates and then mails details from contact form
+     *
+     * @access	public
+     * @param	array
+     * @return	string
+     */
 
 
-    function mail() {
+    public function mail() {
 
 
         $data = array();

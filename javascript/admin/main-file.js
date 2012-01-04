@@ -9,7 +9,6 @@ if (!String.prototype.trim) {
 // function taken from phpjs.org
 // This is messy. Look at using a prototype approach as used for the trim above
 // mysql datetime regex: /^([0-9]{2,4})-([0-1][0-9])-([0-3][0-9]) (?:([0-2][0-9]):([0-5][0-9]):([0-5][0-9]))?$/
-
 function date(format, timestamp) {
     // http://kevin.vanzonneveld.net
     // +   original by: Carlos R. L. Rodrigues (http://www.jsfromhell.com)
@@ -221,32 +220,7 @@ function date(format, timestamp) {
             var O = f.O();
             return (O.substr(0, 3) + ":" + O.substr(3, 2));
         },
-        T: function () { // Timezone abbreviation; e.g. EST, MDT, ...
-            // The following works, but requires inclusion of the very
-            // large timezone_abbreviations_list() function.
-/*              var abbr = '', i = 0, os = 0, default = 0;
-            if (!tal.length) {
-                tal = that.timezone_abbreviations_list();
-            }
-            if (that.php_js && that.php_js.default_timezone) {
-                default = that.php_js.default_timezone;
-                for (abbr in tal) {
-                    for (i=0; i < tal[abbr].length; i++) {
-                        if (tal[abbr][i].timezone_id === default) {
-                            return abbr.toUpperCase();
-                        }
-                    }
-                }
-            }
-            for (abbr in tal) {
-                for (i = 0; i < tal[abbr].length; i++) {
-                    os = -jsdate.getTimezoneOffset() * 60;
-                    if (tal[abbr][i].offset === os) {
-                        return abbr.toUpperCase();
-                    }
-                }
-            }
-*/
+        T: function () {
             return 'UTC';
         },
         Z: function () { // Timezone offset in seconds (-43200...50400)
@@ -311,7 +285,6 @@ var TopMeasure = (function () {
 })();
 
 // function for setting opacity for both IE and non IE
-
 function setOpacity(obj, value) {
     obj.style.opacity = value / 10;
     obj.style.filter = 'alpha(opacity=' + value * 10 + ')';
@@ -427,6 +400,22 @@ function reset_value(form) {
         } // end if text or textarea
     }
 }
+
+
+// fading form values after successful submission
+function fade_value(form) {
+
+    var i, len;
+    i = 0;
+
+    //loop through form elements to make sure text and textarea are not empty
+    for (len = form.length; i < len; i += 1) {
+        $(form[i]).css({
+            opacity: 0.3
+        });
+    }
+}
+
 
 function addEvent(el, type, fn) {
 
@@ -590,6 +579,7 @@ CS.Json = (function () {
 
                     if (objX.status !== 200 && objX.status !== 304) {
                         alert('HTTP error ' + objX.status);
+                        return false;
                     }
                 }
             };
@@ -600,14 +590,134 @@ CS.Json = (function () {
 
     }; // end return
 })(); // end
+// submission for global settings
+CS.GlobalSet = (function () {
+
+    // private attributes if any here
+    var i, metaD, metaK, errorLevel, errorReport, errorM, data;
+
+    // private methods if any here
+    // public attribute and methods below
+    return {
+
+        //public attributes
+        nameForm: null,
+        sloganForm: null,
+        emailForm: null,
+        metaDescription: null,
+        metaKeywords: null,
+        errorReporting: null,
+        errorLevel: null,
+        errorEmail: null,
+        errors: null,
+        form: null,
+        siteUrl: null,
+
+        //public methods
+        handleSubmit: function () {
+
+
+            // set error attribute as an array
+            CS.GlobalSet.errors = [];
+            // dCS.GlobalSeteclare form values
+            CS.GlobalSet.nameForm = this.nameForm.value.trim();
+            CS.GlobalSet.sloganForm = this.sloganForm.value.trim();
+            CS.GlobalSet.emailForm = this.emailForm.value.trim();
+            CS.GlobalSet.metaDescription = this.metaDescription;
+            CS.GlobalSet.metaKeywords = this.metaKeywords;
+            CS.GlobalSet.errorReporting = this.errorReporting;
+            CS.GlobalSet.errorLevel = this.errorLevel.value;
+            CS.GlobalSet.errorEmail = this.errorEmail;
+
+            // metadescription value
+            for (i = 0; i < CS.GlobalSet.metaDescription.length; i += 1) {
+                if (CS.GlobalSet.metaDescription[i].checked == true && CS.GlobalSet.metaDescription[i].value === "1") {
+                    // determines whether the item should be published
+                    metaD = "1";
+                } else {
+                    metaD = "0";
+                } // end if
+            } // end for loop
+            // metakeywords value
+            for (i = 0; i < CS.GlobalSet.metaKeywords.length; i += 1) {
+                if (CS.GlobalSet.metaKeywords[i].checked == true && CS.GlobalSet.metaKeywords[i].value === "1") {
+                    // determines whether the item should be published
+                    metaK = "1";
+                } else {
+                    metaK = "0";
+                } // end if
+            } // end for loop
+            //errorreporting value
+            for (i = 0; i < CS.GlobalSet.errorReporting.length; i += 1) {
+                if (CS.GlobalSet.errorReporting[i].checked == true && CS.GlobalSet.errorReporting[i].value === "1") {
+                    // determines whether the item should be published
+                    errorReport = "1";
+                } else {
+                    errorReport = "0";
+                } // end if
+            } // end for loop
+            //sent email error
+            for (i = 0; i < CS.GlobalSet.errorEmail.length; i += 1) {
+                if (CS.GlobalSet.errorEmail[i].checked == true && CS.GlobalSet.errorEmail[i].value === "1") {
+                    // determines whether the item should be published
+                    errorM = "1";
+                } else {
+                    errorM = "0";
+                } // end if
+            } // end for loop
+            // validation
+            CS.Validation.Min(this.elements, CS.GlobalSet.errors);
+            CS.Validation.Max(CS.GlobalSet.nameForm, CS.GlobalSet.errors, 100, "Opps, the title field is too long");
+            CS.Validation.Max(CS.GlobalSet.sloganForm, CS.GlobalSet.errors, 250, "Opps, the title field is too long");
+            CS.Validation.Max(CS.GlobalSet.emailForm, CS.GlobalSet.errors, 50, "Opps, the title field is too long");
+            CS.Validation.Email(CS.GlobalSet.emailForm, CS.GlobalSet.errors);
+
+            CS.GlobalSet.validData(CS.GlobalSet.errors);
+
+            // stop form from being processed
+            return false;
+
+        },
+
+        validData: function (error) {
+            // for the legacy browsers just run the php form if no errors are produced
+            if (error.length === 0) {
+
+                data = 'nameForm=' + encodeURIComponent(CS.GlobalSet.nameForm) + '&sloganForm=' + encodeURIComponent(CS.GlobalSet.sloganForm) + '&emailForm=' + encodeURIComponent(CS.GlobalSet.emailForm) + '&metaDescription=' + metaD + '&metaKeywords=' + metaK + '&errorReporting=' + errorReport + '&errorLevel=' + CS.GlobalSet.errorLevel + '&errorEmail=' + errorM + '&r=' + Math.random();
+                CS.Json.sendJson(data, CS.GlobalSet.siteUrl + 'admin-config/submit-form');
+                NewAlert.init("The settings have been updated");
+
+                //process form
+                //return this.submit();
+                return false;
+            } else {
+                // If there are errors in the form then run alert message
+                NewAlert.init(error);
+                //stop form from being processed
+                return false;
+            }
+
+        },
+
+        init: function (siteUrl) {
+
+            if (document.forms.submitVarious) {
+
+                CS.GlobalSet.siteUrl = siteUrl;
+                document.forms.submitVarious.onsubmit = CS.GlobalSet.handleSubmit;
+                // on submit run handeSubmit method
+            } // end undefined
+        } // end init()
+    }; // end return
+})(); // end CS.AddNode
 
 // submission of admin_edit_content.php
 // Needs further work on the File API
 CS.EditNode = (function () {
 
     // private attributes if any here
+    var form;
     // private methods if any here
-
     function _isValidDateTime(str) {
         // function tests to see whether inputed date is correctly formatted
         var regEx;
@@ -630,37 +740,42 @@ CS.EditNode = (function () {
         dateField: null,
         error: null,
         form: null,
+        siteUrl: null,
 
         //public methods
         handleSubmit: function () {
 
             // set error attribute as an array
             CS.EditNode.error = [];
+
+            form = document.forms['adminEditContent'];
+
+
             // declare form values
-            CS.EditNode.fileField = this.file_upload.value;
-            CS.EditNode.titleField = this.title.value.trim();
-            CS.EditNode.catField = this.select.value.trim();
-            CS.EditNode.bodyField = this.body.value.trim();
-            CS.EditNode.publishField = this.publish;
+            CS.EditNode.fileField = form.file_upload.value;
+            CS.EditNode.titleField = form.title.value.trim();
+            CS.EditNode.catField = form.select.value.trim();
+            CS.EditNode.bodyField = form.body.value.trim();
+            CS.EditNode.publishField = form.publish;
 
-            if (this.metaDescription) {
-                CS.EditNode.descField = this.metaDescription.value.trim();
+            if (form.metaDescription) {
+                CS.EditNode.descField = form.metaDescription.value.trim();
                 CS.Validation.Max(CS.EditNode.descField, CS.EditNode.error, 255, "Opps, the meta description field is too long");
             }
 
-            if (this.metaKeywords) {
-                CS.EditNode.keyField = this.metaKeywords.value.trim();
+            if (form.metaKeywords) {
+                CS.EditNode.keyField = form.metaKeywords.value.trim();
                 CS.Validation.Max(CS.EditNode.descField, CS.EditNode.error, 255, "Opps, the meta description field is too long");
             }
 
-            CS.EditNode.dateField = this.date.value.trim();
+            CS.EditNode.dateField = form.date.value.trim();
 
             //make sure submitted date is correctly formatted
             if (!_isValidDateTime(CS.EditNode.dateField)) {
                 CS.EditNode.error.push("\nThe date format is incorrent. Please makes sure it is exactly the same format as: " + date("Y-m-d H:i:s", Math.round(new Date().getTime() / 1000)));
             }
 
-            CS.Validation.Min(this.elements, CS.EditNode.error);
+            CS.Validation.Min(form.elements, CS.EditNode.error);
 
             CS.Validation.Max(CS.EditNode.titleField, CS.EditNode.error, 100, "Opps, the title field is too long");
 
@@ -713,11 +828,42 @@ CS.EditNode = (function () {
 
         },
 
-        init: function () {
+        deleteNode: function () {
+
+
+            if (confirm("Delete this article?")) {
+
+                // this nifty little piece of code finds the number in the third segment of the url
+                data = "delete_this=" + window.location.href.substr(window.location.href.lastIndexOf('/') + 1) + "&r=" + Math.random();
+
+                CS.Json.sendJson(data, CS.EditNode.siteUrl + 'admin-edit-content/delete-content');
+                
+                //After successful form submission then disable submit buttons and fade all form fields
+                NewAlert.init("The article has been deleted");
+                document.forms[0].submitNode.disabled = true;
+                document.forms[0].deteteNode.disabled = true;
+                fade_value(document.forms['adminEditContent'].elements)
+
+            } // end if confirm
+            return false;
+        },
+
+        init: function (siteUrl) {
 
             if (document.forms.adminEditContent) {
 
-                document.forms.adminEditContent.onsubmit = CS.EditNode.handleSubmit;
+                CS.EditNode.siteUrl = siteUrl;
+
+                $(document.forms['adminEditContent'].elements['submitNode']).click(function () {
+                    CS.EditNode.handleSubmit();
+                    return false;
+                });
+
+                $(document.forms['adminEditContent'].elements['deteteNode']).click(function () {
+                    CS.EditNode.deleteNode();
+                    return false;
+                });
+
                 // on submit run handeSubmit method
             } // end undefined
         } // end init()
@@ -770,7 +916,6 @@ CS.AddNode = (function () {
             }
 
             CS.Validation.Min(this.elements, CS.AddNode.error);
-
             CS.Validation.Max(CS.AddNode.titleField, CS.AddNode.error, 100, "Opps, the title field is too long");
 
 /*
@@ -842,14 +987,13 @@ CS.AddNode = (function () {
         } // end init()
     }; // end return
 })(); // end CS.AddNode
-
 /*
  JavaScript form submission for admin_category - adding a new category
  */
 CS.AddCategory = (function () {
 
     // private attributes if any here
-    var objX, i, publish, random, data;
+    var objX, i, publish, random, data, form;
     // private methods if any here
     // public attribute and methods below
     return {
@@ -866,6 +1010,8 @@ CS.AddCategory = (function () {
 
             // set error attribute as an array
             CS.AddCategory.error = [];
+            
+            form = this;
 
             // declare form values
             CS.AddCategory.titleField = this.nameAdd.value.trim();
@@ -904,8 +1050,9 @@ CS.AddCategory = (function () {
                 data = 'nameAdd=' + encodeURIComponent(CS.AddCategory.titleField) + '&publishAdd=' + publish + '&r=' + Math.random();
                 CS.Json.sendJson(data, CS.AddCategory.cJson + 'admin-category/add-category');
 
-                NewAlert.init("form submitted");
-                reset_value(this.elements);
+                NewAlert.init("New category created");
+                reset_value(form.elements);
+                location.reload(true);
 
             } else {
                 // If there are errors in the form then run alert message
@@ -927,12 +1074,10 @@ CS.AddCategory = (function () {
         } // end init()
     }; // end return
 })(); // end CS.EditNode
-
 CS.AddMenu = (function () {
     // private attributes if any here
     var objX, i, publish, random, data, key, duplicate, numStr;
     // private methods if any here
-
     function check_duplicate(callback) {
 
         CS.Json.getJson(CS.AddMenu.getJ + "json/" + "menu" + ".json", function (result) {
@@ -1009,12 +1154,12 @@ CS.AddMenu = (function () {
         validData: function (error) {
 
             if (error.length === 0) {
+
                 data = 'nameAdd=' + encodeURIComponent(CS.AddMenu.nameAdd) + '&urlAdd=' + encodeURIComponent(CS.AddMenu.urlAdd) + '&publishAdd=' + publish + '&r=' + Math.random();
                 CS.Json.sendJson(data, CS.AddMenu.createJ + 'admin-menu/menu-add');
                 NewAlert.init("New menu item created");
-
-                reset_value(this.elements);
-
+                reset_value(CS.AddMenu.elements);
+                location.reload(true);
 
             } else {
                 // If there are errors in the form then run alert message
@@ -1039,7 +1184,6 @@ CS.AddMenu = (function () {
     }; // end return
 })(); // end CS.EditNode
 // form submission for menu order
-
 CS.MenuOrder = (function () {
     // private attributes if any here
     var i;
@@ -1087,13 +1231,11 @@ CS.MenuOrder = (function () {
         } // end init()
     }; // end return
 })(); // end CS.menuOrder
-
 CS.AddUser = (function () {
     // private attributes if any here
     var i, publish, data;
     // private methods if any here
     //process form
-
     function checkdup_email(callback) {
 
         //start the ajax to check for duplicate emails or usernames
@@ -1157,10 +1299,13 @@ CS.AddUser = (function () {
         error: null,
         message: null,
         createJ: null,
+        formElements: null,
 
         handleSubmit: function () {
 
             CS.AddUser.error = [];
+
+            CS.AddUser.formElements = this.elements;
 
             // declare form values
             CS.AddUser.usernameAdd = this.usernameAdd.value.trim();
@@ -1226,14 +1371,15 @@ CS.AddUser = (function () {
 
                 CS.Json.sendJson(data, CS.AddUser.createJ + 'admin-user/add-user');
                 NewAlert.init("New user created");
-                reset_value(this.elements);
+                reset_value(CS.AddUser.formElements);
+                location.reload(true);
 
             } else {
                 // If there are errors in the form then run alert message
                 NewAlert.init(error);
+                return false;
                 //stop form from being processed
             }
-            return false;
         },
 
         init: function (url) {
@@ -1248,13 +1394,11 @@ CS.AddUser = (function () {
         } // end init()
     }; // end return
 })(); // end CS.EditNode
-
 CS.EditItem = (function () {
 
     // private attributes if any here
-    var number, catPublish, i, textZone, textZoneValue, form, inputCollection, key, publish;
+    var number, catPublish, i, textZone, textZoneValue, form, inputCollection, key, publish, answer;
     // private methods if any here
-
     function checkdup_email(callback) {
 
         //start the ajax to check for duplicate emails or usernames
@@ -1325,6 +1469,8 @@ CS.EditItem = (function () {
         currentUsername: null,
         error: null,
         id: null,
+        form: null,
+        siteUrl: null,
         //public methods
         category: function (category, url) {
 
@@ -1365,27 +1511,46 @@ CS.EditItem = (function () {
 
                         }
 
-                        document.forms['adminAddCategory' + result[key].id].onsubmit = function (evt) {
+                        $(document.forms['adminAddCategory' + result[key].id].elements['delete' + result[key].id]).click(function () {
+
+                            number = this.name.match(/\d/g);
+                            number = number.join("");
+
+                            data = "id=" + number + '&r=' + Math.random();
+
+                            if (confirm("Delete this category?")) {
+
+                                CS.Json.sendJson(data, CS.EditItem.siteUrl + 'admin-category/delete-category');
+                                NewAlert.init("The category has been deleted");
+                                $("#category-block-" + number).fadeOut(2000);
+
+                            } // end if confirm
+                            return false;
+                        });
+
+                        $(document.forms['adminAddCategory' + result[key].id].elements['submit' + result[key].id]).click(function () {
 
                             CS.EditItem.error = [];
 
-                            for (i = 0; i < this.elements.length; i += 1) {
+                            form = document.forms['adminAddCategory' + result[key].id];
 
-                                if (this.elements[i].type === "text") {
+                            for (i = 0; i < form.elements.length; i += 1) {
+
+                                if (form.elements[i].type === "text") {
 
                                     // find the number  in the name value field
-                                    number = this.elements[i].name.match(/\d/g);
+                                    number = form.elements[i].name.match(/\d/g);
                                     number = number.join("");
 
                                 } // end if statement
                             } // end for loop
-                            CS.EditItem.catName = this.elements['name' + number].value.trim();
+                            CS.EditItem.catName = form.elements['name' + number].value.trim();
 
                             // loop through the publish fields
                             // assign a value whether the article is to be published or not
-                            for (i = 0; i < this.elements['publish' + number].length; i += 1) {
+                            for (i = 0; i < form.elements['publish' + number].length; i += 1) {
 
-                                if (this.elements['publish' + number][i].checked == true && this.elements['publish' + number][i].value === "1") {
+                                if (form.elements['publish' + number][i].checked == true && form.elements['publish' + number][i].value === "1") {
                                     // determines whether the item should be published
                                     catPublish = "1";
                                 } else {
@@ -1398,8 +1563,6 @@ CS.EditItem = (function () {
 
                             if (CS.EditItem.error.length === 0) {
                                 //process form
-                                //number = this.id.match(/\d/g);
-                                //number = number.join("");
                                 $('#category-block-' + number).find("fieldset").hide();
                                 return true;
 
@@ -1410,7 +1573,7 @@ CS.EditItem = (function () {
                                 //stop form from being processed
                             }
 
-                        } // end onsubmit
+                        }); // end document.forms onsubmit
                     } // end if
                 } // end for
             });
@@ -1437,31 +1600,51 @@ CS.EditItem = (function () {
                             $('.menuname').css('cursor', 'default');
                         });
 
-                        document.forms['adminAddMenu' + result[key].id].onsubmit = function () {
+                        $(document.forms['adminAddMenu' + result[key].id].elements['delete' + result[key].id]).click(function () {
+
+                            number = this.name.match(/\d/g);
+                            number = number.join("");
+
+                            data = "delete_this=" + number + '&r=' + Math.random();
+
+                            if (confirm("Delete menu item?")) {
+
+                                CS.Json.sendJson(data, CS.EditItem.siteUrl + 'admin-menu/delete-menu');
+                                $("#menu-block-result" + number).fadeOut(2000);
+                                NewAlert.init("The menu item has been deleted");
+
+                            } // end if confirm
+                            return false;
+
+                        });
+
+                        $(document.forms['adminAddMenu' + result[key].id].elements['submit' + result[key].id]).click(function () {
 
                             CS.EditItem.error = [];
 
-                            for (i = 0; i < this.elements.length; i += 1) {
+                            form = document.forms['adminAddMenu' + result[key].id];
 
-                                if (this.elements[i].type === "text") {
+                            for (i = 0; i < form.elements.length; i += 1) {
+
+                                if (form.elements[i].type === "text") {
 
                                     // find the number  in the name value field
-                                    number = this.elements[i].name.match(/\d/g);
+                                    number = form.elements[i].name.match(/\d/g);
                                     number = number.join("");
 
                                 } // end if statement
                             } // end for loop
-                            CS.EditItem.menuName = this.elements['menuName' + number].value.trim();
-                            CS.EditItem.menuURL = this.elements['menuUrl' + number].value.trim();
+                            CS.EditItem.menuName = form.elements['menuName' + number].value.trim();
+                            CS.EditItem.menuURL = form.elements['menuUrl' + number].value.trim();
                             CS.Validation.Max(CS.EditItem.menuName, CS.EditItem.error, 40, "Opps, the title field field is too long. 40 characters maximum");
                             CS.Validation.Max(CS.EditItem.menuURL, CS.EditItem.error, 100, "Opps, the url field field is too long. 100 characters maximum");
                             CS.Validation.Min(CS.EditItem.menuName, CS.EditItem.error, "Please make sure that the menu name field is not left empty");
 
                             // loop through the publish fields
                             // assign a value whether the article is to be published or not
-                            for (i = 0; i < this.elements['menuPublish' + number].length; i += 1) {
+                            for (i = 0; i < form.elements['menuPublish' + number].length; i += 1) {
 
-                                if (this.elements['menuPublish' + number][i].checked == true && this.elements['menuPublish' + number][i].value === "1") {
+                                if (form.elements['menuPublish' + number][i].checked == true && form.elements['menuPublish' + number][i].value === "1") {
                                     // determines whether the item should be published
                                     catPublish = "1";
                                 } else {
@@ -1470,8 +1653,6 @@ CS.EditItem = (function () {
                             } // end for loop
                             if (CS.EditItem.error.length === 0) {
                                 //process form
-                                //number = this.id.match(/\d/g);
-                                //number = number.join("");
                                 $('#menu-block-result' + number).find("fieldset.fieldset-hidden").hide();
                                 return true;
 
@@ -1481,7 +1662,7 @@ CS.EditItem = (function () {
                                 return false;
                                 //stop form from being processed
                             } // end if statement
-                        }; // end onsubmit
+                        }); // end document.forms onsubmit
                     } // end if hasownproperty
                 } // end key in result
             });
@@ -1520,28 +1701,52 @@ CS.EditItem = (function () {
                             this.parentNode.parentNode.previousSibling.innerHTML = textZoneValue;
                         }
 
+                        $(document.forms['adminAddUser' + result[key].id].elements['delete' + result[key].id]).click(function () {
 
-                        document.forms['adminAddUser' + result[key].id].onsubmit = function (e) {
+                            number = this.name.match(/\d/g);
+                            number = number.join("");
+
+                            if (number === "1") {
+
+                                NewAlert.init("You cannot delete your core administrator");
+
+                            } else {
+
+                                data = "delete_this=" + number + '&r=' + Math.random();
+
+                                if (confirm("Delete user?")) {
+
+                                    CS.Json.sendJson(data, CS.EditItem.siteUrl + 'admin-user/delete-user');
+                                    NewAlert.init("The user has been deleted");
+                                    $("#user-block-" + number).fadeOut(2000);
+                                    return false;
+                                } // end if confirm
+                            } // end if number not 1
+                            return false;
+                        });
+
+                        $(document.forms['adminAddUser' + result[key].id].elements['submit' + result[key].id]).click(function () {
 
                             CS.EditItem.error = [];
+                            form = document.forms['adminAddUser' + result[key].id];
 
-                            for (i = 0; i < this.elements.length; i += 1) {
+                            for (i = 0; i < CS.EditItem.form.elements.length; i += 1) {
 
-                                if (this.elements[i].type === "text") {
+                                if (CS.EditItem.form.elements[i].type === "text") {
                                     // find the number  in the name value field
-                                    number = this.elements[i].name.match(/\d/g);
+                                    number = form.elements[i].name.match(/\d/g);
                                     number = number.join("");
 
                                 } // end if statement
                             } // end for loop
-                            CS.EditItem.usernameOne = this.elements['usernameOne' + number].value.trim();
-                            CS.EditItem.emailEditOne = this.elements['emailEditOne' + number].value.trim();
-                            CS.EditItem.emailEditTwo = this.elements['emailEditTwo' + number].value.trim();
-                            CS.EditItem.passwordOne = this.elements['passwordOne' + number].value.trim();
-                            CS.EditItem.passwordTwo = this.elements['passwordTwo' + number].value.trim();
-                            CS.EditItem.currentEmail = this.elements['hiddenemail' + number].value;
-                            CS.EditItem.currentUsername = this.elements['hidden00' + number].value;
-                            CS.EditItem.adminRights = this.elements['adminRights' + number];
+                            CS.EditItem.usernameOne = form.elements['usernameOne' + number].value.trim();
+                            CS.EditItem.emailEditOne = form.elements['emailEditOne' + number].value.trim();
+                            CS.EditItem.emailEditTwo = form.elements['emailEditTwo' + number].value.trim();
+                            CS.EditItem.passwordOne = form.elements['passwordOne' + number].value.trim();
+                            CS.EditItem.passwordTwo = form.elements['passwordTwo' + number].value.trim();
+                            CS.EditItem.currentEmail = form.elements['hiddenemail' + number].value;
+                            CS.EditItem.currentUsername = form.elements['hidden00' + number].value;
+                            CS.EditItem.adminRights = form.elements['adminRights' + number];
 
                             // assign a value whether the article is to be published or not
                             for (i = 0; i < CS.EditItem.adminRights.length; i += 1) {
@@ -1580,7 +1785,6 @@ CS.EditItem = (function () {
                                     });
                                 }
                             } // end if emails do not match
-
                             if (CS.EditItem.usernameOne) {
 
                                 checkdup_username(function (result) {
@@ -1591,10 +1795,7 @@ CS.EditItem = (function () {
                             } // end if CS.EditItem is positive
                             if (CS.EditItem.error.length === 0) {
                                 //process form
-                                //number = this.id.match(/\d/g);
-                                //number = number.join("");
                                 $('#user-block-' + number).find("fieldset").hide();
-
                                 return true;
 
                             } else {
@@ -1603,16 +1804,15 @@ CS.EditItem = (function () {
                                 return false;
                                 //stop form from being processed
                             } // end if statement
-
-
-                        } // end document.forms onsubmit
+                        }); // end document.forms onsubmit
                     } // end if result.hasOwnProperty(key)
                 } // end for loop
             }); // end json cal
-
         },
         // end user
-        init: function (formName, category, url) {
+        init: function (formName, category, url, siteUrl) {
+
+            CS.EditItem.siteUrl = siteUrl;
 
             if (document.getElementById("edit-menu") && formName == "edit-menu") {
                 CS.EditItem.menu(category, url);
@@ -1623,9 +1823,25 @@ CS.EditItem = (function () {
             }
 
             if (document.getElementById("edit-users") && formName == "edit-users") {
-                CS.EditItem.user(category, url);
+                CS.EditItem.user(category, url, siteUrl);
             }
 
         } // end init()
     }; // end return
 })(); // end
+function init(siteUrl, baseUrl) {
+
+    NewAlert.time = 70;
+
+    CS.EditNode.init(siteUrl);
+    CS.AddNode.init();
+    CS.AddCategory.init(siteUrl);
+    CS.AddMenu.init(baseUrl, siteUrl);
+    // Read and use category.json file
+    CS.EditItem.init("edit-category", "category", baseUrl, siteUrl);
+    CS.EditItem.init("edit-menu", "menu", baseUrl, siteUrl);
+    CS.EditItem.init("edit-users", "user", baseUrl, siteUrl);
+    CS.MenuOrder.init();
+    CS.AddUser.init(siteUrl);
+
+} // end function init

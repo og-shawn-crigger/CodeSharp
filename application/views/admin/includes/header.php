@@ -123,30 +123,21 @@ echo base_url("css/admin/markitup/sets/textile/set.js");
 <script>
 /* <![CDATA[ */
 
-function init() {
-    
-    NewAlert.time = 70;
-    
-    CS.EditNode.init();
-    CS.AddNode.init();
-    CS.AddCategory.init('<?php print site_url(); ?>');
-    CS.AddMenu.init('<?php print base_url(); ?>', '<?php print site_url(); ?>');
-    // Read and use category.json file
-    CS.EditItem.init("edit-category", "category", '<?php print base_url(); ?>');
-    CS.EditItem.init("edit-menu", "menu", '<?php print base_url(); ?>');
-    CS.EditItem.init("edit-users", "user", '<?php print base_url(); ?>');
-    CS.MenuOrder.init();
-    CS.AddUser.init('<?php print site_url(); ?>');
 
-} // end function init
+
 
 
 $(document).ready(function () {
     
+    var siteUrl, baseUrl;
+    
+    siteUrl = '<?php print site_url(); ?>';
+    baseUrl = '<?php print base_url(); ?>';
+    
     // for markItUp editor. Don't touch
     $("#body").markItUp(mySettings);
     
-    init();
+    init(siteUrl, baseUrl);
 
 }); // End document ready
 /* ]]> */
@@ -164,6 +155,9 @@ $(document).ready(function () {
 echo site_url() . $this->uri->uri_string();
 
 ?>" />
+
+
+
 
 </head>
 <?php

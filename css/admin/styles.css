@@ -321,7 +321,7 @@ margin : 0 0 10px 0;
 	color : darkred;
 }
 #admin-various legend {
-float : left;
+	float : left;
 }
 #admin-various legend span {
 	padding-top : 50px;
@@ -387,7 +387,7 @@ float : left;
 	width : 500px;
 	float : left;
 	margin-bottom : 20px;
-clear : both;
+	clear : both;
 }
 #admin-add-article legend span {
 	margin-bottom : 20px;
@@ -561,7 +561,7 @@ clear : both;
 	-webkit-animation-timing-function: ease-out;
 }
 #admin-edit-content > fieldset {
-float : left;
+	float : left;
 }
 #admin-edit-content > fieldset > span {
 	clear : both;
@@ -612,7 +612,7 @@ float : left;
 	margin-bottom : 20px;
 }
 #add-category legend {
-float : left;
+	float : left;
 }
 #add-category legend span {
 	margin-bottom : 20px;
@@ -689,7 +689,7 @@ float : left;
 	margin-bottom : 20px;
 }
 #edit-category legend {
-float : left;
+	float : left;
 }
 #edit-category legend span {
 	margin-bottom : 20px;
@@ -734,7 +734,7 @@ float : left;
 	-webkit-animation-timing-function: ease-in-out;
 }
 .category-title {
-clear :both;
+	clear :both;
 }
 /* delete category */
 #delete-category {
@@ -766,7 +766,7 @@ clear :both;
 	margin-bottom : 20px;
 }
 #admin-add-user legend {
-float : left;
+	float : left;
 }
 #admin-add-user legend span {
 	margin-bottom : 20px;
@@ -816,7 +816,7 @@ float : left;
 	margin : 0 10px;
 }
 .username {
-background : darkred;
+	background : darkred;
 	color : #fff!important;
 	font-size : 1.6em;
 	margin-bottom : 1.25em;
@@ -841,7 +841,7 @@ background : darkred;
 	margin-bottom : 20px;
 }
 #edit-users legend {
-    float : left;
+	float : left;
 }
 #edit-users legend span {
 	margin-bottom : 20px;
@@ -892,7 +892,7 @@ background : darkred;
 	border-radius : 10px;
 }
 #delete-menu legend {
-float : left;
+	float : left;
 }
 /* add-categories */
 
@@ -917,7 +917,7 @@ float : left;
 	margin-bottom : 20px;
 }
 #add-categories legend {
-    float : left;
+	float : left;
 }
 #add-categories legend span {
 	margin-bottom : 20px;
@@ -978,7 +978,7 @@ float : left;
 	margin-bottom : 20px;
 }
 #add-menu legend {
-    float : left;
+	float : left;
 }
 #add-menu legend span {
 	margin-bottom : 20px;
@@ -1047,7 +1047,7 @@ float : left;
 	margin-bottom : 20px;
 }
 #rearrange-menu legend {
-    float : left;
+	float : left;
 }
 #rearrange-menu legend span {
 	margin-bottom : 20px;
@@ -1156,8 +1156,6 @@ float : left;
 	-webkit-animation-direction: normal;
 	-webkit-animation-timing-function: ease-in-out;
 }
-
-
 #delete-menu_item {
 	padding : 10px;
 	border : 1px solid darkred;
@@ -1165,13 +1163,12 @@ float : left;
 	border-radius : 10px;
 }
 #delete-menu_item legend {
-float : left;
+	float : left;
 }
 #delete-menu_item legend span {
-display : block;
-margin-bottom : 20px;
+	display : block;
+	margin-bottom : 20px;
 }
-
 /* pagination */
 
 #pagination {
@@ -1187,10 +1184,9 @@ margin-bottom : 20px;
 	text-align : right;
 	margin-top : 40px;
 }
-
 #install {
-width : 600px;
-margin : 30px auto;
+	width : 600px;
+	margin : 30px auto;
 }
 #install h1, #install p {
 	font-size : 1.6em;
@@ -1218,7 +1214,7 @@ margin : 30px auto;
 	color : darkred;
 }
 #install legend {
-    float : left;
+	float : left;
 }
 #install legend span {
 	margin-bottom : 20px;
@@ -1230,7 +1226,7 @@ margin : 30px auto;
 	padding : 5px;
 	border-radius : 5px;
 	margin-left : 400px;
-margin-top : 30px;
+	margin-top : 30px;
 	margin-bottom : 30px;
 }
 #install input[type=submit]:hover {
@@ -1246,23 +1242,21 @@ margin-top : 30px;
 	-webkit-animation-direction: normal;
 	-webkit-animation-timing-function: ease-in-out;
 }
-
-.ie7 legend, .ie7 input[type=text]  {
-margin-left : -7px;
+.ie7 legend, .ie7 input[type=text] {
+	margin-left : -7px;
 }
 .ie7 #markItUpBody {
-margin-left : -300px;
+	margin-left : -300px;
 }
 .ie7 input[type=submit] {
-margin-left: 0!important;
-clear : both;
+	margin-left: 0!important;
+	clear : both;
 }
 .ie7 #article-list-item fieldset {
-clear :both;
+	clear :both;
 }
-
 .elegant-alertxyz {
-position : absolute;
+	position : absolute;
 	left: 0;
 	top : 0;
 	width : 100%;
@@ -1270,25 +1264,21 @@ position : absolute;
 	padding : 30px 0 30px 0;
 	text-align : center;
 	font-size : 3em;
-    line-height : 1em;
+	line-height : 1em;
 	margin-bottom : 30px;
 	background : #fff;
 	-webkit-box-shadow : 0 3px 3px #999;
 	-moz-box-shadow : 0 3px 3px #999;
 	box-shadow : 0 3px 3px #999;
-
 }
-
-0.666666667
-
 /* new clearfix */
 .clearfix:after {
-	visibility: hidden;
-	display: block;
-	font-size: 0;
-	content: " ";
-	clear: both;
-	height: 0;
+ visibility: hidden;
+ display: block;
+ font-size: 0;
+ content: " ";
+ clear: both;
+ height: 0;
 }
 * html .clearfix {
 	zoom: 1;

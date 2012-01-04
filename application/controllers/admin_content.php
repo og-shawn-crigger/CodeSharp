@@ -1,8 +1,27 @@
 <?php
+/**
+ * CodeSharp
+ *
+ * A CMS based on CodeIgniter
+ *
+ * @package		CodeSharp
+ * @author		Andy Walpole (unless stated to the contrary)
+ * @copyright	Andy Walpole (unless stated to the contrary)
+ * @license		http://codeigniter.com/user_guide/license.html
+ * @link		https://github.com/TCotton/CodeSharp
+ * @since		Version 1.0
+ * @filesource
+ */
+
+// ------------------------------------------------------------------------
 
 /**
- * @author Andy Walpole
- * @date 29/9/2011
+ * Admin_Content
+ *
+ * @package		CodeSharp
+ * @subpackage	Application
+ * @category	Controllers
+ * @author		Andy Walpole
  * 
  */
 
@@ -31,7 +50,17 @@ class Admin_Content extends CI_Controller {
         }
 
     }
+    
+    // --------------------------------------------------------------------
 
+    /**
+     * add_theme function
+     * Adds category menu and template to all pages
+     *
+     * @access	private
+     * @param	string
+     * @return	string
+     */
 
     // universal to all functions
     private function add_theme($array) {
@@ -54,12 +83,34 @@ class Admin_Content extends CI_Controller {
         $this->add_theme($data);
 
     }
+    
+        
+    // --------------------------------------------------------------------
+
+    /**
+     * form_success function
+     * Shows success message
+     *
+     * @access	private
+     * @return	string
+     */
+
 
     private function form_success() {
 
         return "<p>You have successfully created a new article!</p>";
 
     }
+    
+      // --------------------------------------------------------------------
+
+    /**
+     * form_failure function
+     * Shows error message
+     *
+     * @access	private
+     * @return	string
+     */
 
 
     private function form_failure() {
@@ -67,7 +118,17 @@ class Admin_Content extends CI_Controller {
         return "<p>Unforunately there have been some errors:</p>";
 
     }
+    
+    // --------------------------------------------------------------------
 
+    /**
+     * admin_add_content function
+     * Adds new article, validates and then calls database query
+     *
+     * @access	public
+     * @param	array
+     * @return	string
+     */
 
     public function admin_add_content() {
 

@@ -137,7 +137,7 @@ foreach ($query as $user) {
 
         $attributesD = array('id' => "delete-menu", 'name' => "deleteMenu");
 
-        $form .= form_open_multipart('admin_user/delete_user', $attributesD);
+        $form .= form_open('admin-user/delete-user', $attributesD);
 
         $form .= form_fieldset('<span>Are you sure you want to delete this menu item? It will not be possible to undo this action.</span>');
 

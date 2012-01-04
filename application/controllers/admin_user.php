@@ -1,12 +1,30 @@
 <?php
 
 /**
- * @author Andy Walpole
- * @date 3/10/2011
- * 
+ * CodeSharp
+ *
+ * A CMS based on CodeIgniter
+ *
+ * @package		CodeSharp
+ * @author		Andy Walpole (unless stated to the contrary)
+ * @copyright	Andy Walpole (unless stated to the contrary)
+ * @license		http://codeigniter.com/user_guide/license.html
+ * @link		https://github.com/TCotton/CodeSharp
+ * @since		Version 1.0
+ * @filesource
  */
 
+// ------------------------------------------------------------------------
 
+/**
+ * Admin_User
+ *
+ * @package		CodeSharp
+ * @subpackage	Application
+ * @category	Controllers
+ * @author		Andy Walpole
+ * 
+ */
 class Admin_User extends CI_Controller {
 
     function __construct() {
@@ -46,6 +64,17 @@ class Admin_User extends CI_Controller {
         }
 
     }
+    // --------------------------------------------------------------------
+
+    /**
+     * add_theme function
+     * Adds user details and template to all pages
+     *
+     * @access	private
+     * @param	string
+     * @return	string
+     */
+
 
     private function add_theme($array) {
 
@@ -69,6 +98,17 @@ class Admin_User extends CI_Controller {
         $this->add_theme($data);
 
     }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * email_ajax_check function
+     * Checks to see if email is a duplicate when submitting through AJAX
+     *
+     * @access	public
+     * @param	string
+     * @return	string
+     */
 
     public function email_ajax_check() {
 
@@ -106,6 +146,17 @@ class Admin_User extends CI_Controller {
 
     } // end email_ajax_check
 
+    // --------------------------------------------------------------------
+
+    /**
+     * username_ajax_check function
+     * Checks to see if username is a duplicate when submitting through AJAX
+     *
+     * @access	public
+     * @param	string
+     * @return	string
+     */
+
     public function username_ajax_check() {
 
         if (!isset($_GET['currentUsername'])) {
@@ -142,8 +193,17 @@ class Admin_User extends CI_Controller {
 
     }
 
+    // --------------------------------------------------------------------
 
-    // When a new user is created make sure that the username is unique
+    /**
+     * duplicate_username function
+     * When a new user is created make sure that the username is unique
+     *
+     * @access	public
+     * @param	string
+     * @return	string
+     */
+
 
     public function duplicate_username($name = "") {
 
@@ -164,6 +224,17 @@ class Admin_User extends CI_Controller {
 
     }
 
+    // --------------------------------------------------------------------
+
+    /**
+     * duplicate_email function
+     * When a new user is created make sure that the email is unique
+     *
+     * @access	public
+     * @param	string
+     * @return	string
+     */
+
 
     public function duplicate_email($email = "") {
 
@@ -183,6 +254,18 @@ class Admin_User extends CI_Controller {
         }
 
     }
+
+
+    // --------------------------------------------------------------------
+
+    /**
+     * add_user function
+     * Add a user to the database
+     *
+     * @access	public
+     * @param	array
+     * @return	string
+     */
 
 
     function add_user() {
@@ -219,6 +302,17 @@ class Admin_User extends CI_Controller {
 
     }
 
+    // --------------------------------------------------------------------
+
+    /**
+     * duplicate_username_edit
+     * FOr the edit user form only. Makes sure username is unique
+     *
+     * @access	public
+     * @param	string
+     * @return	string
+     */
+
 
     public function duplicate_username_edit($name = "", $orig_username = "") {
 
@@ -252,8 +346,17 @@ class Admin_User extends CI_Controller {
 
     }
 
+    // --------------------------------------------------------------------
 
-    // checks to see if the new email chosen in the user edit field hasn't already been used
+    /**
+     * duplicate_email_edit
+     * FOr the edit user form only. Makes sure email is unique
+     *
+     * @access	public
+     * @param	string
+     * @return	string
+     */
+
     public function duplicate_email_edit($email, $orig_email = "") {
 
         $hiddenE = $orig_email;
@@ -286,6 +389,17 @@ class Admin_User extends CI_Controller {
 
     }
 
+
+    // --------------------------------------------------------------------
+
+    /**
+     * edit_users function
+     * Form submission for editing users
+     *
+     * @access	public
+     * @param	arrat
+     * @return	string
+     */
 
     public function edit_users() {
 
@@ -359,12 +473,23 @@ class Admin_User extends CI_Controller {
 
     }
 
+    // --------------------------------------------------------------------
+
+    /**
+     * delete_user
+     * Delete a user
+     *
+     * @access	public
+     * @param	string
+     * @return	string
+     */
+
 
     public function delete_user() {
 
         $data = array();
 
-        if ($this->user_model->delete_user($this->input->post("delete_this"))) {
+        if ($this->user_model->delete_user($_POST['delete_this'])) {
 
             $data['success'] = "<p>You have successfully deleted the user</p>";
 

@@ -1,8 +1,28 @@
 <?php
 
 /**
- * @author Andy Walpole
- * @date 9/10/2011
+ * CodeSharp
+ *
+ * A CMS based on CodeIgniter
+ *
+ * @package		CodeSharp
+ * @author		Andy Walpole (unless stated to the contrary)
+ * @copyright	Andy Walpole (unless stated to the contrary)
+ * @license		http://codeigniter.com/user_guide/license.html
+ * @link		https://github.com/TCotton/CodeSharp
+ * @since		Version 1.0
+ * @filesource
+ */
+
+// ------------------------------------------------------------------------
+
+/**
+ * Admin Config
+ *
+ * @package		CodeSharp
+ * @subpackage	Application
+ * @category	Controllers
+ * @author		Andy Walpole
  * 
  */
 
@@ -32,6 +52,18 @@ class Admin_Config extends CI_Controller {
         }
 
     }
+    
+    
+    // --------------------------------------------------------------------
+
+    /**
+     * add_theme function
+     * Adds category menu and template to all pages
+     *
+     * @access	private
+     * @param	string
+     * @return	string
+     */
 
 
     // universal to all functions
@@ -53,6 +85,18 @@ class Admin_Config extends CI_Controller {
         $this->add_theme($data);
 
     }
+    
+        // --------------------------------------------------------------------
+
+    /**
+     * submit form function
+     * Submits the admin config form, validates and then does database query
+     *
+     * @access	public
+     * @param	array
+     * @return	string
+     */
+
 
 
     public function submit_form() {
@@ -68,8 +112,16 @@ class Admin_Config extends CI_Controller {
             $data['error_success'] = "<p>There are problems with your form submission:</p>";
 
         } else {
+            
+            if(is_array($_POST)) {
 
             $this->admin_config_model->update_admin($_POST);
+            
+            } else {
+                
+            $this->admin_config_model->update_admin_ajax($_POST);
+                
+            }
 
             $data['error_success'] = "<p>You have successfully updated the database.</p>";
 

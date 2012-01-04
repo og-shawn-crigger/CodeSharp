@@ -1,8 +1,28 @@
 <?php
 
 /**
- * @author Andy Walpole
- * @date 26/9/2011
+ * CodeSharp
+ *
+ * A CMS based on CodeIgniter
+ *
+ * @package		CodeSharp
+ * @author		Andy Walpole (unless stated to the contrary)
+ * @copyright	Andy Walpole (unless stated to the contrary)
+ * @license		http://codeigniter.com/user_guide/license.html
+ * @link		https://github.com/TCotton/CodeSharp
+ * @since		Version 1.0
+ * @filesource
+ */
+
+// ------------------------------------------------------------------------
+
+/**
+ * Content
+ *
+ * @package		CodeSharp
+ * @subpackage	Application
+ * @category	Controllers
+ * @author		Andy Walpole
  * 
  */
 
@@ -13,6 +33,18 @@ class Content extends CI_Controller {
         parent::__construct();
 
     }
+    
+    // --------------------------------------------------------------------
+
+    /**
+     * add_theme function
+     * Adds category menu and template to all pages
+     * Also adds list of all users for every page
+     *
+     * @access	private
+     * @param	string
+     * @return	string
+     */
 
 
     private function add_theme($array) {
@@ -59,6 +91,18 @@ class Content extends CI_Controller {
         $this->add_theme($data);
 
     }
+    
+        // --------------------------------------------------------------------
+
+    /**
+     * add_theme function
+     * Displays article on the public pages
+     *
+     * @access	public
+     * @param	string
+     * @return	string
+     */
+
 
 
     public function article() {
@@ -123,6 +167,17 @@ class Content extends CI_Controller {
         $this->add_theme($data);
 
     } //
+    
+            // --------------------------------------------------------------------
+
+    /**
+     * acategoryfunction
+     * Displays article segments based on their category
+     *
+     * @access	public
+     * @param	string
+     * @return	string
+     */
 
 
     public function category() {

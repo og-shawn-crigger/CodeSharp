@@ -1,15 +1,30 @@
 <?php
 
 /**
- * @author Andy Walpole
- * @date 9/10/2011
- * 
+ * CodeSharp
+ *
+ * A CMS based on CodeIgniter
+ *
+ * @package		CodeSharp
+ * @author		Andy Walpole (unless stated to the contrary)
+ * @copyright	Andy Walpole (unless stated to the contrary)
+ * @license		http://codeigniter.com/user_guide/license.html
+ * @link		https://github.com/TCotton/CodeSharp
+ * @since		Version 1.0
+ * @filesource
  */
 
-?>
+// ------------------------------------------------------------------------
 
-
-<?php
+/**
+ * Admin_Config_Model Class
+ *
+ * @package		CodeSharp
+ * @subpackage	Application
+ * @category	Models
+ * @author		Andy Walpole
+ * 
+ */
 
 class Admin_Config_Model extends CI_Model {
 
@@ -17,18 +32,27 @@ class Admin_Config_Model extends CI_Model {
     public function __construct() {
 
         parent::__construct();
-        
-      
-        
-        $this->add_admin();
-        
 
+        $this->add_admin();
 
     }
 
     /**
      * Look at placing the individual update database queries into one giant sql query
      */
+
+    // --------------------------------------------------------------------
+
+    /**
+     * update_admin function
+     * Updates admin table after admin config form submission
+     *
+     * @access	public
+     * @param	array
+     * @return	string
+     */
+
+
     public function update_admin($form) {
 
         foreach ($form as $key => $value) {
@@ -100,10 +124,71 @@ class Admin_Config_Model extends CI_Model {
                     break;
 
             }
-
         }
+    }
+
+
+    /**
+     * Look at placing the individual update database queries into one giant sql query
+     */
+
+    // --------------------------------------------------------------------
+
+    /**
+     * update_admin_ajax function
+     * Updates admin table after admin config form submission
+     * AJAX ONLY
+     *
+     * @access	public
+     * @param	string
+     * @return	string
+     */
+
+
+    public function update_admin_ajax($form) {
+
+        $data = array('value' => $_POST['nameForm']);
+        $this->db->where('name', "name_of_site");
+        $this->db->limit(1);
+        $this->db->update('admin', $data);
+
+        $data = array('value' => $_POST['sloganForm']);
+        $this->db->where('name', "slogan");
+        $this->db->limit(1);
+        $this->db->update('admin', $data);
+
+        $data = array('value' => $_POST['emailForm']);
+        $this->db->where('name', "email");
+        $this->db->limit(1);
+        $this->db->update('admin', $data);
+
+        $data = array('okay' => $_POST['metaDescription']);
+        $this->db->where('name', "meta_description");
+        $this->db->limit(1);
+        $this->db->update('admin', $data);
+
+        $data = array('okay' => $_POST['metaKeywords']);
+        $this->db->where('name', "meta_keywords");
+        $this->db->limit(1);
+        $this->db->update('admin', $data);
+
+        $data = array('okay' => $_POST['errorReporting']);
+        $this->db->where('name', "error_reporting");
+        $this->db->limit(1);
+        $this->db->update('admin', $data);
+
+        $data = array('okay' => $_POST['errorLevel']);
+        $this->db->where('name', "error_level");
+        $this->db->limit(1);
+        $this->db->update('admin', $data);
+
+        $data = array('okay' => $_POST['errorEmail']);
+        $this->db->where('name', "error_email");
+        $this->db->limit(1);
+        $this->db->update('admin', $data);
 
     }
+
 
     private function admin_list() {
 

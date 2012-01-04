@@ -1,10 +1,30 @@
 <?php
 
 /**
- * @author Andy Walpole
- * @date 26/9/2011
+ * CodeSharp
+ *
+ * A CMS based on CodeIgniter
+ *
+ * @package		CodeSharp
+ * @author		Andy Walpole (unless stated to the contrary)
+ * @copyright	Andy Walpole (unless stated to the contrary)
+ * @license		http://codeigniter.com/user_guide/license.html
+ * @link		https://github.com/TCotton/CodeSharp
+ * @since		Version 1.0
+ * @filesource
  */
 
+// ------------------------------------------------------------------------
+
+/**
+ * Admin_Config_Model Class
+ *
+ * @package		CodeSharp
+ * @subpackage	Application
+ * @category	Models
+ * @author		Andy Walpole
+ * 
+ */
 class Category_Model extends CI_Model {
 
     function get_categories_by_id($id) {
@@ -14,6 +34,17 @@ class Category_Model extends CI_Model {
         return $query->result();
 
     }
+
+
+    // --------------------------------------------------------------------
+
+    /**
+     * get_cat_title function
+     * lists category id and name 
+     * @access	public
+     * @param	array
+     * @return	string
+     */
 
     function get_cat_title() {
 
@@ -25,8 +56,17 @@ class Category_Model extends CI_Model {
 
     }
 
-    // This is essential for fetching an mutli-dimensional array from the database to be
-    // use in the add content form
+    // --------------------------------------------------------------------
+
+    /**
+     * get_cat_title_mutli function
+     *  // This is essential for fetching an mutli-dimensional array from the database to be
+     * // use in the add content form
+     * @access	public
+     * @param	array
+     * @return	string
+     */
+
     function get_cat_title_mutli() {
 
         $this->db->select('id,name');
@@ -46,7 +86,17 @@ class Category_Model extends CI_Model {
 
     }
 
-    function get_cat_content($id,$limit = null, $offset = null) {
+    // --------------------------------------------------------------------
+
+    /**
+     * get_cat_content function
+     *  // get all category content for display on the publicly accessed pages - visible is set to 1
+     * @access	public
+     * @param	array
+     * @return	string
+     */
+
+    function get_cat_content($id, $limit = null, $offset = null) {
 
         // Find all items of the content node where second item equals the second segment
         $this->db->where('category_id', $id);
@@ -60,20 +110,41 @@ class Category_Model extends CI_Model {
         return $query->result();
 
     }
-    
-    public function find_category_rows($visible = TRUE, $id = "") {
-        
-        if($visible === TRUE) {
-        
-        $this->db->where('visible', 1);
-        
+    // --------------------------------------------------------------------
+
+    /**
+     * find_category_rows function
+     *  find number of individual category items
+     * @access	public
+     * @param	string
+     * @return	string
+     */
+
+
+    public function find_category_rows($visible = true, $id = "") {
+
+        if ($visible === true) {
+
+            $this->db->where('visible', 1);
+
         }
-        
+
         $this->db->where('category_id', $id);
-        
+
         return $this->db->get('content')->num_rows();
-        
+
     }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * add_category function
+     *  add category to the category database table
+     * @access	public
+     * @param	string
+     * @return	string
+     */
+
 
     function add_category($name = "", $publish = "") {
 
@@ -84,6 +155,16 @@ class Category_Model extends CI_Model {
         return $this->db->insert('category', $data);
 
     }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * get_cats function
+     *  This is to make sure that the category name is unique 
+     * @access	public
+     * @param	string
+     * @return	string
+     */
 
     public function get_cats($value = "") {
 
@@ -108,6 +189,16 @@ class Category_Model extends CI_Model {
 
     }
 
+    // --------------------------------------------------------------------
+
+    /**
+     * update_categorys function
+     * Update category
+     * @access	public
+     * @param	string
+     * @return	string
+     */
+
     public function update_category($name, $visibility, $id) {
 
         $data = array('name' => $name, 'visible' => $visibility);
@@ -119,6 +210,16 @@ class Category_Model extends CI_Model {
         return $this->db->update('category', $data);
 
     }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * delete_categoryfunction
+     * Delete category
+     * @access	public
+     * @param	string
+     * @return	string
+     */
 
     public function delete_category($id = "") {
 

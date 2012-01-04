@@ -1,8 +1,28 @@
 <?php
 
 /**
- * @author Andy Walpole
- * @date 19/10/2011
+ * CodeSharp
+ *
+ * A CMS based on CodeIgniter
+ *
+ * @package		CodeSharp
+ * @author		Andy Walpole (unless stated to the contrary)
+ * @copyright	Andy Walpole (unless stated to the contrary)
+ * @license		http://codeigniter.com/user_guide/license.html
+ * @link		https://github.com/TCotton/CodeSharp
+ * @since		Version 1.0
+ * @filesource
+ */
+
+// ------------------------------------------------------------------------
+
+/**
+ * Login
+ *
+ * @package		CodeSharp
+ * @subpackage	Application
+ * @category	Controllers
+ * @author		Andy Walpole
  * 
  */
 
@@ -13,6 +33,17 @@ class Login extends CI_Controller {
         parent::__construct();
 
     }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * add_theme function
+     * Adds user details and template to all pages
+     *
+     * @access	private
+     * @param	string
+     * @return	string
+     */
 
 
     private function add_theme($array) {
@@ -33,6 +64,17 @@ class Login extends CI_Controller {
 
     }
 
+    // --------------------------------------------------------------------
+
+    /**
+     * set_logged_infunction
+     * AIf user is logged in then set the user id to the cookie id and set logged_in parameter to true
+     *
+     * @access	public
+     * @param	string
+     * @return	string
+     */
+
 
     public function set_logged_in() {
 
@@ -49,6 +91,18 @@ class Login extends CI_Controller {
         }
 
     } // end method check_logged_in
+
+
+    // --------------------------------------------------------------------
+
+    /**
+     * letmein function
+     * Login form for the administration area
+     *
+     * @access	public
+     * @param	string
+     * @return	string
+     */
 
 
     public function letmein() {
@@ -97,6 +151,7 @@ class Login extends CI_Controller {
 
     }
 
+
     public function forgotten_userdetails() {
 
         $data = array();
@@ -106,6 +161,18 @@ class Login extends CI_Controller {
         $this->add_theme($data);
 
     }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * valdidate_forgotten_userdetails function
+     * Allows the user to reset their password and user details
+     *
+     * @access	public
+     * @param	string
+     * @return	string
+     */
+
 
     public function valdidate_forgotten_userdetails() {
 
@@ -164,6 +231,17 @@ class Login extends CI_Controller {
 
     }
 
+    // --------------------------------------------------------------------
+
+    /**
+     * letmeout function
+     * Logout of the admin area and destroy the cookie
+     *
+     * @access	public
+     * @param	string
+     * @return	string
+     */
+
 
     public function letmeout() {
 
@@ -175,6 +253,17 @@ class Login extends CI_Controller {
 
 
     //http://localhost/CodeSharp/new_password/login/561451/1
+    // --------------------------------------------------------------------
+
+    /**
+     * new_password function
+     * Sets new password after user clicks on link in email
+     *
+     * @access	public
+     * @param	string
+     * @return	string
+     */
+
 
     public function new_password() {
 

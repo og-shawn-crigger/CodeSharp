@@ -1,11 +1,30 @@
 <?php
 
 /**
- * @author Andy Walpole
- * @date 30/9/2011
- * 
+ * CodeSharp
+ *
+ * A CMS based on CodeIgniter
+ *
+ * @package		CodeSharp
+ * @author		Andy Walpole (unless stated to the contrary)
+ * @copyright	Andy Walpole (unless stated to the contrary)
+ * @license		http://codeigniter.com/user_guide/license.html
+ * @link		https://github.com/TCotton/CodeSharp
+ * @since		Version 1.0
+ * @filesource
  */
 
+// ------------------------------------------------------------------------
+
+/**
+ * Image_Model Class
+ *
+ * @package		CodeSharp
+ * @subpackage	Application
+ * @category	Models
+ * @author		Andy Walpole
+ * 
+ */
 
 class Image_Model extends CI_Model {
 
@@ -26,9 +45,16 @@ class Image_Model extends CI_Model {
 
     }
 
+    // --------------------------------------------------------------------
 
-    // checks image duplicate for the upload_image function below
-    // Checks to see if upload image already exists
+    /**
+     * check_image_duplicate function
+     *  checks image duplicate for the upload_image function below
+     * Checks to see if upload image already exists
+     * @access	private
+     * @return	array
+     */
+
     private function check_image_duplicate() {
 
         $sql = "SELECT filename FROM images";
@@ -39,7 +65,15 @@ class Image_Model extends CI_Model {
 
     }
 
-    // create file row for new image
+    // --------------------------------------------------------------------
+
+    /**
+     * upload_file_database function
+     * // create file row for new image
+     * @access	private
+     * @return	array
+     */
+
     private function upload_file_database($file_type = "", $filename = "") {
 
         // date('Y-m-d H:i:s') = MySQL now() function
@@ -51,8 +85,15 @@ class Image_Model extends CI_Model {
 
     }
 
+    // --------------------------------------------------------------------
 
-    // function for validating image
+    /**
+     * upload_image function
+     * // function for validating image
+     * @access	public
+     * @return	array
+     */
+
     public function upload_image() {
 
         $config = array();
@@ -77,9 +118,17 @@ class Image_Model extends CI_Model {
         } // end upload
 
     }
+    
+        // --------------------------------------------------------------------
+
+    /**
+     * resize_image function
+     * // function to resize image
+     * @access	private
+     * @return	string
+     */
 
 
-    // function to resize image
     private function resize_image($image = "") {
 
         /**

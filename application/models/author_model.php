@@ -1,11 +1,30 @@
 <?php
 
 /**
- * @author Andy Walpole
- * @date 27/9/2011
- * 
+ * CodeSharp
+ *
+ * A CMS based on CodeIgniter
+ *
+ * @package		CodeSharp
+ * @author		Andy Walpole (unless stated to the contrary)
+ * @copyright	Andy Walpole (unless stated to the contrary)
+ * @license		http://codeigniter.com/user_guide/license.html
+ * @link		https://github.com/TCotton/CodeSharp
+ * @since		Version 1.0
+ * @filesource
  */
 
+// ------------------------------------------------------------------------
+
+/**
+ * Author_Model Class
+ *
+ * @package		CodeSharp
+ * @subpackage	Application
+ * @category	Models
+ * @author		Andy Walpole
+ * 
+ */
 
 class Author_Model extends CI_Model {
 
@@ -19,10 +38,20 @@ class Author_Model extends CI_Model {
 
     }
 
+    // --------------------------------------------------------------------
 
-    // This is essential for fetching an mutli-dimensional array from the database to be
-    // use in the content edit form
-    function get_users_title_mutli() {
+    /**
+     * get_users_title_mutli function
+     *  // This is essential for fetching an mutli-dimensional array from the database to be
+     * // use in the content edit form
+     *
+     * @access	public
+     * @param	array
+     * @return	string
+     */
+
+
+    public function get_users_title_mutli() {
 
         $this->db->select('id,username');
 

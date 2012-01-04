@@ -1,8 +1,28 @@
 <?php
 
 /**
- * @author Andy Walpole
- * @date 29/9/2011
+ * CodeSharp
+ *
+ * A CMS based on CodeIgniter
+ *
+ * @package		CodeSharp
+ * @author		Andy Walpole (unless stated to the contrary)
+ * @copyright	Andy Walpole (unless stated to the contrary)
+ * @license		http://codeigniter.com/user_guide/license.html
+ * @link		https://github.com/TCotton/CodeSharp
+ * @since		Version 1.0
+ * @filesource
+ */
+
+// ------------------------------------------------------------------------
+
+/**
+ * Admin Class
+ *
+ * @package		CodeSharp
+ * @subpackage	Application
+ * @category	Controllers
+ * @author		Andy Walpole
  * 
  */
 
@@ -51,6 +71,17 @@ class Admin_Category extends CI_Controller {
 
     }
 
+    // --------------------------------------------------------------------
+
+    /**
+     * add_theme function
+     * Adds category menu and template to all pages
+     *
+     * @access	private
+     * @param	string
+     * @return	string
+     */
+
 
     private function add_theme($array) {
 
@@ -72,6 +103,17 @@ class Admin_Category extends CI_Controller {
 
     }
 
+    // --------------------------------------------------------------------
+
+    /**
+     * form_success function
+     * Returns success message when user successfully creates another category
+     *
+     * @access	private
+     * @param	string
+     * @return	string
+     */
+
     private function form_success() {
 
         $data = array();
@@ -81,6 +123,17 @@ class Admin_Category extends CI_Controller {
         $this->add_theme($data);
 
     }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * form_failure function
+     * Returns error message if form submission was not successful
+     *
+     * @access	private
+     * @param	string
+     * @return	string
+     */
 
 
     private function form_failure() {
@@ -93,16 +146,27 @@ class Admin_Category extends CI_Controller {
 
     }
 
+    // --------------------------------------------------------------------
+
+    /**
+     * add_category function
+     * Validates form and then runs database query
+     *
+     * @access	public
+     * @param	array
+     * @return	function
+     */
+
 
     public function add_category() {
 
         $data = array();
-        
+
         /**
          * validation rule to be found in config -> form_validation.php
          */
-         
-        
+
+
         if ($this->form_validation->run("addcategory") === false) {
 
             // errors here
@@ -113,13 +177,25 @@ class Admin_Category extends CI_Controller {
 
             // success here
 
-            $this->category_model->add_category($this->input->post('nameAdd'), $this->input->post('publishAdd'));
+            $this->category_model->add_category($this->input->post('nameAdd'), $this->input->
+                post('publishAdd'));
 
             $this->form_success();
 
         }
 
     }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * delete_category function
+     * Deletes category
+     *
+     * @access	public
+     * @param	string
+     * @return	string
+     */
 
 
     public function delete_category() {
@@ -136,6 +212,17 @@ class Admin_Category extends CI_Controller {
 
     }
 
+    // --------------------------------------------------------------------
+
+    /**
+     * check_duplicates function
+     * Checks for duplicate category names
+     *
+     * @access	public
+     * @param	string
+     * @return	string
+     */
+
 
     public function check_duplicates($form_input = "", $orig_form = "") {
 
@@ -151,7 +238,7 @@ class Admin_Category extends CI_Controller {
 
 
         foreach ($result as $row) {
-        
+
             if ($row->name == $form_input) {
 
                 $this->form_validation->set_message('check_duplicates',
@@ -166,6 +253,18 @@ class Admin_Category extends CI_Controller {
         } // foreach
 
     }
+
+
+    // --------------------------------------------------------------------
+
+    /**
+     * validate_cat function
+     * Validates categories that are submitted through the edit pages
+     *
+     * @access	public
+     * @param	array
+     * @return	string
+     */
 
 
     public function validate_cat() {

@@ -1,8 +1,28 @@
 <?php
 
 /**
- * @author Andy Walpole
- * @date 29/9/2011
+ * CodeSharp
+ *
+ * A CMS based on CodeIgniter
+ *
+ * @package		CodeSharp
+ * @author		Andy Walpole (unless stated to the contrary)
+ * @copyright	Andy Walpole (unless stated to the contrary)
+ * @license		http://codeigniter.com/user_guide/license.html
+ * @link		https://github.com/TCotton/CodeSharp
+ * @since		Version 1.0
+ * @filesource
+ */
+
+// ------------------------------------------------------------------------
+
+/**
+ * Admin_Menu
+ *
+ * @package		CodeSharp
+ * @subpackage	Application
+ * @category	Controllers
+ * @author		Andy Walpole
  * 
  */
 
@@ -51,6 +71,16 @@ class Admin_Menu extends CI_Controller {
 
     }
 
+    // --------------------------------------------------------------------
+
+    /**
+     * add_theme function
+     * Adds menu details  and template to all pages
+     *
+     * @access	private
+     * @param	string
+     * @return	string
+     */
 
     // universal to all functions
     private function add_theme($array) {
@@ -78,7 +108,16 @@ class Admin_Menu extends CI_Controller {
 
     }
 
-    // When a new menu item is created make sure that the menu name is unique
+    // --------------------------------------------------------------------
+
+    /**
+     * duplicate_menu_name function
+     * When a new menu item is created make sure that the menu name is unique
+     *
+     * @access	public
+     * @param	string
+     * @return	string
+     */
 
     public function duplicate_menu_name($name) {
 
@@ -99,6 +138,16 @@ class Admin_Menu extends CI_Controller {
 
     }
 
+    // --------------------------------------------------------------------
+
+    /**
+     * update_menu function
+     * Form submission for the edit menu forms
+     *
+     * @access	public
+     * @param	array
+     * @return	string
+     */
 
     public function update_menu() {
 
@@ -145,6 +194,18 @@ class Admin_Menu extends CI_Controller {
         $this->add_theme($data);
     }
 
+    // --------------------------------------------------------------------
+
+    /**
+     * uchange_menu_order( function
+     * Changes the menu order on the public pages
+     *
+     * @access	public
+     * @param	array
+     * @return	string
+     */
+
+
     public function change_menu_order() {
 
         $data = array();
@@ -185,7 +246,8 @@ class Admin_Menu extends CI_Controller {
                 // Form has validation problems
 
                 $data['success_fail'] = "<p>There have been some problems with the form</p>";
-                $data['success_fail'] .= '<p>Please make sure the value is a one or two digit number</p>';
+                $data['success_fail'] .=
+                    '<p>Please make sure the value is a one or two digit number</p>';
 
             }
 
@@ -195,6 +257,18 @@ class Admin_Menu extends CI_Controller {
         $this->add_theme($data);
 
     }
+
+    // --------------------------------------------------------------------
+
+    /**
+     * add_categories_to_menu function
+     * Adds categories to the public menu
+     *
+     * @access	public
+     * @param	string
+     * @return	string
+     */
+
 
     public function add_categories_to_menu() {
 
@@ -211,11 +285,19 @@ class Admin_Menu extends CI_Controller {
 
     }
 
+    /**
+     * menu_add function
+     * Creates a menu, validation, database processing
+     *
+     * @access	public
+     * @param	string
+     * @return	string
+     */
 
     public function menu_add() {
 
         $data = array();
-        
+
         /**
          * validation rule to be found in config -> form_validation.php
          */
@@ -242,6 +324,16 @@ class Admin_Menu extends CI_Controller {
         $this->add_theme($data);
 
     }
+
+    /**
+     * delete_menu function
+     * Deletes a menu item
+     *
+     * @access	public
+     * @param	string
+     * @return	string
+     */
+
 
     public function delete_menu() {
 

@@ -185,9 +185,9 @@ if (isset($edit)):
 
         $form .= form_fieldset('<span>Update or delete</span>');
 
-        $form .= form_submit("submit", "delete");
+        $form .= form_submit("deteteNode", "delete");
 
-        $form .= form_submit("submit", "submit");
+        $form .= form_submit("submitNode", "submit");
 
         $form .= form_fieldset_close();
 

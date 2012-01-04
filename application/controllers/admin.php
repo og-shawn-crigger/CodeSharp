@@ -1,8 +1,28 @@
 <?php
 
 /**
- * @author Andy Walpole
- * @date 29/9/2011
+ * CodeSharp
+ *
+ * A CMS based on CodeIgniter
+ *
+ * @package		CodeSharp
+ * @author		Andy Walpole (unless stated to the contrary)
+ * @copyright	Andy Walpole (unless stated to the contrary)
+ * @license		http://codeigniter.com/user_guide/license.html
+ * @link		https://github.com/TCotton/CodeSharp
+ * @since		Version 1.0
+ * @filesource
+ */
+
+// ------------------------------------------------------------------------
+
+/**
+ * Admin Class
+ *
+ * @package		CodeSharp
+ * @subpackage	Application
+ * @category	Controllers
+ * @author		Andy Walpole
  * 
  */
 
@@ -17,8 +37,18 @@ class Admin extends CI_Controller {
 
     }
 
-	
-	private function add_theme($array) {
+    // --------------------------------------------------------------------
+
+    /**
+     * add_theme function
+     * Adds category menu and template to all pages
+     *
+     * @access	private
+     * @param	string
+     * @return	string
+     */
+
+    private function add_theme($array) {
 
         $data = $array;
 
@@ -28,16 +58,27 @@ class Admin extends CI_Controller {
 
         $this->load->view("admin/includes/template.php", $data);
     }
-	
-	
+
+
     public function index() {
 
         $data = array();
 
         $this->add_theme($data);
-        
+
     }
-	
+
+    // --------------------------------------------------------------------
+
+    /**
+     * ais_logged_in function
+     * If user is not logged in then they are returned to the login page
+     *
+     * @access	public
+     * @param	string
+     * @return	string
+     */
+
 
     public function is_logged_in() {
 
@@ -50,6 +91,6 @@ class Admin extends CI_Controller {
         }
 
     }
-    
+
 
 }
