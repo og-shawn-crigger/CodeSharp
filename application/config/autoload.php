@@ -117,7 +117,7 @@ $autoload['language'] = array();
 |
 */
 
-//if (!file_exists("application/views/admin/install_view.php")) {
+if (!file_exists("application/views/admin/install_view.php")) {
 
 $autoload['model'] = array('content_model', 'menu_model', 'category_model',
     'author_model', 'image_model', 'user_model', 'admin_config_model');
