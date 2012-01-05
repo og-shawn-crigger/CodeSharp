@@ -192,7 +192,7 @@ if (is_dir($application_folder)) {
 *
 */
 
-require_once BASEPATH.'core/CodeIgniter.php';
+require_once BASEPATH . 'core/CodeIgniter.php';
 
 
 /* End of file index.php */

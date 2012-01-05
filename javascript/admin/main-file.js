@@ -275,7 +275,6 @@ var TopMeasure = (function () {
         }
     };
 
-
     if ($nonIE.test() != undefined) {
         return $nonIE;
     } else {
@@ -300,6 +299,7 @@ var NewAlert = {
     fade: null,
     data: null,
     run: null,
+    removeText : null,
 
     alertCheck: function () {
 
@@ -326,12 +326,15 @@ var NewAlert = {
 
     // Create error HTML with alertWrap
     alertWrap: function (value) {
+        
+        NewAlert.removeText = '<span class="small">Click any where on the page to remove this message</span>';
 
         // create element with class name alert
         // add value of attribute and append to the body
         NewAlert.nodeAlert = document.createElement("div");
         NewAlert.nodeAlert.className = "elegant-alertxyz";
         NewAlert.nodeAlert.innerHTML = NewAlert.data;
+        NewAlert.nodeAlert.innerHTML += NewAlert.removeText;
         document.body.appendChild(NewAlert.nodeAlert);
         NewAlert.nodeAlert.style.top = TopMeasure.test() + "px";
         NewAlert.alertFade();
@@ -341,6 +344,7 @@ var NewAlert = {
     alertFade: function (value2) {
 
         // alertWrap method;
+        /*
         setOpacity(NewAlert.nodeAlert, 10);
 
         NewAlert.fade = setInterval(function () {
@@ -362,6 +366,18 @@ var NewAlert = {
                 NewAlert.run = null;
             }
         }, NewAlert.time);
+        */
+        
+        // if user clicks on any element on the page then the node alert disappears
+        x = 0;
+
+        for (len = document.documentElement.childNodes.length; x < len; x += 1) {
+
+            document.documentElement.childNodes[x].onclick = function() {
+                NewAlert.nodeAlert.parentNode.removeChild(NewAlert.nodeAlert);
+            }
+        } // end for loop
+        
     },
 
     init: function (data) {
@@ -401,7 +417,6 @@ function reset_value(form) {
     }
 }
 
-
 // fading form values after successful submission
 function fade_value(form) {
 
@@ -415,7 +430,6 @@ function fade_value(form) {
         });
     }
 }
-
 
 function addEvent(el, type, fn) {
 
@@ -616,7 +630,6 @@ CS.GlobalSet = (function () {
         //public methods
         handleSubmit: function () {
 
-
             // set error attribute as an array
             CS.GlobalSet.errors = [];
             // dCS.GlobalSeteclare form values
@@ -750,7 +763,6 @@ CS.EditNode = (function () {
 
             form = document.forms['adminEditContent'];
 
-
             // declare form values
             CS.EditNode.fileField = form.file_upload.value;
             CS.EditNode.titleField = form.title.value.trim();
@@ -830,7 +842,6 @@ CS.EditNode = (function () {
 
         deleteNode: function () {
 
-
             if (confirm("Delete this article?")) {
 
                 // this nifty little piece of code finds the number in the third segment of the url
@@ -842,7 +853,7 @@ CS.EditNode = (function () {
                 NewAlert.init("The article has been deleted");
                 document.forms[0].submitNode.disabled = true;
                 document.forms[0].deteteNode.disabled = true;
-                fade_value(document.forms['adminEditContent'].elements)
+                fade_value(document.forms['adminEditContent'].elements);
 
             } // end if confirm
             return false;
@@ -987,6 +998,7 @@ CS.AddNode = (function () {
         } // end init()
     }; // end return
 })(); // end CS.AddNode
+
 /*
  JavaScript form submission for admin_category - adding a new category
  */
@@ -1022,6 +1034,7 @@ CS.AddCategory = (function () {
                 CS.AddCategory.error.push("\nPlease don't leave any fields empty");
 
             }
+            
             if (CS.AddCategory.titleField.length > 40) {
 
                 CS.AddCategory.error.push("\nNo more than 40 characters");
@@ -1074,6 +1087,7 @@ CS.AddCategory = (function () {
         } // end init()
     }; // end return
 })(); // end CS.EditNode
+
 CS.AddMenu = (function () {
     // private attributes if any here
     var objX, i, publish, random, data, key, duplicate, numStr;
@@ -1183,6 +1197,7 @@ CS.AddMenu = (function () {
         } // end init()
     }; // end return
 })(); // end CS.EditNode
+
 // form submission for menu order
 CS.MenuOrder = (function () {
     // private attributes if any here
@@ -1231,6 +1246,7 @@ CS.MenuOrder = (function () {
         } // end init()
     }; // end return
 })(); // end CS.menuOrder
+
 CS.AddUser = (function () {
     // private attributes if any here
     var i, publish, data;
@@ -1394,6 +1410,7 @@ CS.AddUser = (function () {
         } // end init()
     }; // end return
 })(); // end CS.EditNode
+
 CS.EditItem = (function () {
 
     // private attributes if any here
@@ -1829,6 +1846,7 @@ CS.EditItem = (function () {
         } // end init()
     }; // end return
 })(); // end
+
 function init(siteUrl, baseUrl) {
 
     NewAlert.time = 70;

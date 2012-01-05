@@ -1271,6 +1271,19 @@ margin : 0 0 10px 0;
 	-moz-box-shadow : 0 3px 3px #999;
 	box-shadow : 0 3px 3px #999;
 }
+.elegant-alertxyz .small {
+    font-size : 16px;
+    float : right;
+    top : 0;
+    width : 150px;
+    margin-right : 50px;
+    color : red;
+    line-height : 1.2em;
+    padding : 10px;
+    border-radius : 10px;
+    border : 1px solid red;
+    text-transform:capitalize
+    }
 /* new clearfix */
 .clearfix:after {
  visibility: hidden;

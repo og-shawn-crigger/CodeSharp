@@ -17,7 +17,7 @@ if (!defined('BASEPATH'))
 | path to your installation.
 |
 */
-$config['base_url'] = 'http://localhost/CodeSharp/';
+$config['base_url'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -250,7 +250,7 @@ $config['encryption_key'] = 'Gx.-n>:Kp]=n?[ZS_L=LMi4Sfw>h+wXX';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_expiration'] = 604800;
 $config['sess_expire_on_close'] = false;
-$config['sess_encrypt_cookie'] = TRUE;
+$config['sess_encrypt_cookie'] = false;
 $config['sess_use_database'] = false;
 $config['sess_table_name'] = 'ci_sessions';
 $config['sess_match_ip'] = false;
@@ -300,6 +300,8 @@ $config['global_xss_filtering'] = true;
 /**
  * NEEDED TO PREVENT CSRF ACTION BEING TAKEN ON ADMIN PAGES. CAUSES ERROR.
  */
+ 
+ // Only use CRSF if the user is non registered
  
  if(isset($_COOKIE['ci_session'])) {
     
