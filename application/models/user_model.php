@@ -174,14 +174,19 @@ class User_Model extends CI_Model {
         $query = $this->db->get("user");
 
         $user = $query->row();
-        
-        var_dump(urlencode($user->member));
 
         if (!empty($user)) {
 
 
             // Email contacts to admin
             // Need to set universal admin email
+            
+            $config['protocol'] = 'sendmail';
+            $config['charset'] = 'utf-8';
+            $config['wordwrap'] = TRUE;
+            $config['mailtype'] = 'html';
+            
+            $this->email->initialize($config);
 
             $this->email->from(SITENAME);
             $this->email->to($user->email);
@@ -221,8 +226,7 @@ class User_Model extends CI_Model {
 
             }
 
-            // remove below
-           // echo $this->email->print_debugger();
+     
 
             return "<p>We have sent you an email so you can reset your password. Please check your inbox</p>";
 

@@ -359,7 +359,7 @@ var NewAlert = {
     init: function (data) {
 
         // Place data into data attribute
-        if (data.constructor === Array) {
+        if (typeof data === "object") {
 
             x = 0;
             newData = [];
@@ -436,7 +436,7 @@ CS.Validation = {
 
         //check to see if whole form has been entered as a value
         //or a single form value as string
-        if (value.constructor === Object) {
+        if (typeof value === "object") {
             CS.Validation.i = 0;
             var elems = value;
             //loop through form elements to make sure text and textarea are not empty
@@ -448,7 +448,7 @@ CS.Validation = {
                     } // if value < 1
                 } // end if text or textarea
             } // end for statement
-        } else if (value.constructor === String) {
+        } else if (typeof value === "string") {
             if (value.length < 1) {
                 obj.push("\n" + msg);
             }
@@ -462,7 +462,7 @@ CS.Validation = {
     Max: function (value, obj, number, msg) {
 
         //number = number || null;
-        if (value.constructor !== String || msg.constructor !== String || number.constructor !== Number) {
+        if (typeof value !== "string" || typeof msg !== "string" || typeof number !== "number") {
             // error message for webmasters only
             alert("Webmaster error: Please enter the right value for Validator.Max");
         } else {
@@ -483,31 +483,31 @@ CS.Validation = {
 
     Image: function (value, obj) {
 
-if(value != "") {
+        if (value != "") {
 
-        // the valueos of all the file fields
-        // Below checks to make sure that uploaded file is an image
-        CS.Validation.image = [".jpeg", ".jpg", ".png", ".gif"];
+            // the valueos of all the file fields
+            // Below checks to make sure that uploaded file is an image
+            CS.Validation.image = [".jpeg", ".jpg", ".png", ".gif"];
 
-        CS.Validation.i = 0;
-        // find extension of file
-        CS.Validation.ext = value.slice(value.indexOf(".")).toLowerCase();
-        
-        if (CS.Validation.ext in {
-            '.jpeg': '',
-            '.jpg': '',
-            '.png': '',
-            '.gif': ''
-        }) {
+            CS.Validation.i = 0;
+            // find extension of file
+            CS.Validation.ext = value.slice(value.indexOf(".")).toLowerCase();
 
-            return true;
+            if (CS.Validation.ext in {
+                '.jpeg': '',
+                '.jpg': '',
+                '.png': '',
+                '.gif': ''
+            }) {
 
-        } else {
+                return true;
 
-            obj.push("\nPlease make sure you only upload an image");
+            } else {
 
-        }// end if CS.Validation.ext
-}
+                obj.push("\nPlease make sure you only upload an image");
+
+            } // end if CS.Validation.ext
+        }
 
     }
 
@@ -570,13 +570,10 @@ CS.Json = (function () {
             objX.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             objX.onreadystatechange = function () {
 
-                if (objX.readyState !== 4) {
-
-                    if (objX.status !== 200 && objX.status !== 304) {
-                        alert('HTTP error ' + objX.status);
-                        return false;
-                    }
+                if (objX.readystate !== 4) {
+                    return;
                 }
+
             };
 
             objX.send(data);
@@ -810,7 +807,7 @@ CS.EditNode = (function () {
             // for the legacy browsers just run the php form if no errors are produced
             if (error.length === 0) {
                 //process form
-                form.submit();
+                return true;
 
             } else {
                 // If there are errors in the form then run alert message
@@ -845,15 +842,15 @@ CS.EditNode = (function () {
             if (document.forms.adminEditContent) {
 
                 CS.EditNode.siteUrl = siteUrl;
-
+                
                 $(document.forms['adminEditContent'].elements['submit']).click(function () {
-    
+
                     CS.EditNode.handleSubmit();
                     return false;
                 });
 
                 $(document.forms['adminEditContent'].elements['detete']).click(function () {
-     
+
                     CS.EditNode.deleteNode();
                     return false;
                 });
@@ -863,7 +860,6 @@ CS.EditNode = (function () {
         } // end init()
     }; // end return
 })(); // end CS.EditNode
-
 // submission of admin_new_content.php
 // Needs further work on the File API
 CS.AddNode = (function () {
@@ -911,21 +907,6 @@ CS.AddNode = (function () {
 
             CS.Validation.Min(this.elements, CS.AddNode.error);
             CS.Validation.Max(CS.AddNode.titleField, CS.AddNode.error, 100, "Opps, the title field is too long");
-
-/*
-
-            // assign a value whether the article is to be published or not
-            for (i = 0; i < CS.AddNode.publishField.length; i += 1) {
-                if (CS.AddNode.publishField[i].checked == true && CS.AddNode.publishField[i].value === "1") {
-                    // determines whether the item should be published
-                    publish = "1";
-                } else {
-                    publish = "0";
-                } // end if
-            } // end for loop
-            */
-
-
 
             CS.Validation.Image(CS.AddNode.fileField, CS.AddNode.error);
 
@@ -983,7 +964,6 @@ CS.AddNode = (function () {
         } // end init()
     }; // end return
 })(); // end CS.AddNode
-
 /*
  JavaScript form submission for admin_category - adding a new category
  */
@@ -1046,11 +1026,12 @@ CS.AddCategory = (function () {
             if (error.length === 0) {
 
                 data = 'nameAdd=' + encodeURIComponent(CS.AddCategory.titleField) + '&publishAdd=' + publish + '&r=' + Math.random();
+
                 CS.Json.sendJson(data, CS.AddCategory.cJson + 'admin-category/add-category');
 
                 NewAlert.init("New category created");
                 reset_value(form.elements);
-                location.reload(true);
+                setTimeout("location.reload(true)", 3);
 
             } else {
                 // If there are errors in the form then run alert message
@@ -1072,7 +1053,6 @@ CS.AddCategory = (function () {
         } // end init()
     }; // end return
 })(); // end CS.EditNode
-
 CS.AddMenu = (function () {
     // private attributes if any here
     var objX, i, publish, random, data, key, duplicate, numStr;
@@ -1182,11 +1162,10 @@ CS.AddMenu = (function () {
         } // end init()
     }; // end return
 })(); // end CS.EditNode
-
 // form submission for menu order
 CS.MenuOrder = (function () {
     // private attributes if any here
-    var i;
+    var i, form;
     // private methods if any here
     // public attribute and methods below
     return {
@@ -1196,6 +1175,8 @@ CS.MenuOrder = (function () {
         handleSubmit: function () {
 
             CS.MenuOrder.error = [];
+
+            form = this;
 
             for (i = 0; i < this.elements.length; i += 1) {
                 if (this.elements[i].type === "text") {
@@ -1212,7 +1193,7 @@ CS.MenuOrder = (function () {
         validData: function (error) {
 
             if (error.length === 0) {
-                return this.submit();
+                form.submit();
             } else {
                 // If there are errors in the form then run alert message
                 NewAlert.init(error);
@@ -1231,7 +1212,6 @@ CS.MenuOrder = (function () {
         } // end init()
     }; // end return
 })(); // end CS.menuOrder
-
 CS.AddUser = (function () {
     // private attributes if any here
     var i, publish, data;
@@ -1373,8 +1353,8 @@ CS.AddUser = (function () {
                 CS.Json.sendJson(data, CS.AddUser.createJ + 'admin-user/add-user');
                 NewAlert.init("New user created");
                 reset_value(CS.AddUser.formElements);
-                setTimeout("location.reload(true)",3);
- 
+                setTimeout("location.reload(true)", 3);
+
 
             } else {
                 // If there are errors in the form then run alert message
@@ -1732,9 +1712,9 @@ CS.EditItem = (function () {
                             CS.EditItem.error = [];
                             form = document.forms['adminAddUser' + result[key].id];
 
-                            for (i = 0; i < CS.EditItem.form.elements.length; i += 1) {
+                            for (i = 0; i < form.elements.length; i += 1) {
 
-                                if (CS.EditItem.form.elements[i].type === "text") {
+                                if (form.elements[i].type === "text") {
                                     // find the number  in the name value field
                                     number = form.elements[i].name.match(/\d/g);
                                     number = number.join("");
