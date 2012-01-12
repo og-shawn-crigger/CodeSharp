@@ -96,7 +96,7 @@ class User_Model extends CI_Model {
 
         $error = "<p>Sorry the username or password does not exist</p>";
         $error .= '<p>If you have forgotten your username or password then <a href="' .
-            base_url() . INDEX . 'login/forgotten_userdetails">please click on here</a></p>';
+            site_url() . 'login/forgotten_userdetails">please click on here</a></p>';
 
         /**
          * First checks to see is usename exists
@@ -174,6 +174,8 @@ class User_Model extends CI_Model {
         $query = $this->db->get("user");
 
         $user = $query->row();
+        
+        var_dump(urlencode($user->member));
 
         if (!empty($user)) {
 
@@ -192,7 +194,7 @@ class User_Model extends CI_Model {
             $body = 'Your username is ' . $user->username . "<br />";
             $body .= 'For your new password please visit: ';
             $body .= '<a href="';
-            $body .= base_url() . INDEX . 'login/' . 'new_password/' . $user->member . "/1";
+            $body .= site_url(). 'login/' . 'new_password/' . urlencode($user->member) . "/1";
             $body .= '">' . SITENAME . '</a>';
 
             $body = stripslashes($body);
@@ -220,7 +222,7 @@ class User_Model extends CI_Model {
             }
 
             // remove below
-            echo $this->email->print_debugger();
+           // echo $this->email->print_debugger();
 
             return "<p>We have sent you an email so you can reset your password. Please check your inbox</p>";
 
@@ -244,14 +246,16 @@ class User_Model extends CI_Model {
 
         // Add fixed salt and unique user salt to the password
 
-        $this->db->select('id, dbsalt');
+        $this->db->select('id');
 
         $this->db->where('member', $member);
 
         $query = $this->db->get("user");
+        
+        $user = $query->row();
 
         if ($this->db->affected_rows() === 1) {
-
+      
             /**
              * User membership number exists
              * From here on generate a new membership password and change the newpass column back to 0
@@ -261,14 +265,15 @@ class User_Model extends CI_Model {
 
             // new password
             $new_password = uniqid();
-            $password = "";
-
-            // prepare the password for inclusion into the database
-            $password = hash_hmac('sha1', $new_password, SALT . $user->dbsalt);
+            $dbsalt = DBSALT;
+            
+             // Add fixed salt and unique user salt to the password
+        $password = hash_hmac('sha1', $new_password , SALT . $dbsalt);
+        
 
             // now run database update query
 
-            $data = array('newpass' => 0, 'password' => $password);
+            $data = array('newpass' => 0, 'password' => $this->encrypt->encode($password), 'dbsalt' => $this->encrypt->encode($dbsalt));
 
             $this->db->limit(1);
 
@@ -286,7 +291,6 @@ class User_Model extends CI_Model {
             return "<p>Your user details can not be found. Please contact the administrator for help.</p>";
 
         }
-
 
         // end if $this->db->affected_rows() === 1
 

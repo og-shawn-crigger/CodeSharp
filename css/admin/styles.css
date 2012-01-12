@@ -227,21 +227,21 @@ nav ul li a:hover {
 	display : block;
 	margin-bottom : 1.25em;
 }
-#admin-login input[type=text], #admin-login input[type=password], #admin-login label {
+#newPassdord input[type=text], #admin-login input[type=text], #admin-login input[type=password], #admin-login label {
 	float : left;
 	width : 180px;
 	padding : 5px;
 }
-#admin-login input[type=text], #admin-login input[type=password] {
+#newPassdord input[type=text], #admin-login input[type=text], #admin-login input[type=password] {
 	border : 1px solid #ccc;
 	margin-bottom : 1.25em;
 	border-radius : 5px;
 }
-#admin-login input[type=text]:focus, #admin-login input[type=password]:focus {
+#newPassdord input[type=text]:focus, #admin-login input[type=text]:focus, #admin-login input[type=password]:focus {
 	border : 1px solid darkred;
 	color : darkred;
 }
-#admin-login input[type=submit] {
+#admin-login input[type=submit], #newPassdord input[type=submit] {
 	clear : both;
 	margin: 20px auto;
 	display : block;
@@ -251,6 +251,11 @@ nav ul li a:hover {
 	padding : 5px;
 	font-size : 16px;
 	border-radius : 5px;
+}
+#newPassdord label{
+float : left;
+width : 170px;
+margin-right : 20px;
 }
 /* Main admin page */
 

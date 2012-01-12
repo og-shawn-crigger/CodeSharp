@@ -1373,7 +1373,8 @@ CS.AddUser = (function () {
                 CS.Json.sendJson(data, CS.AddUser.createJ + 'admin-user/add-user');
                 NewAlert.init("New user created");
                 reset_value(CS.AddUser.formElements);
-                location.reload(true);
+                setTimeout("location.reload(true)",3);
+ 
 
             } else {
                 // If there are errors in the form then run alert message

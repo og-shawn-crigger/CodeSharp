@@ -55,12 +55,24 @@ foreach ($menu as $main_menu) {
         /**
          * LOOK AT BELOW - REMOVE DIRECT CALL TO DATABASE MODEL
          */
-
+         
         $menu_url = $this->menu_model->menu_url($main_menu['id']);
+        
+       $url = parse_url($menu_url->url);
 
         if ($menu_url->url !== "") {
+        
+        if(isset($url["scheme"]) && $url["scheme"]=="http"||"https") {
+        
+        $main_front .= $menu_url->url;
+        
+        } else {
+        
+        $main_front .= site_url($menu_url->url);
+        
+        }
 
-            $main_front .= site_url($menu_url->url);
+            
 
 
         } else {

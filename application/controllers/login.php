@@ -236,7 +236,7 @@ class Login extends CI_Controller {
     /**
      * letmeout function
      * Logout of the admin area and destroy the cookie
-     *
+     *on/controllers/login.php
      * @access	public
      * @param	string
      * @return	string
@@ -269,10 +269,9 @@ class Login extends CI_Controller {
 
         $data = array();
 
-        if (ctype_digit($this->uri->segment(3)) && $this->uri->segment(4) == 1) {
+        if ($this->uri->segment(4) == 1) {
 
-            $data['new_password'] = $this->user_model->set_new_password($this->uri->segment
-                (3));
+            $data['new_password'] = $this->user_model->set_new_password(urldecode($this->uri->segment(3)));
 
         } else {
 
