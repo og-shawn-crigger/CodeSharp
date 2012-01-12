@@ -1272,18 +1272,25 @@ margin : 0 0 10px 0;
 	box-shadow : 0 3px 3px #999;
 }
 .elegant-alertxyz .small {
-    font-size : 16px;
-    float : right;
-    top : 0;
-    width : 150px;
-    margin-right : 50px;
-    color : red;
-    line-height : 1.2em;
-    padding : 10px;
-    border-radius : 10px;
-    border : 1px solid red;
-    text-transform:capitalize
+   font-size : 14px;
+color : red;
+display : block;
+margin-top : 10px;
+margin-bottom : -20px;
     }
+
+#install-script legend span {
+width : 500px;
+}
+#install-script input,{
+display : block;
+width : 200px;
+}
+#install-script  label {
+float : left;
+width : 200px;
+}
+
 /* new clearfix */
 .clearfix:after {
  visibility: hidden;

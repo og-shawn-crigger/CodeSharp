@@ -33,7 +33,7 @@ class ContactUs extends CI_Controller {
 
         parent::__construct();
     }
-    
+
     // --------------------------------------------------------------------
 
     /**
@@ -67,8 +67,8 @@ class ContactUs extends CI_Controller {
         $this->theme($data);
 
     }
-    
-        // --------------------------------------------------------------------
+
+    // --------------------------------------------------------------------
 
     /**
      * mail function
@@ -84,23 +84,24 @@ class ContactUs extends CI_Controller {
 
 
         $data = array();
-        
-         /**
+
+        /**
          * validation rule to be found in config -> form_validation.php
          */
 
         if ($this->form_validation->run("contactus") == false) {
 
             $data['error_success'] = "<p>Opps, there have been problems with the form:</p>";
-            
+
             $this->theme($data);
 
             sleep(2);
 
         } else {
 
-            $data['error_success'] = "<p>Thanks for getting in touch. We will return your enquiry as soon as possible</p>";
-            
+            $data['error_success'] =
+                "<p>Thanks for getting in touch. We will return your enquiry as soon as possible</p>";
+
             $this->theme($data);
 
 
@@ -143,7 +144,6 @@ class ContactUs extends CI_Controller {
 
         }
 
-        
 
     }
 

@@ -299,7 +299,7 @@ var NewAlert = {
     fade: null,
     data: null,
     run: null,
-    removeText : null,
+    removeText: null,
 
     alertCheck: function () {
 
@@ -326,8 +326,8 @@ var NewAlert = {
 
     // Create error HTML with alertWrap
     alertWrap: function (value) {
-        
-        NewAlert.removeText = '<span class="small">Click any where on the page to remove this message</span>';
+
+        NewAlert.removeText = '\<br /><span class="small clearfix">Click any where on the page to remove this message</span>';
 
         // create element with class name alert
         // add value of attribute and append to the body
@@ -342,42 +342,18 @@ var NewAlert = {
 
     // use alertFade to create the fade out opacity effect
     alertFade: function (value2) {
-
-        // alertWrap method;
-        /*
-        setOpacity(NewAlert.nodeAlert, 10);
-
-        NewAlert.fade = setInterval(function () {
-
-            // Set opacity for non-IE browsers
-            NewAlert.nodeAlert.style.opacity = parseFloat(NewAlert.nodeAlert.style.opacity) - parseFloat(0.01);
-            //Set opacity for IE browsers
-            NewAlert.nodeAlert.style.filter = "alpha(opacity=" + (NewAlert.time - NewAlert.stepCount) + ")";
-            NewAlert.stepCount += 1;
-
-            if (NewAlert.stepCount >= NewAlert.time) {
-
-                clearInterval(NewAlert.fade);
-                // destroy node after it has finished fading into nothing
-                document.body.removeChild(NewAlert.nodeAlert);
-                // stepCount attribute needs to be reset back to 0
-                NewAlert.stepCount = 0;
-                // reset back to null
-                NewAlert.run = null;
-            }
-        }, NewAlert.time);
-        */
-        
         // if user clicks on any element on the page then the node alert disappears
         x = 0;
 
         for (len = document.documentElement.childNodes.length; x < len; x += 1) {
 
-            document.documentElement.childNodes[x].onclick = function() {
-                NewAlert.nodeAlert.parentNode.removeChild(NewAlert.nodeAlert);
+            document.documentElement.childNodes[x].onclick = function () {
+                if (NewAlert.nodeAlert !== null) {
+                    NewAlert.nodeAlert.parentNode.removeChild(NewAlert.nodeAlert);
+                    NewAlert.nodeAlert = null;
+                }
             }
         } // end for loop
-        
     },
 
     init: function (data) {
@@ -507,27 +483,32 @@ CS.Validation = {
 
     Image: function (value, obj) {
 
+if(value != "") {
+
         // the valueos of all the file fields
         // Below checks to make sure that uploaded file is an image
         CS.Validation.image = [".jpeg", ".jpg", ".png", ".gif"];
+
         CS.Validation.i = 0;
         // find extension of file
         CS.Validation.ext = value.slice(value.indexOf(".")).toLowerCase();
-        // loop through file extentiong above and then see if it fits what the user has updated
-        for (CS.Validation.len = CS.Validation.image.length; CS.Validation.i < CS.Validation.len; CS.Validation.i += 1) {
-            if (CS.Validation.ext === CS.Validation.image[CS.AddNode.i]) {
-                CS.Validation.imageError = null;
-                break;
-            } else {
-                if (CS.AddNode.fileField !== "") {
-                    CS.AddNode.imageError = 1;
-                }
-            } // else
-        } // end for loop
-        // if the file is not an image then produce an error message and attached it to the error array
-        if (CS.AddNode.imageError === 1) {
+        
+        if (CS.Validation.ext in {
+            '.jpeg': '',
+            '.jpg': '',
+            '.png': '',
+            '.gif': ''
+        }) {
+
+            return true;
+
+        } else {
+
             obj.push("\nPlease make sure you only upload an image");
-        }
+
+        }// end if CS.Validation.ext
+}
+
     }
 
 };
@@ -723,7 +704,6 @@ CS.GlobalSet = (function () {
         } // end init()
     }; // end return
 })(); // end CS.AddNode
-
 // submission of admin_edit_content.php
 // Needs further work on the File API
 CS.EditNode = (function () {
@@ -830,7 +810,8 @@ CS.EditNode = (function () {
             // for the legacy browsers just run the php form if no errors are produced
             if (error.length === 0) {
                 //process form
-                CS.EditNode.Form.submit();
+                form.submit();
+
             } else {
                 // If there are errors in the form then run alert message
                 NewAlert.init(error);
@@ -848,11 +829,11 @@ CS.EditNode = (function () {
                 data = "delete_this=" + window.location.href.substr(window.location.href.lastIndexOf('/') + 1) + "&r=" + Math.random();
 
                 CS.Json.sendJson(data, CS.EditNode.siteUrl + 'admin-edit-content/delete-content');
-                
+
                 //After successful form submission then disable submit buttons and fade all form fields
                 NewAlert.init("The article has been deleted");
-                document.forms[0].submitNode.disabled = true;
-                document.forms[0].deteteNode.disabled = true;
+                document.forms[0].submit.disabled = true;
+                document.forms[0].detete.disabled = true;
                 fade_value(document.forms['adminEditContent'].elements);
 
             } // end if confirm
@@ -865,12 +846,14 @@ CS.EditNode = (function () {
 
                 CS.EditNode.siteUrl = siteUrl;
 
-                $(document.forms['adminEditContent'].elements['submitNode']).click(function () {
+                $(document.forms['adminEditContent'].elements['submit']).click(function () {
+    
                     CS.EditNode.handleSubmit();
                     return false;
                 });
 
-                $(document.forms['adminEditContent'].elements['deteteNode']).click(function () {
+                $(document.forms['adminEditContent'].elements['detete']).click(function () {
+     
                     CS.EditNode.deleteNode();
                     return false;
                 });
@@ -941,6 +924,8 @@ CS.AddNode = (function () {
                 } // end if
             } // end for loop
             */
+
+
 
             CS.Validation.Image(CS.AddNode.fileField, CS.AddNode.error);
 
@@ -1022,7 +1007,7 @@ CS.AddCategory = (function () {
 
             // set error attribute as an array
             CS.AddCategory.error = [];
-            
+
             form = this;
 
             // declare form values
@@ -1034,7 +1019,7 @@ CS.AddCategory = (function () {
                 CS.AddCategory.error.push("\nPlease don't leave any fields empty");
 
             }
-            
+
             if (CS.AddCategory.titleField.length > 40) {
 
                 CS.AddCategory.error.push("\nNo more than 40 characters");
@@ -1410,7 +1395,6 @@ CS.AddUser = (function () {
         } // end init()
     }; // end return
 })(); // end CS.EditNode
-
 CS.EditItem = (function () {
 
     // private attributes if any here
@@ -1846,7 +1830,6 @@ CS.EditItem = (function () {
         } // end init()
     }; // end return
 })(); // end
-
 function init(siteUrl, baseUrl) {
 
     NewAlert.time = 70;
@@ -1861,5 +1844,6 @@ function init(siteUrl, baseUrl) {
     CS.EditItem.init("edit-users", "user", baseUrl, siteUrl);
     CS.MenuOrder.init();
     CS.AddUser.init(siteUrl);
+    CS.GlobalSet.init(siteUrl);
 
 } // end function init

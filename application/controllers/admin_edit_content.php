@@ -190,12 +190,14 @@ class Admin_Edit_Content extends CI_Controller {
 
     // see routies.php -> $route['admin_edit_content/edit_node/:num/submit'] = "admin_edit_content/submit";
     public function submit() {
+        
+  
 
         $data = array();
 
         $file_result = null;
 
-        if ($this->input->post("submit") == "submit") {
+        if ($this->input->post("submit")) {
             
             /**
          * validation rule to be found in config -> form_validation.php
@@ -206,6 +208,11 @@ class Admin_Edit_Content extends CI_Controller {
                 $this->form_validation->set_rules('metaDescription', 'Meta Description',
                     'trim|max_length[255]');
 
+            } else {
+                
+                $meta_description = null;
+                
+                
             }
             
             if ($this->input->post('metaKeywords')) {
@@ -255,11 +262,25 @@ class Admin_Edit_Content extends CI_Controller {
                 // form validation okay
 
                 // create database update here
+                
+                if ($this->input->post('metaDescription')) {
+                    
+                    $meta_description = $this->input->post('metaDescription');
+                    
+                    }
+                    
+                    
+                   if ($this->input->post('metaKeywords')) {
+                    
+                    $meta_keywords = $this->input->post('metaKeywords');
+                    
+                    }
+                
 
                 if ($this->content_model->update_content($this->input->post('title'), $this->
                     input->post('select'), $this->input->post('contentAuthor'), $image_result, $this->
                     input->post('date'), $this->input->post('body'), $this->input->post('publish'),
-                    $this->input->post('metaDescription'), $meta_keywords, $this->uri->segment(3))) {
+                    $meta_description, $meta_keywords, $this->uri->segment(3))) {
 
                     $data['success_error'] = '<p>You have successfully edited the content item</p>';
 
@@ -270,7 +291,7 @@ class Admin_Edit_Content extends CI_Controller {
         }
 
 
-        if ($this->input->post("submit") == "delete") {
+        if ($this->input->post("detete")) {
 
             $data['delete_content'] = 1;
 

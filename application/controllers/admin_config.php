@@ -52,8 +52,8 @@ class Admin_Config extends CI_Controller {
         }
 
     }
-    
-    
+
+
     // --------------------------------------------------------------------
 
     /**
@@ -85,8 +85,8 @@ class Admin_Config extends CI_Controller {
         $this->add_theme($data);
 
     }
-    
-        // --------------------------------------------------------------------
+
+    // --------------------------------------------------------------------
 
     /**
      * submit form function
@@ -98,11 +98,10 @@ class Admin_Config extends CI_Controller {
      */
 
 
-
     public function submit_form() {
 
         $data = array();
-        
+
         /**
          * validation rule to be found in config -> form_validation.php
          */
@@ -112,15 +111,15 @@ class Admin_Config extends CI_Controller {
             $data['error_success'] = "<p>There are problems with your form submission:</p>";
 
         } else {
-            
-            if(is_array($_POST)) {
 
-            $this->admin_config_model->update_admin($_POST);
-            
+            if (is_array($_POST)) {
+
+                $this->admin_config_model->update_admin($_POST);
+
             } else {
-                
-            $this->admin_config_model->update_admin_ajax($_POST);
-                
+
+                $this->admin_config_model->update_admin_ajax($_POST);
+
             }
 
             $data['error_success'] = "<p>You have successfully updated the database.</p>";

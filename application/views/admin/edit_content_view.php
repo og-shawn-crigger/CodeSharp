@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
 }
 
 
-if (isset($_POST['submit']) && isset($delete_content)) {
+if (isset($delete_content)) {
 
     $attributesD = array('id' => "delete-node", 'name' => "deleteNode");
 
@@ -185,9 +185,9 @@ if (isset($edit)):
 
         $form .= form_fieldset('<span>Update or delete</span>');
 
-        $form .= form_submit("deteteNode", "delete");
+        $form .= form_submit("detete", "delete");
 
-        $form .= form_submit("submitNode", "submit");
+        $form .= form_submit("submit", "submit");
 
         $form .= form_fieldset_close();
 
