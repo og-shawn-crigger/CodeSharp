@@ -1,6 +1,6 @@
 CodeSharp is a small CMS based on CodeIgniter.
 
-Currently in Alpha version. You can download a version here: https://github.com/downloads/TCotton/CodeSharp/TCotton-CodeSharp-ab7a791.zip
+Currently in Alpha version. You can download a version here: https://github.com/downloads/TCotton/CodeSharp/codesharp-beta.zip
 
 1. Create the database and include the database details in file application/config/database.php
 
