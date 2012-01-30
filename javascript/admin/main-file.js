@@ -1827,4 +1827,5 @@ function init(siteUrl, baseUrl) {
     CS.AddUser.init(siteUrl);
     CS.GlobalSet.init(siteUrl);
 
+	
 } // end function init
