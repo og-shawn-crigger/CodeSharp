@@ -1,4 +1,173 @@
 /*global clearInterval: false, clearTimeout: false, document: false, event: false, frames: false, history: false, Image: false, location: false, name: false, navigator: false, Option: false, parent: false, screen: false, setInterval: false, setTimeout: false, window: false, XMLHttpRequest: false, $: false */
+
+// test to see whether browser supports the HTML5 FileAPI
+var fileAPI = {
+    test: function () {
+        if (window.File && window.FileReader && window.FileList && window.Blob) {
+            return true;
+        }
+    }
+};
+
+// top page object class
+// branching for window.pageYOffset / document.documentElement.scrollTop
+var TopMeasure = (function () {
+
+    var $ie = {
+        test: function () {
+            return document.documentElement.scrollTop;
+        }
+    };
+
+    var $nonIE = {
+        test: function () {
+            return window.pageYOffset;
+        }
+    };
+
+    if ($nonIE.test() != undefined) {
+        return $nonIE;
+    } else {
+        return $ie;
+    }
+
+})();
+
+// function for setting opacity for both IE and non IE
+function setOpacity(obj, value) {
+    obj.style.opacity = value / 10;
+    obj.style.filter = 'alpha(opacity=' + value * 10 + ')';
+}
+
+// elegant alert script below (https://github.com/TCotton/Elegant-Alert)
+var NewAlert = {
+    // this class is to replace the standard javascript alert box
+    // declare attributes at the top
+    nodeAlert: null,
+    stepCount: 0,
+    time: 100,
+    fade: null,
+    data: null,
+    run: null,
+    removeText: null,
+
+    alertCheck: function () {
+
+        var bodyChildren, len, x, first, newData;
+        bodyChildren = document.body.childNodes;
+
+        x = 0;
+
+        for (len = bodyChildren.length; x < len; x += 1) {
+
+            // Checks to make sure that the alert is not run twice until after
+            // it has finished
+            if (bodyChildren[x].nodeType === 1 && bodyChildren[x].className === "elegant-alertxyz") {
+                // loops through entire body nodes to make sure class 'elegant-alertxyz' is not already present
+                NewAlert.run = 1;
+                break;
+            }
+        } // end for loop
+        // if animation is not already running then run method alertWrap
+        if (NewAlert.run !== 1) {
+            NewAlert.alertWrap();
+        }
+    },
+
+    // Create error HTML with alertWrap
+    alertWrap: function (value) {
+
+        NewAlert.removeText = '\<br /><span class="small clearfix">Click any where on the page to remove this message</span>';
+
+        // create element with class name alert
+        // add value of attribute and append to the body
+        NewAlert.nodeAlert = document.createElement("div");
+        NewAlert.nodeAlert.className = "elegant-alertxyz";
+        NewAlert.nodeAlert.innerHTML = NewAlert.data;
+        NewAlert.nodeAlert.innerHTML += NewAlert.removeText;
+        document.body.appendChild(NewAlert.nodeAlert);
+        NewAlert.nodeAlert.style.top = TopMeasure.test() + "px";
+        NewAlert.alertFade();
+    },
+
+    // use alertFade to create the fade out opacity effect
+    alertFade: function (value2) {
+        // if user clicks on any element on the page then the node alert disappears
+        x = 0;
+
+        for (len = document.documentElement.childNodes.length; x < len; x += 1) {
+
+            document.documentElement.childNodes[x].onclick = function () {
+                if (NewAlert.nodeAlert !== null) {
+                    NewAlert.nodeAlert.parentNode.removeChild(NewAlert.nodeAlert);
+                    NewAlert.nodeAlert = null;
+                }
+            }
+        } // end for loop
+    },
+
+    init: function (data) {
+
+        // Place data into data attribute
+        if (typeof data === "object") {
+
+            x = 0;
+            newData = [];
+            for (len = data.length; x < len; x += 1) {
+                newData.push("<br />" + data[x])
+            }
+            NewAlert.data = String(newData);
+
+        } else {
+
+            NewAlert.data = data;
+        }
+
+        // Run alertCheck method
+        NewAlert.alertCheck();
+
+    }
+};
+
+// function for reseting form values to zero after successful form submission
+function reset_value(form) {
+
+    var i, len;
+    i = 0;
+
+    //loop through form elements to make sure text and textarea are not empty
+    for (len = form.length; i < len; i += 1) {
+        if (form[i].type === "text" || form[i].type === "textarea") {
+            form[i].value = "";
+        } // end if text or textarea
+    }
+}
+
+// fading form values after successful submission
+function fade_value(form) {
+
+    var i, len;
+    i = 0;
+
+    //loop through form elements to make sure text and textarea are not empty
+    for (len = form.length; i < len; i += 1) {
+        $(form[i]).css({
+            opacity: 0.3
+        });
+    }
+}
+
+function addEvent(el, type, fn) {
+
+    if (window.addEventListener) {
+        el.addEventListener(type, fn, false);
+    } else if (window.attachEvent) {
+        el.attachEvent('on' + type, fn);
+    } else {
+        el['on' + type] = fn;
+    }
+}
+
 // The Douglas Crockfords prototype trim method: http://javascript.crockford.com/remedial.html
 if (!String.prototype.trim) {
     String.prototype.trim = function () {
@@ -247,175 +416,6 @@ function date(format, timestamp) {
         return format.replace(formatChr, formatChrCb);
     };
     return this.date(format, timestamp);
-}
-
-
-// test to see whether browser supports the HTML5 FileAPI
-var fileAPI = {
-    test: function () {
-        if (window.File && window.FileReader && window.FileList && window.Blob) {
-            return true;
-        }
-    }
-};
-
-// top page object class
-// branching for window.pageYOffset / document.documentElement.scrollTop
-var TopMeasure = (function () {
-
-    var $ie = {
-        test: function () {
-            return document.documentElement.scrollTop;
-        }
-    };
-
-    var $nonIE = {
-        test: function () {
-            return window.pageYOffset;
-        }
-    };
-
-    if ($nonIE.test() != undefined) {
-        return $nonIE;
-    } else {
-        return $ie;
-    }
-
-})();
-
-// function for setting opacity for both IE and non IE
-function setOpacity(obj, value) {
-    obj.style.opacity = value / 10;
-    obj.style.filter = 'alpha(opacity=' + value * 10 + ')';
-}
-
-// elegant alert script below (https://github.com/TCotton/Elegant-Alert)
-var NewAlert = {
-    // this class is to replace the standard javascript alert box
-    // declare attributes at the top
-    nodeAlert: null,
-    stepCount: 0,
-    time: 100,
-    fade: null,
-    data: null,
-    run: null,
-    removeText: null,
-
-    alertCheck: function () {
-
-        var bodyChildren, len, x, first, newData;
-        bodyChildren = document.body.childNodes;
-
-        x = 0;
-
-        for (len = bodyChildren.length; x < len; x += 1) {
-
-            // Checks to make sure that the alert is not run twice until after
-            // it has finished
-            if (bodyChildren[x].nodeType === 1 && bodyChildren[x].className === "elegant-alertxyz") {
-                // loops through entire body nodes to make sure class 'elegant-alertxyz' is not already present
-                NewAlert.run = 1;
-                break;
-            }
-        } // end for loop
-        // if animation is not already running then run method alertWrap
-        if (NewAlert.run !== 1) {
-            NewAlert.alertWrap();
-        }
-    },
-
-    // Create error HTML with alertWrap
-    alertWrap: function (value) {
-
-        NewAlert.removeText = '\<br /><span class="small clearfix">Click any where on the page to remove this message</span>';
-
-        // create element with class name alert
-        // add value of attribute and append to the body
-        NewAlert.nodeAlert = document.createElement("div");
-        NewAlert.nodeAlert.className = "elegant-alertxyz";
-        NewAlert.nodeAlert.innerHTML = NewAlert.data;
-        NewAlert.nodeAlert.innerHTML += NewAlert.removeText;
-        document.body.appendChild(NewAlert.nodeAlert);
-        NewAlert.nodeAlert.style.top = TopMeasure.test() + "px";
-        NewAlert.alertFade();
-    },
-
-    // use alertFade to create the fade out opacity effect
-    alertFade: function (value2) {
-        // if user clicks on any element on the page then the node alert disappears
-        x = 0;
-
-        for (len = document.documentElement.childNodes.length; x < len; x += 1) {
-
-            document.documentElement.childNodes[x].onclick = function () {
-                if (NewAlert.nodeAlert !== null) {
-                    NewAlert.nodeAlert.parentNode.removeChild(NewAlert.nodeAlert);
-                    NewAlert.nodeAlert = null;
-                }
-            }
-        } // end for loop
-    },
-
-    init: function (data) {
-
-        // Place data into data attribute
-        if (typeof data === "object") {
-
-            x = 0;
-            newData = [];
-            for (len = data.length; x < len; x += 1) {
-                newData.push("<br />" + data[x])
-            }
-            NewAlert.data = String(newData);
-
-        } else {
-
-            NewAlert.data = data;
-        }
-
-        // Run alertCheck method
-        NewAlert.alertCheck();
-
-    }
-};
-
-// function for reseting form values to zero after successful form submission
-function reset_value(form) {
-
-    var i, len;
-    i = 0;
-
-    //loop through form elements to make sure text and textarea are not empty
-    for (len = form.length; i < len; i += 1) {
-        if (form[i].type === "text" || form[i].type === "textarea") {
-            form[i].value = "";
-        } // end if text or textarea
-    }
-}
-
-// fading form values after successful submission
-function fade_value(form) {
-
-    var i, len;
-    i = 0;
-
-    //loop through form elements to make sure text and textarea are not empty
-    for (len = form.length; i < len; i += 1) {
-        $(form[i]).css({
-            opacity: 0.3
-        });
-    }
-}
-
-function addEvent(el, type, fn) {
-
-    if (window.addEventListener) {
-        el.addEventListener(type, fn, false);
-    } else if (window.attachEvent) {
-        el.attachEvent('on' + type, fn);
-    } else {
-        el['on' + type] = fn;
-    }
 }
 
 // declare the global namespace
