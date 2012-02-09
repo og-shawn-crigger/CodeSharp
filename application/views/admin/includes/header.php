@@ -14,60 +14,7 @@ ob_start();
 <title>
 <?php
 
-$pageURL = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
-
-if ($_SERVER["SERVER_PORT"] != "80") {
-
-    $pageURL .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
-
-} else {
-
-    $pageURL .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
-
-}
-
-$page = $pageURL;
-
-switch ($page) {
-
-    case "/admin":
-        echo "Administration section " . " / " . SITENAME;
-        break;
-
-    case (preg_match('/^.*\/admin-config\/*/', $page) ? true : false):
-        echo "Main admin configuration " . " / " . SITENAME;
-        break;
-
-    case (preg_match('/^.*\/admin-content\/*/', $page) ? true : false):
-        echo "Add a content page " . " / " . SITENAME;
-        break;
-
-    case (preg_match('/^.*\/admin-edit-content$/', $page) ? true : false):
-        echo "Edit a content page " . " / " . SITENAME;
-        break;
-
-    case (preg_match('/^.*\/admin-edit-content\/edit-node\/\d/', $page) ? true : false):
-        echo isset($_POST["title"]) ? $_POST["title"]:
-        $edit[0]->title . " / " . SITENAME;
-        break;
-
-    case (preg_match('/^.*\/admin-category\/*/', $page) ? true : false):
-        echo "Edit categories " . " / " . SITENAME;
-        break;
-
-    case (preg_match('/^.*\/admin-user\/*/', $page) ? true : false):
-        echo "Add and edit user details " . " / " . SITENAME;
-        break;
-
-    case (preg_match('/^.*\/admin-menu\/*/', $page) ? true : false):
-        echo "Add and edit menu details " . " / " . SITENAME;
-        break;
-
-    default:
-        echo SITENAME . " / " . SLOGAN;
-        break;
-
-}
+echo title(isset($edit[0]->title)? $edit[0]->title: null,null,null);
 
 ?>
 </title>

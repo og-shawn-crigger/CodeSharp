@@ -15,39 +15,7 @@
 <title>
 <?php
 
-/**
- * Do not remove below. This is needed for page titles
- */
-
-$pageURL = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
-
-if ($_SERVER["SERVER_PORT"] != "80"){
-
-    $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
-	
-} else {
-
-    $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
-	
-}
-
-$page = $pageURL;
-
-switch ($page) {
-
-    case (preg_match('/^.*\/article\/.*/', $page) ? true : false):
-        echo $full_node[0]->title . " / " . SITENAME;
-        break;
-
-    case (preg_match('/^.*\/category\/.*/', $page) ? true : false):
-        echo $category_records[0]->name . " / " . SITENAME;
-        break;
-
-    default:
-        echo SITENAME . " / " . SLOGAN;
-        break;
-
-}
+echo title(null,isset($category_records[0]->name)? $category_records[0]->name: null,isset($full_node[0]->title)? $full_node[0]->title: null);
 
 ?>
 </title>

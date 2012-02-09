@@ -71,8 +71,9 @@ $autoload['libraries'] = array('database', 'form_validation', 'email',
 
 $autoload['helper'] = array('url', 'html', 'form', 'text', 'date',
     'htmlspecial_helper', 'array_key_change_helper', 'error_helper',
-    'strip_form_helper', 'utf8special_helper', 'admin_menu_helper', 'encrypt_helper',
-    'decrypt_helper', 'admin_top_menu_helper', 'create_json_helper');
+    'strip_form_helper', 'utf8special_helper', 'admin_menu_helper',
+    'admin_top_menu_helper', 'create_json_helper', 'main_menu_helper',
+    'title_helper');
 
 
 /*
@@ -119,14 +120,14 @@ $autoload['language'] = array();
 
 if (!file_exists("application/views/admin/install_view.php")) {
 
-$autoload['model'] = array('content_model', 'menu_model', 'category_model',
-    'author_model', 'image_model', 'user_model', 'admin_config_model');
-    
-  } else {
-    
-   $autoload['model'] = "";
-    
-  }
+    $autoload['model'] = array('content_model', 'menu_model', 'category_model',
+        'author_model', 'image_model', 'user_model', 'admin_config_model');
+
+} else {
+
+    $autoload['model'] = "";
+
+}
 
 
 /* End of file autoload.php */
